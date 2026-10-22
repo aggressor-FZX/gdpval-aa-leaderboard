@@ -1,0 +1,1006 @@
+{
+  "test_name": "Qwen Strategy Test",
+  "test_time": "2026-06-09 19:22:05",
+  "models": [
+    {
+      "model": "Qwen 3.7 Plus",
+      "model_id": "qwen/qwen3.7-plus",
+      "price_blended": 0.7,
+      "runs": [
+        {
+          "run": 1,
+          "ok": true,
+          "disqualified": false,
+          "score": 97.0,
+          "band": "Production-ready",
+          "gates": {
+            "disqualified": false,
+            "critical_fails": [],
+            "non_critical_fails": [
+              [
+                "G10",
+                "Table markers"
+              ]
+            ],
+            "passes": [
+              [
+                "G1",
+                "PASS"
+              ],
+              [
+                "G2",
+                "PASS"
+              ],
+              [
+                "G3",
+                "PASS"
+              ],
+              [
+                "G4",
+                "PASS"
+              ],
+              [
+                "G5",
+                "PASS"
+              ],
+              [
+                "G6",
+                "PASS (440 words)"
+              ],
+              [
+                "G7",
+                "PASS"
+              ],
+              [
+                "G8",
+                "PASS"
+              ],
+              [
+                "G9",
+                "PASS"
+              ]
+            ],
+            "gates_passed": 9,
+            "critical_count": 0,
+            "non_critical_count": 1
+          },
+          "details": {
+            "fidelity": {
+              "raw": 10,
+              "weighted": 35.0
+            },
+            "alignment": {
+              "raw": 8,
+              "weighted": 16.0,
+              "theme_hits": 7
+            },
+            "bullets": {
+              "raw": 8,
+              "weighted": 8.0,
+              "count": 14
+            },
+            "metrics": {
+              "raw": 10,
+              "weighted": 10.0
+            },
+            "targeting": {
+              "raw": 5,
+              "weighted": 5.0
+            },
+            "skills": {
+              "raw": 10,
+              "weighted": 5.0
+            },
+            "ats_structure": {
+              "raw": 10,
+              "weighted": 5.0
+            },
+            "brevity": {
+              "raw": 10,
+              "weighted": 5.0,
+              "words": 440
+            },
+            "gsi": {
+              "raw": 8,
+              "weighted": 8.0,
+              "inferred": [
+                "governance",
+                "compliance"
+              ],
+              "unsupported": []
+            },
+            "total": 97.0,
+            "band": "Production-ready"
+          },
+          "latency": 79.86,
+          "tokens": 5333,
+          "cache_hit_tokens": 0,
+          "cost": 0.003733
+        },
+        {
+          "run": 2,
+          "ok": true,
+          "disqualified": false,
+          "score": 97.0,
+          "band": "Production-ready",
+          "gates": {
+            "disqualified": false,
+            "critical_fails": [],
+            "non_critical_fails": [
+              [
+                "G10",
+                "Table markers"
+              ]
+            ],
+            "passes": [
+              [
+                "G1",
+                "PASS"
+              ],
+              [
+                "G2",
+                "PASS"
+              ],
+              [
+                "G3",
+                "PASS"
+              ],
+              [
+                "G4",
+                "PASS"
+              ],
+              [
+                "G5",
+                "PASS"
+              ],
+              [
+                "G6",
+                "PASS (422 words)"
+              ],
+              [
+                "G7",
+                "PASS"
+              ],
+              [
+                "G8",
+                "PASS"
+              ],
+              [
+                "G9",
+                "PASS"
+              ]
+            ],
+            "gates_passed": 9,
+            "critical_count": 0,
+            "non_critical_count": 1
+          },
+          "details": {
+            "fidelity": {
+              "raw": 10,
+              "weighted": 35.0
+            },
+            "alignment": {
+              "raw": 8,
+              "weighted": 16.0,
+              "theme_hits": 7
+            },
+            "bullets": {
+              "raw": 8,
+              "weighted": 8.0,
+              "count": 14
+            },
+            "metrics": {
+              "raw": 10,
+              "weighted": 10.0
+            },
+            "targeting": {
+              "raw": 5,
+              "weighted": 5.0
+            },
+            "skills": {
+              "raw": 10,
+              "weighted": 5.0
+            },
+            "ats_structure": {
+              "raw": 10,
+              "weighted": 5.0
+            },
+            "brevity": {
+              "raw": 10,
+              "weighted": 5.0,
+              "words": 422
+            },
+            "gsi": {
+              "raw": 8,
+              "weighted": 8.0,
+              "inferred": [
+                "governance",
+                "compliance"
+              ],
+              "unsupported": []
+            },
+            "total": 97.0,
+            "band": "Production-ready"
+          },
+          "latency": 75.12,
+          "tokens": 5076,
+          "cache_hit_tokens": 0,
+          "cost": 0.003553
+        },
+        {
+          "run": 3,
+          "ok": true,
+          "disqualified": false,
+          "score": 100,
+          "band": "Production-ready",
+          "gates": {
+            "disqualified": false,
+            "critical_fails": [],
+            "non_critical_fails": [
+              [
+                "G10",
+                "Table markers"
+              ]
+            ],
+            "passes": [
+              [
+                "G1",
+                "PASS"
+              ],
+              [
+                "G2",
+                "PASS"
+              ],
+              [
+                "G3",
+                "PASS"
+              ],
+              [
+                "G4",
+                "PASS"
+              ],
+              [
+                "G5",
+                "PASS"
+              ],
+              [
+                "G6",
+                "PASS (514 words)"
+              ],
+              [
+                "G7",
+                "PASS"
+              ],
+              [
+                "G8",
+                "PASS"
+              ],
+              [
+                "G9",
+                "PASS"
+              ]
+            ],
+            "gates_passed": 9,
+            "critical_count": 0,
+            "non_critical_count": 1
+          },
+          "details": {
+            "fidelity": {
+              "raw": 10,
+              "weighted": 35.0
+            },
+            "alignment": {
+              "raw": 10,
+              "weighted": 20.0,
+              "theme_hits": 8
+            },
+            "bullets": {
+              "raw": 8,
+              "weighted": 8.0,
+              "count": 20
+            },
+            "metrics": {
+              "raw": 10,
+              "weighted": 10.0
+            },
+            "targeting": {
+              "raw": 5,
+              "weighted": 5.0
+            },
+            "skills": {
+              "raw": 10,
+              "weighted": 5.0
+            },
+            "ats_structure": {
+              "raw": 10,
+              "weighted": 5.0
+            },
+            "brevity": {
+              "raw": 10,
+              "weighted": 5.0,
+              "words": 514
+            },
+            "gsi": {
+              "raw": 10,
+              "weighted": 10.0,
+              "inferred": [
+                "containerized",
+                "container",
+                "governance"
+              ],
+              "unsupported": []
+            },
+            "total": 100,
+            "band": "Production-ready"
+          },
+          "latency": 81.56,
+          "tokens": 5431,
+          "cache_hit_tokens": 0,
+          "cost": 0.003802
+        }
+      ],
+      "summary": {
+        "avg_score": 98.0,
+        "best_score": 100,
+        "variance": 2.0,
+        "pass_rate": 1.0,
+        "dq_rate": 0.0,
+        "fail_rate": 0.0,
+        "avg_fidelity": 35.0,
+        "avg_alignment": 17.3,
+        "avg_latency": 78.8,
+        "scored_count": 3,
+        "dq_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "model": "Qwen3 Coder 480B A35B",
+      "model_id": "qwen/qwen3-coder",
+      "price_blended": 0.615,
+      "runs": [
+        {
+          "run": 1,
+          "ok": true,
+          "disqualified": false,
+          "score": 97.5,
+          "band": "Production-ready",
+          "gates": {
+            "disqualified": false,
+            "critical_fails": [],
+            "non_critical_fails": [
+              [
+                "G6",
+                "Word count 314 outside 320-700"
+              ],
+              [
+                "G10",
+                "Table markers"
+              ]
+            ],
+            "passes": [
+              [
+                "G1",
+                "PASS"
+              ],
+              [
+                "G2",
+                "PASS"
+              ],
+              [
+                "G3",
+                "PASS"
+              ],
+              [
+                "G4",
+                "PASS"
+              ],
+              [
+                "G5",
+                "PASS"
+              ],
+              [
+                "G7",
+                "PASS"
+              ],
+              [
+                "G8",
+                "PASS"
+              ],
+              [
+                "G9",
+                "PASS"
+              ]
+            ],
+            "gates_passed": 8,
+            "critical_count": 0,
+            "non_critical_count": 2
+          },
+          "details": {
+            "fidelity": {
+              "raw": 10,
+              "weighted": 35.0
+            },
+            "alignment": {
+              "raw": 8,
+              "weighted": 16.0,
+              "theme_hits": 6
+            },
+            "bullets": {
+              "raw": 10,
+              "weighted": 10.0,
+              "count": 13
+            },
+            "metrics": {
+              "raw": 10,
+              "weighted": 10.0
+            },
+            "targeting": {
+              "raw": 5,
+              "weighted": 5.0
+            },
+            "skills": {
+              "raw": 10,
+              "weighted": 5.0
+            },
+            "ats_structure": {
+              "raw": 10,
+              "weighted": 5.0
+            },
+            "brevity": {
+              "raw": 5,
+              "weighted": 2.5,
+              "words": 314
+            },
+            "gsi": {
+              "raw": 9,
+              "weighted": 9.0,
+              "inferred": [
+                "containerized",
+                "container",
+                "retrieval-augmented generation"
+              ],
+              "unsupported": []
+            },
+            "total": 97.5,
+            "band": "Production-ready"
+          },
+          "latency": 3.56,
+          "tokens": 1540,
+          "cache_hit_tokens": 0,
+          "cost": 0.000947
+        },
+        {
+          "run": 2,
+          "ok": true,
+          "disqualified": false,
+          "score": 95.5,
+          "band": "Production-ready",
+          "gates": {
+            "disqualified": false,
+            "critical_fails": [],
+            "non_critical_fails": [
+              [
+                "G6",
+                "Word count 319 outside 320-700"
+              ],
+              [
+                "G10",
+                "Table markers"
+              ]
+            ],
+            "passes": [
+              [
+                "G1",
+                "PASS"
+              ],
+              [
+                "G2",
+                "PASS"
+              ],
+              [
+                "G3",
+                "PASS"
+              ],
+              [
+                "G4",
+                "PASS"
+              ],
+              [
+                "G5",
+                "PASS"
+              ],
+              [
+                "G7",
+                "PASS"
+              ],
+              [
+                "G8",
+                "PASS"
+              ],
+              [
+                "G9",
+                "PASS"
+              ]
+            ],
+            "gates_passed": 8,
+            "critical_count": 0,
+            "non_critical_count": 2
+          },
+          "details": {
+            "fidelity": {
+              "raw": 10,
+              "weighted": 35.0
+            },
+            "alignment": {
+              "raw": 8,
+              "weighted": 16.0,
+              "theme_hits": 6
+            },
+            "bullets": {
+              "raw": 8,
+              "weighted": 8.0,
+              "count": 14
+            },
+            "metrics": {
+              "raw": 10,
+              "weighted": 10.0
+            },
+            "targeting": {
+              "raw": 5,
+              "weighted": 5.0
+            },
+            "skills": {
+              "raw": 10,
+              "weighted": 5.0
+            },
+            "ats_structure": {
+              "raw": 10,
+              "weighted": 5.0
+            },
+            "brevity": {
+              "raw": 5,
+              "weighted": 2.5,
+              "words": 319
+            },
+            "gsi": {
+              "raw": 9,
+              "weighted": 9.0,
+              "inferred": [
+                "containerized",
+                "container",
+                "retrieval-augmented generation"
+              ],
+              "unsupported": []
+            },
+            "total": 95.5,
+            "band": "Production-ready"
+          },
+          "latency": 3.66,
+          "tokens": 1551,
+          "cache_hit_tokens": 0,
+          "cost": 0.000954
+        },
+        {
+          "run": 3,
+          "ok": true,
+          "disqualified": false,
+          "score": 96.0,
+          "band": "Production-ready",
+          "gates": {
+            "disqualified": false,
+            "critical_fails": [],
+            "non_critical_fails": [
+              [
+                "G10",
+                "Table markers"
+              ]
+            ],
+            "passes": [
+              [
+                "G1",
+                "PASS"
+              ],
+              [
+                "G2",
+                "PASS"
+              ],
+              [
+                "G3",
+                "PASS"
+              ],
+              [
+                "G4",
+                "PASS"
+              ],
+              [
+                "G5",
+                "PASS"
+              ],
+              [
+                "G6",
+                "PASS (349 words)"
+              ],
+              [
+                "G7",
+                "PASS"
+              ],
+              [
+                "G8",
+                "PASS"
+              ],
+              [
+                "G9",
+                "PASS"
+              ]
+            ],
+            "gates_passed": 9,
+            "critical_count": 0,
+            "non_critical_count": 1
+          },
+          "details": {
+            "fidelity": {
+              "raw": 10,
+              "weighted": 35.0
+            },
+            "alignment": {
+              "raw": 8,
+              "weighted": 16.0,
+              "theme_hits": 6
+            },
+            "bullets": {
+              "raw": 8,
+              "weighted": 8.0,
+              "count": 14
+            },
+            "metrics": {
+              "raw": 10,
+              "weighted": 10.0
+            },
+            "targeting": {
+              "raw": 5,
+              "weighted": 5.0
+            },
+            "skills": {
+              "raw": 8,
+              "weighted": 4.0
+            },
+            "ats_structure": {
+              "raw": 10,
+              "weighted": 5.0
+            },
+            "brevity": {
+              "raw": 8,
+              "weighted": 4.0,
+              "words": 349
+            },
+            "gsi": {
+              "raw": 9,
+              "weighted": 9.0,
+              "inferred": [
+                "containerized",
+                "container",
+                "retrieval-augmented generation"
+              ],
+              "unsupported": []
+            },
+            "total": 96.0,
+            "band": "Production-ready"
+          },
+          "latency": 3.25,
+          "tokens": 1530,
+          "cache_hit_tokens": 0,
+          "cost": 0.000941
+        }
+      ],
+      "summary": {
+        "avg_score": 96.3,
+        "best_score": 97.5,
+        "variance": 0.72,
+        "pass_rate": 1.0,
+        "dq_rate": 0.0,
+        "fail_rate": 0.0,
+        "avg_fidelity": 35.0,
+        "avg_alignment": 16.0,
+        "avg_latency": 3.5,
+        "scored_count": 3,
+        "dq_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "model": "Qwen3.6 27B",
+      "model_id": "qwen/qwen3.6-27b",
+      "price_blended": 0.8175,
+      "runs": [
+        {
+          "run": 1,
+          "ok": true,
+          "disqualified": false,
+          "score": 23.5,
+          "band": "Not deployable",
+          "gates": {
+            "disqualified": false,
+            "critical_fails": [],
+            "non_critical_fails": [
+              [
+                "G5",
+                "Missing sections"
+              ],
+              [
+                "G6",
+                "Word count 13 outside 320-700"
+              ],
+              [
+                "G9",
+                "No Boeing/defense relevance"
+              ]
+            ],
+            "passes": [
+              [
+                "G1",
+                "PASS"
+              ],
+              [
+                "G2",
+                "PASS"
+              ],
+              [
+                "G3",
+                "PASS"
+              ],
+              [
+                "G4",
+                "PASS"
+              ],
+              [
+                "G7",
+                "PASS"
+              ],
+              [
+                "G8",
+                "PASS"
+              ],
+              [
+                "G10",
+                "PASS"
+              ]
+            ],
+            "gates_passed": 7,
+            "critical_count": 0,
+            "non_critical_count": 3
+          },
+          "details": {
+            "fidelity": {
+              "raw": 5,
+              "weighted": 17.5
+            },
+            "alignment": {
+              "raw": 0,
+              "weighted": 0.0,
+              "theme_hits": 0
+            },
+            "bullets": {
+              "raw": 0,
+              "weighted": 0.0,
+              "count": 0
+            },
+            "metrics": {
+              "raw": 0,
+              "weighted": 0.0
+            },
+            "targeting": {
+              "raw": 3,
+              "weighted": 3.0
+            },
+            "skills": {
+              "raw": 0,
+              "weighted": 0.0
+            },
+            "ats_structure": {
+              "raw": 3,
+              "weighted": 1.5
+            },
+            "brevity": {
+              "raw": 3,
+              "weighted": 1.5,
+              "words": 13
+            },
+            "gsi": {
+              "raw": 0,
+              "weighted": 0.0,
+              "inferred": [],
+              "unsupported": []
+            },
+            "total": 23.5,
+            "band": "Not deployable"
+          },
+          "latency": 48.92,
+          "tokens": 5050,
+          "cache_hit_tokens": 0,
+          "cost": 0.004128
+        },
+        {
+          "run": 2,
+          "ok": true,
+          "disqualified": false,
+          "score": 23.5,
+          "band": "Not deployable",
+          "gates": {
+            "disqualified": false,
+            "critical_fails": [],
+            "non_critical_fails": [
+              [
+                "G5",
+                "Missing sections"
+              ],
+              [
+                "G6",
+                "Word count 13 outside 320-700"
+              ],
+              [
+                "G9",
+                "No Boeing/defense relevance"
+              ]
+            ],
+            "passes": [
+              [
+                "G1",
+                "PASS"
+              ],
+              [
+                "G2",
+                "PASS"
+              ],
+              [
+                "G3",
+                "PASS"
+              ],
+              [
+                "G4",
+                "PASS"
+              ],
+              [
+                "G7",
+                "PASS"
+              ],
+              [
+                "G8",
+                "PASS"
+              ],
+              [
+                "G10",
+                "PASS"
+              ]
+            ],
+            "gates_passed": 7,
+            "critical_count": 0,
+            "non_critical_count": 3
+          },
+          "details": {
+            "fidelity": {
+              "raw": 5,
+              "weighted": 17.5
+            },
+            "alignment": {
+              "raw": 0,
+              "weighted": 0.0,
+              "theme_hits": 0
+            },
+            "bullets": {
+              "raw": 0,
+              "weighted": 0.0,
+              "count": 0
+            },
+            "metrics": {
+              "raw": 0,
+              "weighted": 0.0
+            },
+            "targeting": {
+              "raw": 3,
+              "weighted": 3.0
+            },
+            "skills": {
+              "raw": 0,
+              "weighted": 0.0
+            },
+            "ats_structure": {
+              "raw": 3,
+              "weighted": 1.5
+            },
+            "brevity": {
+              "raw": 3,
+              "weighted": 1.5,
+              "words": 13
+            },
+            "gsi": {
+              "raw": 0,
+              "weighted": 0.0,
+              "inferred": [],
+              "unsupported": []
+            },
+            "total": 23.5,
+            "band": "Not deployable"
+          },
+          "latency": 48.83,
+          "tokens": 5050,
+          "cache_hit_tokens": 0,
+          "cost": 0.004128
+        },
+        {
+          "run": 3,
+          "ok": true,
+          "disqualified": true,
+          "gates": {
+            "disqualified": true,
+            "critical_fails": [
+              [
+                "G3",
+                "Identity failure"
+              ]
+            ],
+            "non_critical_fails": [
+              [
+                "G5",
+                "Missing sections"
+              ],
+              [
+                "G6",
+                "Word count 0 outside 320-700"
+              ],
+              [
+                "G8",
+                "Missing C2C/Cogito"
+              ],
+              [
+                "G9",
+                "No Boeing/defense relevance"
+              ]
+            ],
+            "passes": [
+              [
+                "G1",
+                "PASS"
+              ],
+              [
+                "G2",
+                "PASS"
+              ],
+              [
+                "G4",
+                "PASS"
+              ],
+              [
+                "G7",
+                "PASS"
+              ],
+              [
+                "G10",
+                "PASS"
+              ]
+            ],
+            "gates_passed": 5,
+            "critical_count": 1,
+            "non_critical_count": 4
+          },
+          "latency": 85.83222031593323,
+          "tokens": 5050
+        }
+      ],
+      "summary": {
+        "avg_score": 23.5,
+        "best_score": 23.5,
+        "variance": 0.0,
+        "pass_rate": 0.67,
+        "dq_rate": 0.33,
+        "fail_rate": 0.0,
+        "avg_fidelity": 17.5,
+        "avg_alignment": 0.0,
+        "avg_latency": 48.9,
+        "scored_count": 2,
+        "dq_count": 1,
+        "fail_count": 0
+      }
+    }
+  ]
+}

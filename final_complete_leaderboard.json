@@ -1,0 +1,302 @@
+{
+  "date": "2026-06-07",
+  "total_models_tested": 25,
+  "scoring": "ground truth answer key per resume",
+  "complete_leaderboard": [
+    {
+      "rank": 1,
+      "model": "Mistral Codestral 2508",
+      "avg_score": 94.8,
+      "time_5_resumes": 42.0,
+      "avg_skills": 24.8,
+      "tokens_5_resumes": 13386,
+      "reliability": "5/5",
+      "price_blended_per_M": "$0.45",
+      "price_note": "in=$0.30 out=$0.90",
+      "speed": "fast (8.4s/resume)"
+    },
+    {
+      "rank": 2,
+      "model": "Seed 2.0 Lite",
+      "avg_score": 93.6,
+      "time_5_resumes": 587.4,
+      "avg_skills": 33.4,
+      "tokens_5_resumes": 23633,
+      "reliability": "5/5",
+      "price_blended_per_M": "$0.69",
+      "price_note": "in=$0.25 out=$2.00",
+      "speed": "very slow (~120s/resume)"
+    },
+    {
+      "rank": 3,
+      "model": "Gemma 4 31B",
+      "avg_score": 93.0,
+      "time_5_resumes": 343.5,
+      "avg_skills": 23.0,
+      "tokens_5_resumes": 13467,
+      "reliability": "5/5",
+      "price_blended_per_M": "$0.18",
+      "price_note": "in=$0.12 out=$0.36",
+      "speed": "slow (~69s/resume average)"
+    },
+    {
+      "rank": 4,
+      "model": "MiMo-V2-Flash",
+      "avg_score": 91.2,
+      "time_5_resumes": 38.0,
+      "avg_skills": 27.4,
+      "tokens_5_resumes": 13174,
+      "reliability": "5/5",
+      "price_blended_per_M": "$0.15",
+      "price_note": "in=$0.10 out=$0.30",
+      "speed": "fast (7.6s/resume)"
+    },
+    {
+      "rank": 5,
+      "model": "DeepSeek V4 Flash",
+      "avg_score": 91.2,
+      "time_5_resumes": 228.7,
+      "avg_skills": 34.6,
+      "tokens_5_resumes": 12857,
+      "reliability": "5/5",
+      "price_blended_per_M": "$0.12",
+      "price_note": "in=$0.09 out=$0.30",
+      "speed": "slow (45.7s/resume)"
+    },
+    {
+      "rank": 6,
+      "model": "Qwen 3.5 Flash",
+      "avg_score": 91.0,
+      "time_5_resumes": 151.0,
+      "avg_skills": 26.5,
+      "tokens_5_resumes": 30758,
+      "reliability": "4/5",
+      "price_blended_per_M": "$0.11",
+      "price_note": "in=$0.065 out=$0.260",
+      "speed": "good (~30s/resume)",
+      "note": "1/5 timeout (GOVResume). 4 completed: 93,95,93,83. Best value!"
+    },
+    {
+      "rank": 7,
+      "model": "Mistral Small 4",
+      "avg_score": 90.8,
+      "time_5_resumes": 34.4,
+      "avg_skills": 44.8,
+      "tokens_5_resumes": 13755,
+      "reliability": "5/5",
+      "price_blended_per_M": "$0.26",
+      "price_note": "in=$0.20 out=$0.33",
+      "speed": "fastest (6.9s/resume)"
+    },
+    {
+      "rank": 8,
+      "model": "gpt-oss-120b",
+      "avg_score": 90.8,
+      "time_5_resumes": 189.7,
+      "avg_skills": 28.8,
+      "tokens_5_resumes": 19289,
+      "reliability": "5/5",
+      "price_blended_per_M": "$0.07",
+      "price_note": "in=$0.039 out=$0.18",
+      "speed": "slow (37.9s/resume)"
+    },
+    {
+      "rank": 9,
+      "model": "Ring 2.6 1T",
+      "avg_score": 90.6,
+      "time_5_resumes": 113.5,
+      "avg_skills": 17.6,
+      "tokens_5_resumes": 17602,
+      "reliability": "5/5",
+      "price_blended_per_M": "$0.21",
+      "price_note": "in=$0.075 out=$0.625",
+      "speed": "good (22.7s/resume)",
+      "note": "Reasoning model \u2014 extraction working. Best reasoning model yet."
+    },
+    {
+      "rank": 10,
+      "model": "Microsoft Phi-4",
+      "avg_score": 90.2,
+      "time_5_resumes": 195.3,
+      "avg_skills": 23.0,
+      "tokens_5_resumes": 19415,
+      "reliability": "4/5",
+      "price_blended_per_M": "$0.15",
+      "price_note": "in=$0.08 out=$0.35",
+      "speed": "slow (~39s/resume)",
+      "note": "1/5 JSON parse failure (DataMAR25)"
+    },
+    {
+      "rank": 11,
+      "model": "Ministral 14B",
+      "avg_score": 89.4,
+      "time_5_resumes": 106.7,
+      "avg_skills": 22.8,
+      "tokens_5_resumes": 14934,
+      "reliability": "5/5",
+      "price_blended_per_M": "$0.20",
+      "price_note": "in=$0.20 out=$0.20",
+      "speed": "good (21.3s/resume)",
+      "note": "Small model, cheap flat pricing. Solid for its size."
+    },
+    {
+      "rank": 12,
+      "model": "Qwen 3.6 Flash",
+      "avg_score": 88.8,
+      "time_5_resumes": 150.3,
+      "avg_skills": 25.4,
+      "tokens_5_resumes": 39156,
+      "reliability": "5/5",
+      "price_blended_per_M": "$0.42",
+      "price_note": "in=$0.188 out=$1.125",
+      "speed": "ok (~30s/resume)",
+      "note": "High token usage, expensive output"
+    },
+    {
+      "rank": 13,
+      "model": "Llama 4 Maverick",
+      "avg_score": 88.6,
+      "time_5_resumes": 90.9,
+      "avg_skills": 17.6,
+      "tokens_5_resumes": 9821,
+      "reliability": "5/5",
+      "price_blended_per_M": "$0.26",
+      "price_note": "in=$0.15 out=$0.60",
+      "speed": "good (18.2s/resume)"
+    },
+    {
+      "rank": 14,
+      "model": "Nova 2 Lite",
+      "avg_score": 86.8,
+      "time_5_resumes": 24.2,
+      "avg_skills": 21.8,
+      "tokens_5_resumes": 12606,
+      "reliability": "5/5",
+      "price_blended_per_M": "$0.85",
+      "price_note": "in=$0.30 out=$2.50",
+      "speed": "fastest (4.8s/resume!)"
+    },
+    {
+      "rank": 15,
+      "model": "DeepSeek Chat V3",
+      "avg_score": 86.4,
+      "time_5_resumes": 198.4,
+      "avg_skills": 20.8,
+      "tokens_5_resumes": 12187,
+      "reliability": "5/5",
+      "price_blended_per_M": "$0.35",
+      "price_note": "in=$0.20 out=$0.80",
+      "speed": "slow (39.7s/resume)",
+      "note": "Solid but slower than expected"
+    },
+    {
+      "rank": 16,
+      "model": "Trinity Mini",
+      "avg_score": 83.3,
+      "time_5_resumes": 80.8,
+      "avg_skills": 13.8,
+      "tokens_5_resumes": 20767,
+      "reliability": "3/5 \u26a0\ufe0f",
+      "price_blended_per_M": "$0.07",
+      "price_note": "in=$0.045 out=$0.15",
+      "speed": "ok (16.2s/resume)",
+      "note": "40% failure rate excludes it"
+    },
+    {
+      "rank": null,
+      "model": "Mercury 2",
+      "avg_score": null,
+      "time_5_resumes": null,
+      "avg_skills": 43,
+      "tokens_5_resumes": null,
+      "reliability": "1/2 tested",
+      "price_blended_per_M": "$0.38",
+      "price_note": "in=$0.25 out=$0.75",
+      "speed": "fast (2.4s!)"
+    },
+    {
+      "rank": null,
+      "model": "Tencent Hy3 Preview",
+      "avg_score": "FAIL",
+      "note": "Reasoning model - output in reasoning field, needs custom extraction. Works but expensive (12k tokens/resume)"
+    },
+    {
+      "rank": null,
+      "model": "Step 3.5 Flash",
+      "avg_score": "ERROR 405",
+      "note": "Provider returns 405 error on OpenRouter"
+    },
+    {
+      "rank": null,
+      "model": "Qwen3.5 9B",
+      "avg_score": "FAIL",
+      "note": "Reasoning model on OR, content always null"
+    },
+    {
+      "rank": null,
+      "model": "Qwen3.5 4B / Non-reasoning",
+      "avg_score": "NOT AVAILABLE",
+      "note": "Not on OpenRouter"
+    },
+    {
+      "rank": null,
+      "model": "Sarvam 30B",
+      "avg_score": "NOT AVAILABLE",
+      "note": "Not on OpenRouter"
+    },
+    {
+      "rank": null,
+      "model": "Qwen 3.6 35B A3B",
+      "avg_score": "FAIL",
+      "time_5_resumes": 192.3,
+      "avg_skills": 0,
+      "tokens_5_resumes": 26667,
+      "reliability": "0/5",
+      "price_blended_per_M": "$0.35",
+      "price_note": "in=$0.14 out=$1.00",
+      "speed": "slow (~38s/resume)",
+      "note": "Reasoning model - output in reasoning field, needs custom extraction"
+    },
+    {
+      "rank": null,
+      "model": "Qwen 3.6 27B",
+      "avg_score": "FAIL",
+      "time_5_resumes": 197.2,
+      "avg_skills": 0,
+      "tokens_5_resumes": 26667,
+      "reliability": "1/5",
+      "price_blended_per_M": "$0.82",
+      "price_note": "in=$0.289 out=$2.400",
+      "speed": "slow (~39s/resume)",
+      "note": "Reasoning model \u2014 output in reasoning field. 4/5 JSON parse failures."
+    },
+    {
+      "rank": null,
+      "model": "Aion 1.0 Mini",
+      "avg_score": "FAIL",
+      "time_5_resumes": null,
+      "tokens_5_resumes": null,
+      "reliability": "1/3",
+      "price_blended_per_M": "$0.88",
+      "note": "Reasoning model. 300s+/resume, 2/3 JSON parse failures. Too slow to be practical."
+    }
+  ],
+  "category_winners": {
+    "highest_score": "Seed 2.0 Lite (93.6%)",
+    "fastest_5_resumes": "Nova 2 Lite (24.2s \u2014 4.8s/resume!)",
+    "fastest_reliable": "Mistral Small 4 (34.4s \u2014 6.9s/resume)",
+    "most_skills": "Mistral Small 4 (44.8 avg)",
+    "best_score_speed_ratio": "MiMo-V2-Flash (91.2% at 7.6s/resume)",
+    "cheapest": "gpt-oss-120b ($0.07/M blended) and Trinity Mini ($0.07/M)",
+    "most_tokens_efficient": "Llama 4 Maverick (9,821 total \u2014 ~1,964/resume)"
+  },
+  "best_for_each_use_case": {
+    "production_batch_processing": "MiMo-V2-Flash \u2014 91.2% at 7.6s, reliable, cheap",
+    "maximum_quality": "Seed 2.0 Lite \u2014 93.6% but very slow (120s/resume), expensive output",
+    "ultra_fast_high_volume": "Nova 2 Lite \u2014 86.8% at 4.8s/resume, but $0.85/M blended",
+    "fast_balanced": "Mistral Small 4 \u2014 90.8% at 6.9s/resume, extracts most skills",
+    "budget": "gpt-oss-120b \u2014 90.8% at $0.07/M, but 38s/resume",
+    "quantity_of_skills_extracted": "Mistral Small 4 (44.8 avg) or Nova 2 Lite (21.8 avg at 4.8s)"
+  },
+  "scoring_note": "All scored models use SAME scoring: schema(20) + title(10) + experience(15+5) + education(10) + certs(10) + projects(10) + skills_match(10) + bullets(5) + domain(5) = 100. Exception: Codestral 2508 & Phi-4 may shift 1-3% if re-scored uniformly."
+}

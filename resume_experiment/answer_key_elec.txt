@@ -1,0 +1,46 @@
+ANSWER_KEY = {
+    "Holloway_ElecWA25": {
+        "title": "Journeyman Electrician",
+        "name": "Marcus D. Holloway",
+        "location": "Tacoma, WA 98405",
+        "email": "m.holloway.electric@gmail.com",
+        "phone": "(253) 774-9031",
+        "experience_count": 3,
+        "expected_companies": [
+            "Cascade Power Solutions, LLC",
+            "Pacific Northwest Electrical Contractors",
+            "IBEW Local 76 Apprenticeship Program",
+        ],
+        "education_count": 2,
+        "expected_degrees": [
+            "A.A.S. Electrical Technology",
+            "High School Diploma",
+        ],
+        "certifications_count": 4,
+        "expected_certifications": [
+            "Washington State Journeyman Electrician License",
+            "OSHA 30-Hour Construction Safety Certification",
+            "NFPA 70E Electrical Safety in the Workplace",
+            "CPR/First Aid Certified",
+        ],
+        "projects_count": 2,
+        "expected_projects": [
+            "Lakewood Regional Medical Center — Emergency Generator Upgrade",
+            "Tacoma Gateway Retail Plaza — Full Electrical Buildout",
+        ],
+        "expected_skills": [
+            "NEC", "OSHA", "NFPA 72", "WAC 296-46B",
+            "conduit bending", "three-phase", "480V", "motor controls",
+            "VFDs", "transfer switches", "fire alarm", "low-voltage",
+            "Megger", "thermal imaging", "AutoCAD", "Bluebeam Revu",
+            "Microsoft Excel", "ServiceTitan",
+        ],
+        "total_bullets_expected": 18,  # approximate across all jobs
+        "domain": "Skilled Trades / Construction",
+        "affiliations_count": 2,
+        "expected_affiliations": [
+            "IBEW Local 76",
+            "NECA — Apprentice Alumni Network",
+        ],
+    }
+}

@@ -1,0 +1,386 @@
+{
+  "test_name": "Qwen 3.7+ / 3.5 Resume Writing Test",
+  "test_time": "2026-06-09 17:39:26",
+  "models": [
+    {
+      "model": "Qwen 3.5 397B A17B",
+      "model_id": "qwen/qwen3.5-397b-a17b",
+      "price_blended": 2.8,
+      "runs": [
+        {
+          "run": 1,
+          "ok": true,
+          "disqualified": false,
+          "score": 100,
+          "band": "Production-ready",
+          "gates": {
+            "disqualified": false,
+            "critical_fails": [],
+            "non_critical_fails": [],
+            "passes": [
+              [
+                "G1",
+                "PASS"
+              ],
+              [
+                "G2",
+                "PASS"
+              ],
+              [
+                "G3",
+                "PASS"
+              ],
+              [
+                "G4",
+                "PASS"
+              ],
+              [
+                "G5",
+                "PASS"
+              ],
+              [
+                "G6",
+                "PASS (386 words)"
+              ],
+              [
+                "G7",
+                "PASS"
+              ],
+              [
+                "G8",
+                "PASS"
+              ],
+              [
+                "G9",
+                "PASS"
+              ],
+              [
+                "G10",
+                "PASS"
+              ]
+            ],
+            "gates_passed": 10,
+            "critical_count": 0,
+            "non_critical_count": 0
+          },
+          "details": {
+            "fidelity": {
+              "raw": 10,
+              "weighted": 35.0
+            },
+            "alignment": {
+              "raw": 10,
+              "weighted": 20.0,
+              "theme_hits": 8
+            },
+            "bullets": {
+              "raw": 8,
+              "weighted": 8.0,
+              "count": 16
+            },
+            "metrics": {
+              "raw": 10,
+              "weighted": 10.0
+            },
+            "targeting": {
+              "raw": 5,
+              "weighted": 5.0
+            },
+            "skills": {
+              "raw": 10,
+              "weighted": 5.0
+            },
+            "ats_structure": {
+              "raw": 10,
+              "weighted": 5.0
+            },
+            "brevity": {
+              "raw": 10,
+              "weighted": 5.0,
+              "words": 386
+            },
+            "gsi": {
+              "raw": 8,
+              "weighted": 8.0,
+              "inferred": [
+                "governance",
+                "compliance"
+              ],
+              "unsupported": []
+            },
+            "total": 100,
+            "band": "Production-ready"
+          },
+          "latency": 100.81,
+          "tokens": 6464,
+          "cost": 0.018099
+        },
+        {
+          "run": 2,
+          "ok": true,
+          "disqualified": false,
+          "score": 98.0,
+          "band": "Production-ready",
+          "gates": {
+            "disqualified": false,
+            "critical_fails": [],
+            "non_critical_fails": [],
+            "passes": [
+              [
+                "G1",
+                "PASS"
+              ],
+              [
+                "G2",
+                "PASS"
+              ],
+              [
+                "G3",
+                "PASS"
+              ],
+              [
+                "G4",
+                "PASS"
+              ],
+              [
+                "G5",
+                "PASS"
+              ],
+              [
+                "G6",
+                "PASS (436 words)"
+              ],
+              [
+                "G7",
+                "PASS"
+              ],
+              [
+                "G8",
+                "PASS"
+              ],
+              [
+                "G9",
+                "PASS"
+              ],
+              [
+                "G10",
+                "PASS"
+              ]
+            ],
+            "gates_passed": 10,
+            "critical_count": 0,
+            "non_critical_count": 0
+          },
+          "details": {
+            "fidelity": {
+              "raw": 10,
+              "weighted": 35.0
+            },
+            "alignment": {
+              "raw": 10,
+              "weighted": 20.0,
+              "theme_hits": 8
+            },
+            "bullets": {
+              "raw": 5,
+              "weighted": 5.0,
+              "count": 19
+            },
+            "metrics": {
+              "raw": 10,
+              "weighted": 10.0
+            },
+            "targeting": {
+              "raw": 5,
+              "weighted": 5.0
+            },
+            "skills": {
+              "raw": 10,
+              "weighted": 5.0
+            },
+            "ats_structure": {
+              "raw": 10,
+              "weighted": 5.0
+            },
+            "brevity": {
+              "raw": 10,
+              "weighted": 5.0,
+              "words": 436
+            },
+            "gsi": {
+              "raw": 8,
+              "weighted": 8.0,
+              "inferred": [
+                "governance"
+              ],
+              "unsupported": []
+            },
+            "total": 98.0,
+            "band": "Production-ready"
+          },
+          "latency": 76.28,
+          "tokens": 5101,
+          "cost": 0.014283
+        },
+        {
+          "run": 3,
+          "ok": true,
+          "disqualified": false,
+          "score": 94.0,
+          "band": "Production-ready",
+          "gates": {
+            "disqualified": false,
+            "critical_fails": [],
+            "non_critical_fails": [],
+            "passes": [
+              [
+                "G1",
+                "PASS"
+              ],
+              [
+                "G2",
+                "PASS"
+              ],
+              [
+                "G3",
+                "PASS"
+              ],
+              [
+                "G4",
+                "PASS"
+              ],
+              [
+                "G5",
+                "PASS"
+              ],
+              [
+                "G6",
+                "PASS (374 words)"
+              ],
+              [
+                "G7",
+                "PASS"
+              ],
+              [
+                "G8",
+                "PASS"
+              ],
+              [
+                "G9",
+                "PASS"
+              ],
+              [
+                "G10",
+                "PASS"
+              ]
+            ],
+            "gates_passed": 10,
+            "critical_count": 0,
+            "non_critical_count": 0
+          },
+          "details": {
+            "fidelity": {
+              "raw": 10,
+              "weighted": 35.0
+            },
+            "alignment": {
+              "raw": 8,
+              "weighted": 16.0,
+              "theme_hits": 7
+            },
+            "bullets": {
+              "raw": 8,
+              "weighted": 8.0,
+              "count": 16
+            },
+            "metrics": {
+              "raw": 10,
+              "weighted": 10.0
+            },
+            "targeting": {
+              "raw": 5,
+              "weighted": 5.0
+            },
+            "skills": {
+              "raw": 10,
+              "weighted": 5.0
+            },
+            "ats_structure": {
+              "raw": 10,
+              "weighted": 5.0
+            },
+            "brevity": {
+              "raw": 8,
+              "weighted": 4.0,
+              "words": 374
+            },
+            "gsi": {
+              "raw": 6,
+              "weighted": 6.0,
+              "inferred": [
+                "compliance"
+              ],
+              "unsupported": []
+            },
+            "total": 94.0,
+            "band": "Production-ready"
+          },
+          "latency": 74.16,
+          "tokens": 5001,
+          "cost": 0.014003
+        }
+      ],
+      "summary": {
+        "avg_score": 97.3,
+        "best_score": 100,
+        "variance": 6.22,
+        "pass_rate": 1.0,
+        "dq_rate": 0.0,
+        "fail_rate": 0.0,
+        "avg_fidelity": 35.0,
+        "avg_alignment": 18.7,
+        "scored_count": 3,
+        "dq_count": 0,
+        "fail_count": 0
+      }
+    },
+    {
+      "model": "Qwen 3.7 Plus",
+      "model_id": "qwen/qwen3.7-plus",
+      "price_blended": 4.375,
+      "runs": [
+        {
+          "run": 1,
+          "ok": false,
+          "error": "429 Client Error: Too Many Requests for url: https://openrouter.ai/api/v1/chat/completions",
+          "latency": 0.43
+        },
+        {
+          "run": 2,
+          "ok": false,
+          "error": "429 Client Error: Too Many Requests for url: https://openrouter.ai/api/v1/chat/completions",
+          "latency": 0.65
+        },
+        {
+          "run": 3,
+          "ok": false,
+          "error": "429 Client Error: Too Many Requests for url: https://openrouter.ai/api/v1/chat/completions",
+          "latency": 0.35
+        }
+      ],
+      "summary": {
+        "avg_score": 0,
+        "best_score": 0,
+        "variance": 0,
+        "pass_rate": 0.0,
+        "dq_rate": 0.0,
+        "fail_rate": 1.0,
+        "avg_fidelity": 0,
+        "avg_alignment": 0,
+        "scored_count": 0,
+        "dq_count": 0,
+        "fail_count": 3
+      }
+    }
+  ]
+}

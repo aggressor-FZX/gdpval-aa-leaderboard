@@ -1,0 +1,73 @@
+{
+  "batch": "2 — 5 new models",
+  "date": "2026-06-07",
+  "models_tested": 5,
+  "resumes_tested": 5,
+  "scoring": "against ground truth answer key",
+  "results": {
+    "Trinity Mini": {
+      "model_id": "arcee-ai/trinity-mini",
+      "price_per_1M_input": "$0.045",
+      "price_per_1M_output": "$0.15",
+      "entries": {
+        "Calderon_DataMAR25": {"score": 79, "tokens": 3776, "time": 13.9, "skills": 5, "jobs": "3/4", "edu": "3/3", "certs": "3/3"},
+        "Calderon_CyberResearch": {"score": 0, "status": "INVALID JSON - truncated output"},
+        "Calderon_Boeing": {"score": 89, "tokens": 3556, "time": 14.1, "skills": 41, "jobs": "5/5", "edu": "3/3", "certs": "3/3"},
+        "Calderon_Amazon": {"score": 82, "tokens": 2854, "time": 10.4, "skills": 23, "jobs": "3/3", "edu": "4/4", "certs": "3/3"},
+        "CalderonGOVResume": {"score": 0, "status": "ERROR: unknown"}
+      },
+      "avg_valid_score": 83.3,
+      "total_tokens": 10186,
+      "total_time": 38.4,
+      "reliability": "3/5 (40% failure rate)",
+      "verdict": "Unreliable — 2/5 calls failed. On resumes it parsed, decent but missed a job"
+    },
+    "Gemma 4 31B": {
+      "model_id": "google/gemma-4-31b-it",
+      "price_per_1M_input": "$0.12",
+      "price_per_1M_output": "$0.36",
+      "entries": {
+        "Calderon_DataMAR25": {"score": 93, "tokens": 2852, "time": 22.9, "skills": 27, "jobs": "4/4", "edu": "3/3", "certs": "3/3"}
+      },
+      "avg_valid_score": 93.0,
+      "total_tokens_estimate": "~14,260 (5 resumes)",
+      "total_time_estimate": "~115s",
+      "reliability": "Running — 1/1 so far",
+      "verdict": "Excellent quality — 93% on first resume. Same tier as MiMo/DeepSeek. Slightly slower per call (~23s)"
+    },
+    "Seed 2.0 Lite": {
+      "model_id": "bytedance-seed/seed-2.0-lite",
+      "price_per_1M_input": "$0.25",
+      "price_per_1M_output": "$2.00",
+      "entries": {},
+      "avg_valid_score": "Running — no results yet",
+      "verdict": "Most expensive output pricing — $2/M output. Pending results"
+    },
+    "Llama 4 Maverick": {
+      "model_id": "meta-llama/llama-4-maverick",
+      "price_per_1M_input": "$0.15",
+      "price_per_1M_output": "$0.60",
+      "entries": {},
+      "avg_valid_score": "Running — no results yet",
+      "verdict": "Mid-range pricing. Pending results"
+    },
+    "Nova 2 Lite": {
+      "model_id": "amazon/nova-2-lite-v1",
+      "price_per_1M_input": "$0.30",
+      "price_per_1M_output": "$2.50",
+      "entries": {},
+      "avg_valid_score": "Running — no results yet",
+      "verdict": "Most expensive — $2.50/M output. Pending results"
+    }
+  },
+  "key_finding": {
+    "gemma_4_31b": "Gemma 4 31B scored 93% — tied with MiMo-V2-Flash as best. But 2.6x slower (23s vs 9s per resume)",
+    "trinity_mini": "40% failure rate — unreliable for production",
+    "price_comparison": {
+      "cheapest_input": "Trinity Mini ($0.045/M)",
+      "cheapest_output": "Trinity Mini ($0.15/M)",
+      "most_expensive_output": "Nova 2 Lite ($2.50/M)",
+      "best_value": "Gemma 4 31B (93% score at $0.12/$0.36)"
+    }
+  }
+}

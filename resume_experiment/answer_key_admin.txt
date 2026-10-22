@@ -1,0 +1,43 @@
+ANSWER_KEY = {
+    "Whitfield_AdminNC25": {
+        "title": "Senior Administrative Coordinator",
+        "name": "Sandra R. Whitfield",
+        "location": "Raleigh, NC 27612",
+        "email": "sandra.whitfield.admin@outlook.com",
+        "phone": "(919) 503-4417",
+        "experience_count": 4,
+        "expected_companies": [
+            "WakeMed Health & Hospitals",
+            "Triangle United Way",
+            "Cargill Dermatology Associates",
+            "NC State University — Office of Undergraduate Admissions",
+        ],
+        "education_count": 2,
+        "expected_degrees": [
+            "B.A. Communication Studies",
+            "A.A. General Studies",
+        ],
+        "certifications_count": 3,
+        "expected_certifications": [
+            "Certified Administrative Professional (CAP)",
+            "Notary Public, State of North Carolina",
+            "HIPAA Privacy & Security Compliance Training",
+        ],
+        "projects_count": 0,
+        "expected_skills": [
+            "Microsoft Office Suite", "Word", "Excel", "PowerPoint", "Outlook",
+            "SharePoint", "Zoom", "Teams", "DocuSign", "Concur",
+            "Raiser's Edge", "NextGen EHR", "Slate CRM", "Smartsheet", "Canva",
+            "calendar management", "travel coordination", "meeting facilitation",
+            "records management", "HIPAA", "budget tracking", "vendor negotiation",
+            "onboarding", "accounts payable", "data entry",
+        ],
+        "total_bullets_expected": 20,  # approximate across all jobs
+        "domain": "Administrative / Office Operations",
+        "volunteer_count": 2,
+        "expected_volunteer_orgs": [
+            "Raleigh Food Bank",
+            "Millbrook Neighborhood Association",
+        ],
+    }
+}

@@ -1,0 +1,119 @@
+{
+  "experiment_date": "2026-06-07T08:10:51",
+  "resume": "Calderon_DataMAR25.pdf.txt (4220 chars)",
+  "models_tested": 9,
+  "status": "partial_completion",
+  "per_model_results": {
+    "MiMo-V2-Flash": {
+      "aa_intelligence": null,
+      "score": "100.0%",
+      "tokens": 2899,
+      "time_sec": 8.61,
+      "output_chars": 6368,
+      "experience_count": 4,
+      "education_count": 3,
+      "skills_count": 50,
+      "certifications_count": 3,
+      "projects_count": 4,
+      "keys": ["title", "title_confidence", "skills", "skill_count", "experience", "education", "projects", "certifications", "domain", "overall_confidence"],
+      "cost_1m_tokens_blended": null,
+      "verdict": "Perfect schema compliance, fast, cheap"
+    },
+    "MiMo-V2.5": {
+      "aa_intelligence": 49,
+      "score": "100.0%",
+      "tokens": 2756,
+      "time_sec": 13.58,
+      "output_chars": 5911,
+      "experience_count": 4,
+      "education_count": 3,
+      "skills_count": 27,
+      "certifications_count": 3,
+      "projects_count": 4,
+      "keys": ["title", "title_confidence", "skills", "skill_count", "experience", "education", "projects", "certifications", "domain", "overall_confidence"],
+      "cost_1m_tokens_blended": 0.175,
+      "verdict": "Perfect schema, slightly slower than Flash, more expensive"
+    },
+    "gpt-oss-120b": {
+      "aa_intelligence": 33.3,
+      "score": "100.0%",
+      "tokens": 4698,
+      "time_sec": 168.0,
+      "output_chars": 6182,
+      "experience_count": 4,
+      "education_count": 3,
+      "skills_count": 59,
+      "certifications_count": 3,
+      "projects_count": 4,
+      "keys": ["title", "title_confidence", "skills", "skill_count", "experience", "education", "projects", "certifications", "domain", "overall_confidence"],
+      "cost_1m_tokens_blended": 0.262,
+      "verdict": "Very slow (168s!) but perfect schema"
+    },
+    "Qwen3.5 9B (reasoning)": {
+      "aa_intelligence": 32.4,
+      "score": "FAIL",
+      "tokens": null,
+      "time_sec": null,
+      "reason": "Reasoning model - outputs reasoning tokens, never produces JSON content. Will need non-reasoning variant or prompt changes.",
+      "cost_1m_tokens_blended": 0.113,
+      "verdict": "Not suitable for this task as deployed on OpenRouter"
+    }
+  },
+  "availability_summary": {
+    "Qwen3.5 9B (Reasoning)": {
+      "aa_name": "Qwen3.5 9B (Reasoning)",
+      "aa_intel": 32.4,
+      "or_id": "qwen/qwen3.5-9b",
+      "status": "Available on OR but reasoning-only → content goes to 'reasoning' field"
+    },
+    "Qwen3.5 9B (Non-reasoning)": {
+      "aa_name": "Qwen3.5 9B (Non-reasoning)",
+      "aa_intel": 27.3,
+      "or_id": "NOT FOUND",
+      "status": "Listed on AA with $0 pricing, not on OpenRouter"
+    },
+    "Qwen3.5 4B (Reasoning)": {
+      "aa_name": "Qwen3.5 4B (Reasoning)",
+      "aa_intel": 27.1,
+      "or_id": "NOT FOUND",
+      "status": "Not available on OpenRouter at all"
+    },
+    "Qwen3.5 4B (Non-reasoning)": {
+      "aa_name": "Qwen3.5 4B (Non-reasoning)",
+      "aa_intel": 22.6,
+      "or_id": "NOT FOUND",
+      "status": "Not available on OpenRouter at all"
+    },
+    "Sarvam 30B (high)": {
+      "aa_name": "Sarvam 30B (high)",
+      "aa_intel": 12.3,
+      "or_id": "NOT FOUND",
+      "status": "Not available on OpenRouter at all"
+    },
+    "gpt-oss-120b (high)": {
+      "aa_name": "gpt-oss-120b (high)",
+      "aa_intel": 33.3,
+      "or_id": "openai/gpt-oss-120b",
+      "status": "Same OR ID as (low), no separate reasoning_effort param support"
+    },
+    "gpt-oss-120b (low)": {
+      "aa_name": "gpt-oss-120b (low)",
+      "aa_intel": 24.5,
+      "or_id": "openai/gpt-oss-120b",
+      "status": "Same OR ID as (high)"
+    },
+    "Nemotron 3 Nano Omni 30B A3B Reasoning": {
+      "aa_name": "Nemotron 3 Nano Omni 30B A3B Reasoning",
+      "aa_intel": 21.4,
+      "or_id": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+      "status": "Only free tier available on OR"
+    }
+  },
+  "verdict": {
+    "best_overall": "MiMo-V2-Flash — 100% schema match, 8.6s, cheap",
+    "best_schema_compliance": "MiMo-V2-Flash, MiMo-V2.5, gpt-oss-120b — all 100%",
+    "fastest": "MiMo-V2-Flash (8.6s) vs MiMo-V2.5 (13.6s) vs gpt-oss-120b (168s)",
+    "cheapest_per_resume": "gpt-oss-120b (~$0.00018/resume) but 168s latency. MiMo-V2-Flash (~$0.0003/resume) at 8.6s is better value",
+    "conclusion": "MiMo-V2-Flash is the winner. Qwen3.5 9B/4B and Sarvam 30B cannot be tested on OpenRouter in their free/non-reasoning forms."
+  }
+}

@@ -1,0 +1,248 @@
+{
+  "test_time": "2026-06-08 20:59:18",
+  "results": [
+    {
+      "ok": true,
+      "content": "JEFF CALDERON\nData Scientist | ML Engineer | GenAI\nCogito Metric LLC \u2014 C2C Available\n916.712.8396 | jeff.d.calderon@gmail.com | Marysville, WA | U.S. Citizen\n\nPROFESSIONAL SUMMARY\nData scientist and ML engineer with 10+ years in statistical modeling, NLP, and production AI. Proven expertise developing and optimizing GenAI systems\u2014including RAG pipelines, LLM fine-tuning, and multi-agent orchestration\u2014on cloud infrastructure. Cleared professional (Security+) with direct Boeing Defense capstone experience delivering scalable MLOps on H100/A100 GPU clusters. Seeking to leverage deep learning, data engineering, and generative AI skills within BDS.\n\nTECHNICAL SKILLS\nLanguages & Data Engineering: Python, SQL, Hadoop/HDFS, Spark, Airflow\nDeep Learning & GenAI: PyTorch, TensorFlow, Scikit-learn, Hugging Face, LangChain, LangGraph, RAG, LLM Fine-Tuning, Prompt Engineering, Multi-Agent Orchestration\nVector DBs & Cloud: Pinecone, AWS, Docker, Kubernetes, Linux\nMethods & Security: Monte Carlo Simulation, Unsupervised ML, NLP, Security+, AI Ethics & Governance\n\nPROFESSIONAL EXPERIENCE\n\nData Analyst Intern \u2014 Washington State Data Exchange for Public Safety (04/2025\u2013Present)\n- Engineered data pipelines integrating public safety datasets to support analytics and reporting workflows.\n- Applied statistical modeling and Python-based analysis to identify patterns and drive data-informed decisions.\n\nOperations Manager \u2014 NOAA (12/2019\u201305/2023)\n- Developed Python statistical models and automated reporting workflows, reducing reporting overhead by 40%.\n- Collaborated with cross-functional teams to translate analytical findings into operational improvements.\n- Implemented data engineering processes using SQL and Python for large-scale environmental data processing.\n\nMarine Data Analyst \u2014 NOAA (12/2016\u201305/2019)\n- Processed and analyzed 10+ TB of marine data using unsupervised ML and Python, extracting actionable insights from complex datasets.\n- Automated data ingestion and transformation pipelines, eliminating 30 hours/week of manual effort.\n- Leveraged Hadoop/HDFS and SQL for scalable data engineering across distributed systems.\n\nResearch Physicist \u2014 U.S. Naval Research Laboratory (01/2014\u201306/2016)\n- Designed and executed Monte Carlo simulations supporting classified federal R&D programs valued at $500K.\n- Applied advanced statistical methods and computational modeling to defense-related research initiatives.\n- Operated within strict security and governance protocols aligned with federal compliance standards.\n\nFaculty Assistant Researcher \u2014 UMD/CERN (01/2013\u201304/2015)\n- Built distributed data processing workflows using Hadoop on the LHC computing grid for high-energy physics analysis.\n- Co-authored peer-reviewed publication in J. Instrumentation (2016) based on research findings.\n\nPROJECTS\n\nBoeing Defense Capstone (08/2025\u201305/2026)\n- Developing and fine-tuning deep learning models on 263K+ image datasets using PyTorch and TensorFlow on H100/A100 GPU clusters.\n- Implementing MLOps pipelines with Docker and Kubernetes for model training, evaluation, and deployment at scale.\n- Collaborating with Boeing Defense stakeholders to deliver AI-driven solutions within BDS operational constraints.\n\nCogito Metric NLP Platform (2024\u2013Present)\n- Architected a production RAG pipeline using LangChain, Pinecone, and Hugging Face models with REST APIs deployed on AWS.\n- Implemented LLM fine-tuning and prompt engineering strategies to optimize retrieval accuracy and response quality.\n- Designed multi-agent orchestration workflows using LangGraph for complex reasoning tasks.\n\nEDUCATION & CERTIFICATIONS\nB.S. Data Analytics \u2014 Washington State University (Expected 05/2026, GPA 4.0)\nB.S. Physics \u2014 University of Maryland (12/2015)\nA.A.S. Computer Science \u2014 Everett Community College (GPA 4.0)\nCompTIA Network Security+ | Cybersecurity Analyst | Data Analytics Certificate, WSU",
+      "word_count": 504,
+      "latency_s": 17.04,
+      "tokens_total": 2378,
+      "tokens_prompt": 1317,
+      "tokens_completion": 1061,
+      "model_used": "z-ai/glm-5.1-20260406",
+      "gates": {
+        "disqualified": false,
+        "critical_fails": [],
+        "non_critical_fails": [
+          [
+            "G10",
+            "Table markers"
+          ]
+        ],
+        "passes": [
+          [
+            "G1",
+            "PASS"
+          ],
+          [
+            "G2",
+            "PASS"
+          ],
+          [
+            "G3",
+            "PASS"
+          ],
+          [
+            "G4",
+            "PASS"
+          ],
+          [
+            "G5",
+            "PASS"
+          ],
+          [
+            "G6",
+            "PASS (504 words)"
+          ],
+          [
+            "G7",
+            "PASS"
+          ],
+          [
+            "G8",
+            "PASS"
+          ],
+          [
+            "G9",
+            "PASS"
+          ]
+        ],
+        "gates_passed": 9,
+        "critical_count": 0,
+        "non_critical_count": 1
+      },
+      "score": 100,
+      "band": "Production-ready",
+      "details": {
+        "fidelity": {
+          "raw": 10,
+          "weighted": 35.0
+        },
+        "alignment": {
+          "raw": 10,
+          "weighted": 20.0,
+          "theme_hits": 8
+        },
+        "bullets": {
+          "raw": 8,
+          "weighted": 8.0,
+          "count": 19
+        },
+        "metrics": {
+          "raw": 10,
+          "weighted": 10.0
+        },
+        "targeting": {
+          "raw": 10,
+          "weighted": 10.0
+        },
+        "skills": {
+          "raw": 10,
+          "weighted": 5.0
+        },
+        "ats_structure": {
+          "raw": 10,
+          "weighted": 5.0
+        },
+        "brevity": {
+          "raw": 10,
+          "weighted": 5.0,
+          "words": 504
+        },
+        "gsi": {
+          "raw": 4,
+          "weighted": 4.0,
+          "inferred": [
+            "governance",
+            "compliance"
+          ],
+          "unsupported": [
+            "airflow",
+            "spark"
+          ]
+        },
+        "total": 100,
+        "band": "Production-ready"
+      },
+      "config": "Fusion-A: GLM 5.1 judge + KatCoder/MiMo/DeepSeek panel",
+      "analysis_models": [
+        "kwaipilot/kat-coder-pro-v2",
+        "xiaomi/mimo-v2.5-pro",
+        "deepseek/deepseek-v4-pro"
+      ],
+      "judge_model": "z-ai/glm-5.1"
+    },
+    {
+      "ok": true,
+      "content": "JEFF CALDERON\nCogito Metric LLC | cogitometric.ai\nMarysville, WA 98270 | 916.712.8396 | jeff.d.calderon@gmail.com\nU.S. Citizen | C2C Available\n\nDATA SCIENTIST & ML ENGINEER\nGenAI \u00b7 NLP \u00b7 Deep Learning \u00b7 MLOps \u00b7 10+ Years in Production AI\n\nPROFESSIONAL EXPERIENCE\n\nCogito Metric LLC \u2014 Marysville, WA\nData Scientist & ML Engineer (Founder) | 2024 \u2013 Present\n- Architected an end-to-end GenAI/NLP platform integrating LangChain, LangGraph, and Hugging Face for multi-agent orchestration and LLM fine-tuning on domain-specific corpora.\n- Built retrieval-augmented generation (RAG) pipelines with Pinecone vector database, delivering context-aware inference at scale.\n- Deployed containerized REST APIs on AWS (Docker, EC2) serving production AI workloads; implemented MLOps practices for CI/CD and model versioning.\n- Engineered prompt strategies and fine-tuned open-source LLMs, reducing hallucination rates and improving response accuracy for downstream applications.\n- Collaborating with cross-functional stakeholders to translate requirements into scalable AI-driven solutions.\n\nWashington State Data Exchange for Public Safety \u2014 WA\nData Analyst Intern | Apr 2025 \u2013 Present\n- Develop Python-based analytical workflows and statistical models to derive actionable insights from public-safety datasets.\n- Apply SQL for complex data extraction and transformation across relational databases supporting multi-agency data sharing.\n- Contribute to data engineering pipelines using Hadoop/HDFS for large-scale batch processing and aggregation.\n\nNOAA (National Oceanic and Atmospheric Administration) \u2014 Various Locations\nOperations Manager | Dec 2019 \u2013 May 2023\n- Led data-driven operations optimization using Python statistical modeling; reduced reporting overhead by 40% through automated analytics dashboards.\n- Managed cross-functional teams bridging domain scientists and technical staff to deliver production data systems.\n- Oversaw data quality and governance protocols for environmental datasets supporting federal decision-making.\n\nMarine Data Analyst | Dec 2016 \u2013 May 2019\n- Processed and analyzed 10+ TB of marine sensor data using unsupervised machine learning (scikit-learn) to identify anomalous patterns and environmental trends.\n- Automated recurring data workflows with Python and SQL, eliminating 30+ hours of manual processing per week.\n- Engineered feature pipelines and statistical models on Hadoop/HDFS infrastructure for large-scale oceanographic datasets.\n\nU.S. Naval Research Laboratory \u2014 Washington, D.C.\nResearch Physicist | Jan 2014 \u2013 Jun 2016\n- Developed Monte Carlo simulation frameworks in Python for classified defense research programs, directly supporting $500K in federally funded R&D.\n- Built and validated high-fidelity physics-based ML models under security-constrained environments, adhering to strict governance and compliance standards.\n- Collaborated across interdisciplinary teams of physicists, engineers, and data scientists on advanced modeling initiatives.\n\nUniversity of Maryland / CERN \u2014 College Park, MD & Geneva, CH\nFaculty Assistant Researcher | Jan 2013 \u2013 Apr 2015\n- Processed petabyte-scale LHC experimental data on distributed Hadoop grid infrastructure, contributing to published findings in Journal of Instrumentation (2016).\n- Developed Python and SQL-based data reduction scripts for high-energy physics analysis on the CERN computing grid.\n\nPROJECTS\n\nBoeing Defense, Space & Security Capstone | Aug 2025 \u2013 May 2026\n- Training and evaluating deep learning models (PyTorch, TensorFlow) on 263,000+ image datasets using H100 and A100 GPU clusters.\n- Implementing containerized MLOps pipelines with Docker and Kubernetes for reproducible model training, validation, and deployment in defense-grade compute environments.\n- Fine-tuning vision models and applying data engineering practices for large-scale image preprocessing and augmentation.\n\nCogito Metric NLP Platform (Active Development) | 2024 \u2013 Present\n- Full-stack GenAI application integrating LangChain, LangGraph, Pinecone, and Hugging Face for RAG-powered natural language understanding.\n- Multi-agent orchestration framework enabling chained LLM reasoning across structured and unstructured data sources.\n- REST API layer on AWS supporting secure, low-latency inference for external client applications.\n\nEDUCATION & CERTIFICATIONS\n\nB.S. Data Analytics \u2014 Washington State University, May 2026 (GPA: 4.0)\nB.S. Physics \u2014 University of Maryland, Dec 2015\nA.A.S. Computer Science \u2014 Everett Community College (GPA: 4.0)\n\nCertifications: CompTIA Network Security+ \u00b7 Cybersecurity Analyst (CySA+) \u00b7 Data Analytics Certificate, WSU\n\nTECHNICAL SKILLS\nDeep Learning & GenAI: PyTorch, TensorFlow, Hugging Face, LangChain, LangGraph, RAG, Pinecone, LLM Fine-Tuning, Prompt Engineering, Multi-Agent Orchestration\nML & Statistics: Scikit-learn, Monte Carlo Simulation, Unsupervised Learning, Statistical Modeling, Feature Engineering\nData Engineering: Python, SQL, Hadoop/HDFS, Docker, Kubernetes, AWS (EC2, S3), MLOps, CI/CD\nSecurity & Compliance: Security+ (CompTIA), CySA+, Classified Research Environments, Governance-Aware AI Development",
+      "word_count": 678,
+      "latency_s": 56.06,
+      "tokens_total": 4199,
+      "tokens_prompt": 1445,
+      "tokens_completion": 2754,
+      "model_used": "deepseek/deepseek-v4-pro-20260423",
+      "gates": {
+        "disqualified": false,
+        "critical_fails": [],
+        "non_critical_fails": [
+          [
+            "G10",
+            "Table markers"
+          ]
+        ],
+        "passes": [
+          [
+            "G1",
+            "PASS"
+          ],
+          [
+            "G2",
+            "PASS"
+          ],
+          [
+            "G3",
+            "PASS"
+          ],
+          [
+            "G4",
+            "PASS"
+          ],
+          [
+            "G5",
+            "PASS"
+          ],
+          [
+            "G6",
+            "PASS (678 words)"
+          ],
+          [
+            "G7",
+            "PASS"
+          ],
+          [
+            "G8",
+            "PASS"
+          ],
+          [
+            "G9",
+            "PASS"
+          ]
+        ],
+        "gates_passed": 9,
+        "critical_count": 0,
+        "non_critical_count": 1
+      },
+      "score": 93.0,
+      "band": "Production-ready",
+      "details": {
+        "fidelity": {
+          "raw": 10,
+          "weighted": 35.0
+        },
+        "alignment": {
+          "raw": 8,
+          "weighted": 16.0,
+          "theme_hits": 7
+        },
+        "bullets": {
+          "raw": 5,
+          "weighted": 5.0,
+          "count": 25
+        },
+        "metrics": {
+          "raw": 10,
+          "weighted": 10.0
+        },
+        "targeting": {
+          "raw": 5,
+          "weighted": 5.0
+        },
+        "skills": {
+          "raw": 10,
+          "weighted": 5.0
+        },
+        "ats_structure": {
+          "raw": 10,
+          "weighted": 5.0
+        },
+        "brevity": {
+          "raw": 8,
+          "weighted": 4.0,
+          "words": 678
+        },
+        "gsi": {
+          "raw": 8,
+          "weighted": 8.0,
+          "inferred": [
+            "containerized",
+            "container",
+            "retrieval-augmented generation",
+            "vector database",
+            "governance",
+            "compliance"
+          ],
+          "unsupported": []
+        },
+        "total": 93.0,
+        "band": "Production-ready"
+      },
+      "config": "Fusion-B: DeepSeek judge + KatCoder/MiMo/GLM panel",
+      "analysis_models": [
+        "kwaipilot/kat-coder-pro-v2",
+        "xiaomi/mimo-v2.5-pro",
+        "z-ai/glm-5.1"
+      ],
+      "judge_model": "deepseek/deepseek-v4-pro"
+    }
+  ]
+}

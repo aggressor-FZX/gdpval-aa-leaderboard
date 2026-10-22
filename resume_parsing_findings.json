@@ -1,0 +1,52 @@
+{
+  "experiment_summary": {
+    "date": "2026-06-07",
+    "models_tested": 7,
+    "resumes": 5,
+    "note": "User requested 8 originals; 3 unavailable on OpenRouter, substituted"
+  },
+  "model_substitutions": {
+    "original_requested": ["MiMo-V2-Flash", "Qwen3.5 9B", "gpt-oss-120b (low)", "gpt-oss-120b (high)", "Nemotron 3 Nano Omni 30B A3B Reasoning", "Qwen3.5 4B", "Sarvam 30B (high)", "MiMo-V2.5"],
+    "actual_tested": ["MiMo-V2-Flash", "Qwen3 8B", "gpt-oss-120b", "Nemotron 3 Nano Omni 30B (free)", "MiMo-V2.5", "DeepSeek V4 Flash", "Mistral Small 4"],
+    "reasons": {
+      "Qwen3.5 9B → Qwen3 8B": "Qwen3.5 9B is reasoning-only model, content goes into 'reasoning' field not 'content'",
+      "gpt-oss-120b (low) and (high) merged": "Same model ID on OpenRouter",
+      "Qwen3.5 4B → Qwen3 8B": "Qwen3.5 4B not available on OpenRouter",
+      "Sarvam 30B → skipped": "Not available on OpenRouter",
+      "Nemotron only as free": "Only free tier available for Nemotron 3 Nano Omni",
+      "Added DeepSeek V4 Flash": "Cheap model from AA leaderboard",
+      "Added Mistral Small 4": "Budget model to round out experiment"
+    }
+  },
+  "results_so_far": {
+    "MiMo-V2-Flash": {
+      "success_rate": "5/5",
+      "avg_score": "100%",
+      "avg_tokens": 3000,
+      "avg_time": "9.5s",
+      "cost": "Free tier (N/A)",
+      "json_quality": "Matches schema perfectly with experience, education, skills, projects, certifications, classified_skills, domain, confidence",
+      "output_size_avg": 5300,
+      "note": "Best performer for exact schema compliance"
+    },
+    "gpt-oss-120b": {
+      "success_rate": "1/1 verified (test call)",
+      "json_valid": "Yes",
+      "key_mapping": "Uses 'name' instead of 'title', 'professional_experience' instead of 'experience', 'contact' as nested object instead of flat fields",
+      "schema_match": "Partial - different key names but valid JSON with complete data",
+      "cost": "$0.039/M input, $0.18/M output (very cheap)"
+    },
+    "Qwen3 8B": {
+      "success_rate": "1/1 verified (test call)",
+      "json_valid": "Yes",
+      "issues": "Outputs // comments before JSON block. Uses 'name' instead of 'title', 'professional_experience' instead of 'experience'",
+      "schema_match": "Partial",
+      "cost": "$0.05/M input, $0.40/M output"
+    }
+  },
+  "best_value_recommendation": {
+    "tight_schema": "MiMo-V2-Flash — cheapest model that outputs exact schema",
+    "budget_parsing": "gpt-oss-120b ($0.039/M input) — produces valid JSON with all fields, just different key names",
+    "note": "For production, use MiMo-V2-Flash with the exact JSON schema in the prompt and response_format: json_object. All models needed 3000-3400 tokens per resume at ~$0.0001-0.001 per resume"
+  }
+}

@@ -1,0 +1,334 @@
+[
+  {
+    "model": "Qwen 3.6 35B A3B",
+    "model_id": "qwen/qwen3.6-35b-a3b",
+    "resume": "Calderon_DataMAR25",
+    "ok": true,
+    "latency": 36.96,
+    "tokens": 5382,
+    "score": 0,
+    "details": {
+      "error": "unknown"
+    }
+  },
+  {
+    "model": "Qwen 3.6 35B A3B",
+    "model_id": "qwen/qwen3.6-35b-a3b",
+    "resume": "Calderon_CyberResearch",
+    "ok": true,
+    "latency": 29.59,
+    "tokens": 5698,
+    "score": 0,
+    "details": {
+      "error": "unknown"
+    }
+  },
+  {
+    "model": "Qwen 3.6 35B A3B",
+    "model_id": "qwen/qwen3.6-35b-a3b",
+    "resume": "Calderon_Boeing",
+    "ok": true,
+    "latency": 34.35,
+    "tokens": 5259,
+    "score": 0,
+    "details": {
+      "error": "unknown"
+    }
+  },
+  {
+    "model": "Qwen 3.6 35B A3B",
+    "model_id": "qwen/qwen3.6-35b-a3b",
+    "resume": "Calderon_Amazon",
+    "ok": true,
+    "latency": 35.72,
+    "tokens": 5114,
+    "score": 0,
+    "details": {
+      "error": "unknown"
+    }
+  },
+  {
+    "model": "Qwen 3.6 35B A3B",
+    "model_id": "qwen/qwen3.6-35b-a3b",
+    "resume": "CalderonGOVResume",
+    "ok": true,
+    "latency": 55.71,
+    "tokens": 5214,
+    "score": 0,
+    "details": {
+      "error": "JSON parse failed"
+    }
+  },
+  {
+    "model": "Qwen 3.6 35B A3B",
+    "model_id": "qwen/qwen3.6-35b-a3b",
+    "resume": "__SUMMARY__",
+    "avg_score": 0.0,
+    "total_tokens": 26667,
+    "total_time": 192.3,
+    "successes": 0,
+    "avg_skills": 0.0
+  },
+  {
+    "model": "Microsoft Phi-4",
+    "model_id": "microsoft/phi-4",
+    "resume": "Calderon_DataMAR25",
+    "ok": true,
+    "latency": 120.56,
+    "tokens": 9478,
+    "score": 0,
+    "details": {
+      "error": "JSON parse failed"
+    }
+  },
+  {
+    "model": "Microsoft Phi-4",
+    "model_id": "microsoft/phi-4",
+    "resume": "Calderon_CyberResearch",
+    "ok": true,
+    "latency": 20.76,
+    "tokens": 2972,
+    "score": 88,
+    "details": {
+      "schema_fields": 9,
+      "title_match": false,
+      "extracted_title": "data scientist and developer",
+      "exp_count": 6,
+      "exp_expected": 6,
+      "company_matches": "6/6",
+      "edu_count": 3,
+      "edu_expected": 3,
+      "cert_count": 3,
+      "cert_expected": 3,
+      "proj_count": 0,
+      "proj_expected": 0,
+      "skill_count": 21,
+      "domain_match": false,
+      "total_score": 88
+    }
+  },
+  {
+    "model": "Microsoft Phi-4",
+    "model_id": "microsoft/phi-4",
+    "resume": "Calderon_Boeing",
+    "ok": true,
+    "latency": 22.81,
+    "tokens": 2764,
+    "score": 99,
+    "details": {
+      "schema_fields": 10,
+      "title_match": true,
+      "exp_count": 5,
+      "exp_expected": 5,
+      "company_matches": "4/5",
+      "edu_count": 3,
+      "edu_expected": 3,
+      "cert_count": 3,
+      "cert_expected": 3,
+      "proj_count": 3,
+      "proj_expected": 3,
+      "skill_count": 27,
+      "domain_match": false,
+      "total_score": 99
+    }
+  },
+  {
+    "model": "Microsoft Phi-4",
+    "model_id": "microsoft/phi-4",
+    "resume": "Calderon_Amazon",
+    "ok": true,
+    "latency": 14.41,
+    "tokens": 1972,
+    "score": 88,
+    "details": {
+      "schema_fields": 10,
+      "title_match": false,
+      "extracted_title": "data scientist and developer",
+      "exp_count": 3,
+      "exp_expected": 3,
+      "company_matches": "3/3",
+      "edu_count": 4,
+      "edu_expected": 4,
+      "cert_count": 3,
+      "cert_expected": 3,
+      "proj_count": 0,
+      "proj_expected": 0,
+      "skill_count": 26,
+      "domain_match": false,
+      "total_score": 88
+    }
+  },
+  {
+    "model": "Microsoft Phi-4",
+    "model_id": "microsoft/phi-4",
+    "resume": "CalderonGOVResume",
+    "ok": true,
+    "latency": 16.74,
+    "tokens": 2229,
+    "score": 86,
+    "details": {
+      "schema_fields": 9,
+      "title_match": false,
+      "extracted_title": "data scientist and developer",
+      "exp_count": 4,
+      "exp_expected": 4,
+      "company_matches": "3/4",
+      "edu_count": 4,
+      "edu_expected": 4,
+      "cert_count": 2,
+      "cert_expected": 2,
+      "proj_count": 0,
+      "proj_expected": 0,
+      "skill_count": 18,
+      "domain_match": false,
+      "total_score": 86
+    }
+  },
+  {
+    "model": "Microsoft Phi-4",
+    "model_id": "microsoft/phi-4",
+    "resume": "__SUMMARY__",
+    "avg_score": 90.2,
+    "total_tokens": 19415,
+    "total_time": 195.3,
+    "successes": 4,
+    "avg_skills": 23.0
+  },
+  {
+    "model": "Mistral Codestral 2508",
+    "model_id": "mistralai/codestral-2508",
+    "resume": "Calderon_DataMAR25",
+    "ok": true,
+    "latency": 10.06,
+    "tokens": 3028,
+    "score": 99,
+    "details": {
+      "schema_fields": 10,
+      "title_match": true,
+      "exp_count": 4,
+      "exp_expected": 4,
+      "company_matches": "4/4",
+      "edu_count": 3,
+      "edu_expected": 3,
+      "cert_count": 3,
+      "cert_expected": 3,
+      "proj_count": 4,
+      "proj_expected": 4,
+      "skill_count": 38,
+      "domain_match": false,
+      "total_score": 99
+    }
+  },
+  {
+    "model": "Mistral Codestral 2508",
+    "model_id": "mistralai/codestral-2508",
+    "resume": "Calderon_CyberResearch",
+    "ok": true,
+    "latency": 8.96,
+    "tokens": 3216,
+    "score": 100,
+    "details": {
+      "schema_fields": 10,
+      "title_match": true,
+      "exp_count": 6,
+      "exp_expected": 6,
+      "company_matches": "6/6",
+      "edu_count": 3,
+      "edu_expected": 3,
+      "cert_count": 3,
+      "cert_expected": 3,
+      "proj_count": 0,
+      "proj_expected": 0,
+      "skill_count": 23,
+      "domain_match": false,
+      "total_score": 100
+    }
+  },
+  {
+    "model": "Mistral Codestral 2508",
+    "model_id": "mistralai/codestral-2508",
+    "resume": "Calderon_Boeing",
+    "ok": true,
+    "latency": 8.26,
+    "tokens": 2719,
+    "score": 99,
+    "details": {
+      "schema_fields": 10,
+      "title_match": true,
+      "exp_count": 5,
+      "exp_expected": 5,
+      "company_matches": "4/5",
+      "edu_count": 3,
+      "edu_expected": 3,
+      "cert_count": 3,
+      "cert_expected": 3,
+      "proj_count": 3,
+      "proj_expected": 3,
+      "skill_count": 22,
+      "domain_match": false,
+      "total_score": 99
+    }
+  },
+  {
+    "model": "Mistral Codestral 2508",
+    "model_id": "mistralai/codestral-2508",
+    "resume": "Calderon_Amazon",
+    "ok": true,
+    "latency": 6.57,
+    "tokens": 2129,
+    "score": 88,
+    "details": {
+      "schema_fields": 10,
+      "title_match": false,
+      "extracted_title": "data scientist and developer",
+      "exp_count": 3,
+      "exp_expected": 3,
+      "company_matches": "3/3",
+      "edu_count": 4,
+      "edu_expected": 4,
+      "cert_count": 3,
+      "cert_expected": 3,
+      "proj_count": 0,
+      "proj_expected": 0,
+      "skill_count": 23,
+      "domain_match": false,
+      "total_score": 88
+    }
+  },
+  {
+    "model": "Mistral Codestral 2508",
+    "model_id": "mistralai/codestral-2508",
+    "resume": "CalderonGOVResume",
+    "ok": true,
+    "latency": 8.14,
+    "tokens": 2294,
+    "score": 88,
+    "details": {
+      "schema_fields": 10,
+      "title_match": false,
+      "extracted_title": "data scientist and developer",
+      "exp_count": 4,
+      "exp_expected": 4,
+      "company_matches": "3/4",
+      "edu_count": 4,
+      "edu_expected": 4,
+      "cert_count": 2,
+      "cert_expected": 2,
+      "proj_count": 0,
+      "proj_expected": 0,
+      "skill_count": 18,
+      "domain_match": false,
+      "total_score": 88
+    }
+  },
+  {
+    "model": "Mistral Codestral 2508",
+    "model_id": "mistralai/codestral-2508",
+    "resume": "__SUMMARY__",
+    "avg_score": 94.8,
+    "total_tokens": 13386,
+    "total_time": 42.0,
+    "successes": 5,
+    "avg_skills": 24.8
+  }
+]
