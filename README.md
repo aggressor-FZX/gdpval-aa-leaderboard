@@ -2,6 +2,19 @@
 
 Comprehensive LLM scoring analysis combining **Artificial Analysis** (AA) benchmark data with **OpenRouter** real-world pricing and throughput telemetry.
 
+## Repository Layout
+
+| Path | Contents |
+|---|---|
+| `Model_Efficiency_Comparison.ipynb` | **Canonical analysis notebook** (efficiency rankings, provider value, workhorse & saturation-utility models) |
+| `benchmarks/` | Resume-writing / parsing benchmark harnesses (v2, v3, v4) |
+| `results/` | Benchmark result JSONs and provider value caches |
+| `scripts/` | Analysis & comparison utility scripts |
+| `archive/` | Superseded notebooks (`GDPval_AA_Leaderboard.ipynb`), old plots, PDF/HTML exports |
+| `LLM_comparisons/` | Separate nested repo: `llm_testing/` + `resume_writing/` workstreams (not tracked here) |
+| `plots/`, `eda_plots/` | Generated figures |
+| `report_export/` | Exported HTML report + provider CSV/summary |
+
 ## What This Does
 
 Scores 700+ LLMs across intelligence, speed, reliability, and cost using multiple scoring schemes:
@@ -58,7 +71,17 @@ OPENROUTER_API_KEY_1=your_key
 
 ## Usage
 
-Open `GDPval_AA_Leaderboard.ipynb` and run cells top-to-bottom. Sections 2.1b–2.3 rescue missing throughput data and cross-check both catalogs; sections 3.1–3.10 compute the efficiency analyses; section 4 compares scoring methods; the appendix holds the resume benchmarks.
+**Canonical notebook: `Model_Efficiency_Comparison.ipynb`** — open it and run cells top-to-bottom. Highlights:
+
+- **3.11 provider discovery**: default vs best-value endpoint per top-20 model (AA published speed vs OpenRouter endpoints telemetry, quality gates: uptime ≥ 95%, ctx ≥ 100k, no fp4/mxfp4 quant). Cached in `results/provider_value_by_model.json` (61 models).
+- **3.14 top-20 rerank**: true cost / real speed using the resolved provider cache
+- **3.15 workhorse ranking**: cheap + fast models ranked on $/task with speed premium, empirical benchmark columns attached
+- **3.16 saturation-utility ranking**: saturating intelligence & speed utilities (diminishing returns), dual rankings (measured-only vs expanded w/ imputation flags)
+- **Every figure is stamped** with a data-provenance note (source of intelligence, throughput, and price data for that plot)
+
+Sections 2.1b–2.3 rescue missing throughput data and cross-check both catalogs; §2–§3 cover the efficiency analyses; §4 compares scoring methods; §5 holds the OpenRouter stealth-routing test (spends live API credit); the appendix holds the resume benchmarks.
+
+> `GDPval_AA_Leaderboard.ipynb` and other superseded notebooks/exports are archived under `archive/`.
 
 ## Key Findings (2026-10)
 

@@ -19,3 +19,8 @@ Thumbs.db
 # Large binary artifacts (regenerable from the notebook)
 *.pdf
 __pycache__/LLM_comparisons/
+LLM_comparisons/
+
+# Scratch
+.verify_notebook.py
+.vscode/

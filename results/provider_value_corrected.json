@@ -1,0 +1,734 @@
+{
+  "model": "deepseek/deepseek-v4.1-flash",
+  "needle_max_tokens": 1024,
+  "ladder": [
+    {
+      "name": "Baidu",
+      "blend": 0.09397499999999999,
+      "in": 0.0537,
+      "out": 0.2148,
+      "quant": "fp8",
+      "ctx": 1048576,
+      "tps_listed": 106
+    },
+    {
+      "name": "Decart",
+      "blend": 0.1125,
+      "in": 0.09,
+      "out": 0.18,
+      "quant": "fp4",
+      "ctx": 1048576,
+      "tps_listed": 79
+    },
+    {
+      "name": "Sail Research",
+      "blend": 0.13,
+      "in": 0.09,
+      "out": 0.25,
+      "quant": "fp4",
+      "ctx": 1048576,
+      "tps_listed": 103
+    },
+    {
+      "name": "Sail Research",
+      "blend": 0.13,
+      "in": 0.09,
+      "out": 0.25,
+      "quant": "fp4",
+      "ctx": 1048576,
+      "tps_listed": 84
+    },
+    {
+      "name": "DeepInfra",
+      "blend": 0.16799999999999998,
+      "in": 0.112,
+      "out": 0.33599999999999997,
+      "quant": "fp8",
+      "ctx": 1048576,
+      "tps_listed": 54
+    },
+    {
+      "name": "Relace",
+      "blend": 0.1775,
+      "in": 0.07,
+      "out": 0.5,
+      "quant": "unknown",
+      "ctx": 1048576,
+      "tps_listed": 118
+    },
+    {
+      "name": "DeepInfra",
+      "blend": 0.21,
+      "in": 0.14,
+      "out": 0.42,
+      "quant": "fp8",
+      "ctx": 1048576,
+      "tps_listed": 81
+    },
+    {
+      "name": "AtlasCloud",
+      "blend": 0.23625000000000002,
+      "in": 0.135,
+      "out": 0.54,
+      "quant": "fp8",
+      "ctx": 1048576,
+      "tps_listed": 116
+    },
+    {
+      "name": "InferenceNet",
+      "blend": 0.256,
+      "in": 0.103,
+      "out": 0.7150000000000001,
+      "quant": "fp8",
+      "ctx": 1040000,
+      "tps_listed": 92
+    },
+    {
+      "name": "InferenceNet",
+      "blend": 0.256,
+      "in": 0.103,
+      "out": 0.7150000000000001,
+      "quant": "fp8",
+      "ctx": 1040000,
+      "tps_listed": 118
+    },
+    {
+      "name": "StreamLake",
+      "blend": 0.25725,
+      "in": 0.14700000000000002,
+      "out": 0.5880000000000001,
+      "quant": "fp8",
+      "ctx": 1024000,
+      "tps_listed": 70
+    },
+    {
+      "name": "OpenInference",
+      "blend": 0.265,
+      "in": 0.02,
+      "out": 1.0,
+      "quant": "fp4",
+      "ctx": 1048576,
+      "tps_listed": 73
+    },
+    {
+      "name": "CoreWeave",
+      "blend": 0.275,
+      "in": 0.15,
+      "out": 0.65,
+      "quant": "fp8",
+      "ctx": 1048576,
+      "tps_listed": 177
+    },
+    {
+      "name": "Reka",
+      "blend": 0.28875,
+      "in": 0.105,
+      "out": 0.84,
+      "quant": "unknown",
+      "ctx": 1048576,
+      "tps_listed": 107.5
+    },
+    {
+      "name": "DigitalOcean",
+      "blend": 0.28875,
+      "in": 0.165,
+      "out": 0.66,
+      "quant": "unknown",
+      "ctx": 1048576,
+      "tps_listed": 173
+    },
+    {
+      "name": "ModelRun",
+      "blend": 0.29500000000000004,
+      "in": 0.16999999999999998,
+      "out": 0.67,
+      "quant": "fp4",
+      "ctx": 1048576,
+      "tps_listed": 175
+    },
+    {
+      "name": "Wafer",
+      "blend": 0.30500000000000005,
+      "in": 0.19,
+      "out": 0.65,
+      "quant": "mxfp4",
+      "ctx": 1048576,
+      "tps_listed": 162
+    },
+    {
+      "name": "GMICloud",
+      "blend": 0.315,
+      "in": 0.18,
+      "out": 0.72,
+      "quant": "fp8",
+      "ctx": 1048575,
+      "tps_listed": 89
+    },
+    {
+      "name": "DeepInfra",
+      "blend": 0.315,
+      "in": 0.21,
+      "out": 0.63,
+      "quant": "fp8",
+      "ctx": 1048576,
+      "tps_listed": 58.5
+    },
+    {
+      "name": "Novita",
+      "blend": 0.34125,
+      "in": 0.195,
+      "out": 0.78,
+      "quant": "fp8",
+      "ctx": 1048576,
+      "tps_listed": 130
+    },
+    {
+      "name": "Fireworks",
+      "blend": 0.3675,
+      "in": 0.21,
+      "out": 0.84,
+      "quant": "unknown",
+      "ctx": 1048576,
+      "tps_listed": 173
+    },
+    {
+      "name": "Phala",
+      "blend": 0.3675,
+      "in": 0.21,
+      "out": 0.84,
+      "quant": "unknown",
+      "ctx": 1048576,
+      "tps_listed": 106
+    },
+    {
+      "name": "Morph",
+      "blend": 0.4815,
+      "in": 0.442,
+      "out": 0.6,
+      "quant": "fp8",
+      "ctx": 1048576,
+      "tps_listed": 214
+    },
+    {
+      "name": "Makora",
+      "blend": 0.4875,
+      "in": 0.26,
+      "out": 1.17,
+      "quant": "fp8",
+      "ctx": 1048576,
+      "tps_listed": 145
+    },
+    {
+      "name": "Crusoe",
+      "blend": 0.5175,
+      "in": 0.29,
+      "out": 1.2,
+      "quant": "fp8",
+      "ctx": 1048576,
+      "tps_listed": 132
+    },
+    {
+      "name": "Google",
+      "blend": 0.5249999999999999,
+      "in": 0.3,
+      "out": 1.2,
+      "quant": "unknown",
+      "ctx": 1048576,
+      "tps_listed": 33
+    },
+    {
+      "name": "Nebius",
+      "blend": 0.5249999999999999,
+      "in": 0.3,
+      "out": 1.2,
+      "quant": "fp8",
+      "ctx": 1048000,
+      "tps_listed": 145
+    },
+    {
+      "name": "PrimeIntellect",
+      "blend": 0.5249999999999999,
+      "in": 0.3,
+      "out": 1.2,
+      "quant": "unknown",
+      "ctx": 1048576,
+      "tps_listed": 157
+    },
+    {
+      "name": "Cohere",
+      "blend": 0.5249999999999999,
+      "in": 0.3,
+      "out": 1.2,
+      "quant": "unknown",
+      "ctx": 1048576,
+      "tps_listed": 197
+    },
+    {
+      "name": "BaseTen",
+      "blend": 0.5249999999999999,
+      "in": 0.3,
+      "out": 1.2,
+      "quant": "unknown",
+      "ctx": 1048576,
+      "tps_listed": 270
+    },
+    {
+      "name": "Together",
+      "blend": 0.5249999999999999,
+      "in": 0.3,
+      "out": 1.2,
+      "quant": "unknown",
+      "ctx": 1048576,
+      "tps_listed": 291
+    },
+    {
+      "name": "SiliconFlow",
+      "blend": 0.5249999999999999,
+      "in": 0.3,
+      "out": 1.2,
+      "quant": "fp8",
+      "ctx": 1048576,
+      "tps_listed": 76
+    },
+    {
+      "name": "Modal",
+      "blend": 0.5249999999999999,
+      "in": 0.3,
+      "out": 1.2,
+      "quant": "unknown",
+      "ctx": 1048576,
+      "tps_listed": 74.5
+    },
+    {
+      "name": "BaseTen",
+      "blend": 0.5249999999999999,
+      "in": 0.3,
+      "out": 1.2,
+      "quant": "unknown",
+      "ctx": 1048576,
+      "tps_listed": 292
+    },
+    {
+      "name": "Parasail",
+      "blend": 0.5249999999999999,
+      "in": 0.3,
+      "out": 1.2,
+      "quant": "fp8",
+      "ctx": 1048576,
+      "tps_listed": 173
+    },
+    {
+      "name": "Fireworks",
+      "blend": 0.5249999999999999,
+      "in": 0.3,
+      "out": 1.2,
+      "quant": "unknown",
+      "ctx": 1048576,
+      "tps_listed": 59
+    },
+    {
+      "name": "Venice",
+      "blend": 0.5249999999999999,
+      "in": 0.3,
+      "out": 1.2,
+      "quant": "fp8",
+      "ctx": 1000000,
+      "tps_listed": 265
+    },
+    {
+      "name": "Alibaba",
+      "blend": 0.5775,
+      "in": 0.33,
+      "out": 1.32,
+      "quant": "unknown",
+      "ctx": 1000000,
+      "tps_listed": 65
+    },
+    {
+      "name": "Fireworks",
+      "blend": 0.7875,
+      "in": 0.44999999999999996,
+      "out": 1.7999999999999998,
+      "quant": "unknown",
+      "ctx": 1048576,
+      "tps_listed": 218
+    },
+    {
+      "name": "BaseTen",
+      "blend": 1.0499999999999998,
+      "in": 0.6,
+      "out": 2.4,
+      "quant": "unknown",
+      "ctx": 1048576,
+      "tps_listed": 253
+    }
+  ],
+  "arms": [
+    {
+      "provider": "Baidu",
+      "census": {
+        "Baidu": 5
+      },
+      "checks": {
+        "B_trunc": true,
+        "C_32k": true,
+        "C_64k": true,
+        "D_tool": true
+      },
+      "passed": 4,
+      "tps_median": 178.65307328172526,
+      "latency_median": 3.318706512451172,
+      "reasoning_median": 132.0,
+      "cost": 0.001392,
+      "B": {
+        "finish": "stop",
+        "items": 500,
+        "max_item": 500,
+        "latency": 10.355189800262451,
+        "provider": "Baidu",
+        "completion_tokens": 2362,
+        "reasoning_tokens": 1363
+      },
+      "C": {
+        "32000": {
+          "found": true,
+          "finish": "stop",
+          "prompt_tokens": 32065,
+          "completion_tokens": 69,
+          "reasoning_tokens": 65,
+          "latency": 1.7294743061065674,
+          "provider": "Baidu",
+          "reply": "PINEAPPLE-7731"
+        },
+        "64000": {
+          "found": true,
+          "finish": "stop",
+          "prompt_tokens": 64065,
+          "completion_tokens": 117,
+          "reasoning_tokens": 111,
+          "latency": 4.303118705749512,
+          "provider": "Baidu",
+          "reply": "PINEAPPLE-7731"
+        }
+      },
+      "D": {
+        "valid": 3,
+        "of": 3
+      },
+      "errors": []
+    },
+    {
+      "provider": "Decart",
+      "census": {
+        "Decart": 5
+      },
+      "checks": {
+        "B_trunc": true,
+        "C_32k": true,
+        "C_64k": true,
+        "D_tool": false
+      },
+      "passed": 3,
+      "tps_median": 156.60994053120297,
+      "latency_median": 3.076626777648926,
+      "reasoning_median": 87.0,
+      "cost": 0.00943,
+      "B": {
+        "finish": "stop",
+        "items": 500,
+        "max_item": 500,
+        "latency": 12.005724668502808,
+        "provider": "Decart",
+        "completion_tokens": 2202,
+        "reasoning_tokens": 804
+      },
+      "C": {
+        "32000": {
+          "found": true,
+          "finish": "stop",
+          "prompt_tokens": 32065,
+          "completion_tokens": 62,
+          "reasoning_tokens": 53,
+          "latency": 1.676727056503296,
+          "provider": "Decart",
+          "reply": "PINEAPPLE-7731"
+        },
+        "64000": {
+          "found": true,
+          "finish": "stop",
+          "prompt_tokens": 64065,
+          "completion_tokens": 68,
+          "reasoning_tokens": 59,
+          "latency": 2.565141439437866,
+          "provider": "Decart",
+          "reply": "PINEAPPLE-7731"
+        }
+      },
+      "D": {
+        "valid": 0,
+        "of": 3
+      },
+      "errors": [
+        "D:RuntimeError",
+        "D:RuntimeError",
+        "D:RuntimeError"
+      ]
+    },
+    {
+      "provider": "Sail Research",
+      "census": {},
+      "checks": {
+        "B_trunc": false,
+        "C_32k": false,
+        "C_64k": false,
+        "D_tool": false
+      },
+      "passed": 0,
+      "tps_median": NaN,
+      "latency_median": NaN,
+      "reasoning_median": NaN,
+      "cost": 0.0,
+      "B": {
+        "error": "RuntimeError: HTTP 429: {\"error\":{\"message\":\"Provider returned error\",\"code\":429,\"metadata\":{\""
+      },
+      "C": {
+        "32000": {
+          "error": "RuntimeError: HTTP 429: {\"error\":{\"message\":\"Provider returned error\",\"code\":429,\"metadata\":{\""
+        },
+        "64000": {
+          "error": "RuntimeError: HTTP 429: {\"error\":{\"message\":\"Provider returned error\",\"code\":429,\"metadata\":{\""
+        }
+      },
+      "D": {
+        "valid": 0,
+        "of": 3
+      },
+      "errors": [
+        "A:RuntimeError:HTTP 429: {\"error\":{\"message\":\"Provider returned error\",\"cod",
+        "A:RuntimeError:HTTP 429: {\"error\":{\"message\":\"Provider returned error\",\"cod",
+        "A:RuntimeError:HTTP 429: {\"error\":{\"message\":\"Provider returned error\",\"cod",
+        "A:RuntimeError:HTTP 429: {\"error\":{\"message\":\"Provider returned error\",\"cod",
+        "A:RuntimeError:HTTP 429: {\"error\":{\"message\":\"Provider returned error\",\"cod",
+        "D:RuntimeError",
+        "D:RuntimeError",
+        "D:RuntimeError"
+      ]
+    },
+    {
+      "provider": "DeepInfra",
+      "census": {
+        "DeepInfra": 5
+      },
+      "checks": {
+        "B_trunc": true,
+        "C_32k": true,
+        "C_64k": true,
+        "D_tool": true
+      },
+      "passed": 4,
+      "tps_median": 163.63165783292067,
+      "latency_median": 3.1266672611236572,
+      "reasoning_median": 110.0,
+      "cost": 0.013124,
+      "B": {
+        "finish": "stop",
+        "items": 500,
+        "max_item": 500,
+        "latency": 6.404870271682739,
+        "provider": "DeepInfra",
+        "completion_tokens": 1115,
+        "reasoning_tokens": 114
+      },
+      "C": {
+        "32000": {
+          "found": true,
+          "finish": "stop",
+          "prompt_tokens": 32065,
+          "completion_tokens": 55,
+          "reasoning_tokens": 46,
+          "latency": 4.080671548843384,
+          "provider": "DeepInfra",
+          "reply": "PINEAPPLE-7731"
+        },
+        "64000": {
+          "found": true,
+          "finish": "stop",
+          "prompt_tokens": 64065,
+          "completion_tokens": 67,
+          "reasoning_tokens": 58,
+          "latency": 2.8875443935394287,
+          "provider": "DeepInfra",
+          "reply": "PINEAPPLE-7731"
+        }
+      },
+      "D": {
+        "valid": 3,
+        "of": 3
+      },
+      "errors": []
+    },
+    {
+      "provider": "Relace",
+      "census": {
+        "Relace": 5
+      },
+      "checks": {
+        "B_trunc": true,
+        "C_32k": true,
+        "C_64k": true,
+        "D_tool": false
+      },
+      "passed": 3,
+      "tps_median": 179.35870330465778,
+      "latency_median": 2.6087419986724854,
+      "reasoning_median": 65.0,
+      "cost": 0.007523,
+      "B": {
+        "finish": "stop",
+        "items": 500,
+        "max_item": 500,
+        "latency": 4.307762861251831,
+        "provider": "Relace",
+        "completion_tokens": 1148,
+        "reasoning_tokens": 147
+      },
+      "C": {
+        "32000": {
+          "found": true,
+          "finish": "stop",
+          "prompt_tokens": 32065,
+          "completion_tokens": 84,
+          "reasoning_tokens": 75,
+          "latency": 2.3139452934265137,
+          "provider": "Relace",
+          "reply": "PINEAPPLE-7731"
+        },
+        "64000": {
+          "found": true,
+          "finish": "stop",
+          "prompt_tokens": 64065,
+          "completion_tokens": 56,
+          "reasoning_tokens": 47,
+          "latency": 2.5571463108062744,
+          "provider": "Relace",
+          "reply": "PINEAPPLE-7731"
+        }
+      },
+      "D": {
+        "valid": 0,
+        "of": 3
+      },
+      "errors": [
+        "D:RuntimeError",
+        "D:RuntimeError",
+        "D:RuntimeError"
+      ]
+    },
+    {
+      "provider": "AtlasCloud",
+      "census": {
+        "AtlasCloud": 5
+      },
+      "checks": {
+        "B_trunc": true,
+        "C_32k": true,
+        "C_64k": true,
+        "D_tool": true
+      },
+      "passed": 4,
+      "tps_median": 161.463376107727,
+      "latency_median": 2.8807730674743652,
+      "reasoning_median": 90.0,
+      "cost": 0.00972,
+      "B": {
+        "finish": "stop",
+        "items": 500,
+        "max_item": 500,
+        "latency": 5.753417015075684,
+        "provider": "AtlasCloud",
+        "completion_tokens": 1211,
+        "reasoning_tokens": 212
+      },
+      "C": {
+        "32000": {
+          "found": true,
+          "finish": "stop",
+          "prompt_tokens": 32065,
+          "completion_tokens": 81,
+          "reasoning_tokens": 73,
+          "latency": 1.6703460216522217,
+          "provider": "AtlasCloud",
+          "reply": "PINEAPPLE-7731"
+        },
+        "64000": {
+          "found": true,
+          "finish": "stop",
+          "prompt_tokens": 64065,
+          "completion_tokens": 70,
+          "reasoning_tokens": 62,
+          "latency": 2.2930943965911865,
+          "provider": "AtlasCloud",
+          "reply": "PINEAPPLE-7731"
+        }
+      },
+      "D": {
+        "valid": 3,
+        "of": 3
+      },
+      "errors": []
+    },
+    {
+      "provider": "InferenceNet",
+      "census": {
+        "InferenceNet": 5
+      },
+      "checks": {
+        "B_trunc": true,
+        "C_32k": true,
+        "C_64k": true,
+        "D_tool": true
+      },
+      "passed": 4,
+      "tps_median": 184.3191096128421,
+      "latency_median": 2.842590808868408,
+      "reasoning_median": 74.0,
+      "cost": 0.010499,
+      "B": {
+        "finish": "stop",
+        "items": 500,
+        "max_item": 500,
+        "latency": 10.56112027168274,
+        "provider": "InferenceNet",
+        "completion_tokens": 2232,
+        "reasoning_tokens": 1231
+      },
+      "C": {
+        "32000": {
+          "found": true,
+          "finish": "stop",
+          "prompt_tokens": 32065,
+          "completion_tokens": 61,
+          "reasoning_tokens": 52,
+          "latency": 1.5589733123779297,
+          "provider": "InferenceNet",
+          "reply": "PINEAPPLE-7731"
+        },
+        "64000": {
+          "found": true,
+          "finish": "stop",
+          "prompt_tokens": 64065,
+          "completion_tokens": 53,
+          "reasoning_tokens": 44,
+          "latency": 1.633019208908081,
+          "provider": "InferenceNet",
+          "reply": "PINEAPPLE-7731"
+        }
+      },
+      "D": {
+        "valid": 3,
+        "of": 3
+      },
+      "errors": []
+    }
+  ]
+}

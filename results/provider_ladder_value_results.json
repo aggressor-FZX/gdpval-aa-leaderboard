@@ -1,0 +1,583 @@
+{
+  "model": "deepseek/deepseek-v4.1-flash",
+  "ladder": [
+    {
+      "name": "Baidu",
+      "blend": 0.09397499999999999,
+      "in": 0.0537,
+      "out": 0.2148,
+      "ctx": 1048576,
+      "quant": "fp8",
+      "tps": 106,
+      "uptime": 100
+    },
+    {
+      "name": "Decart",
+      "blend": 0.1125,
+      "in": 0.09,
+      "out": 0.18,
+      "ctx": 1048576,
+      "quant": "fp4",
+      "tps": 79,
+      "uptime": 100
+    },
+    {
+      "name": "Sail Research",
+      "blend": 0.13,
+      "in": 0.09,
+      "out": 0.25,
+      "ctx": 1048576,
+      "quant": "fp4",
+      "tps": 103,
+      "uptime": 100
+    },
+    {
+      "name": "Sail Research",
+      "blend": 0.13,
+      "in": 0.09,
+      "out": 0.25,
+      "ctx": 1048576,
+      "quant": "fp4",
+      "tps": 84,
+      "uptime": 100
+    },
+    {
+      "name": "DeepInfra",
+      "blend": 0.16799999999999998,
+      "in": 0.112,
+      "out": 0.33599999999999997,
+      "ctx": 1048576,
+      "quant": "fp8",
+      "tps": 54,
+      "uptime": 100
+    },
+    {
+      "name": "Relace",
+      "blend": 0.1775,
+      "in": 0.07,
+      "out": 0.5,
+      "ctx": 1048576,
+      "quant": "unknown",
+      "tps": 118,
+      "uptime": 100
+    },
+    {
+      "name": "DeepInfra",
+      "blend": 0.21,
+      "in": 0.14,
+      "out": 0.42,
+      "ctx": 1048576,
+      "quant": "fp8",
+      "tps": 81,
+      "uptime": 100
+    },
+    {
+      "name": "AtlasCloud",
+      "blend": 0.23625000000000002,
+      "in": 0.135,
+      "out": 0.54,
+      "ctx": 1048576,
+      "quant": "fp8",
+      "tps": 116,
+      "uptime": 100
+    },
+    {
+      "name": "InferenceNet",
+      "blend": 0.256,
+      "in": 0.103,
+      "out": 0.7150000000000001,
+      "ctx": 1040000,
+      "quant": "fp8",
+      "tps": 92,
+      "uptime": 100
+    },
+    {
+      "name": "InferenceNet",
+      "blend": 0.256,
+      "in": 0.103,
+      "out": 0.7150000000000001,
+      "ctx": 1040000,
+      "quant": "fp8",
+      "tps": 118,
+      "uptime": 100
+    },
+    {
+      "name": "StreamLake",
+      "blend": 0.25725,
+      "in": 0.14700000000000002,
+      "out": 0.5880000000000001,
+      "ctx": 1024000,
+      "quant": "fp8",
+      "tps": 70,
+      "uptime": 100
+    },
+    {
+      "name": "OpenInference",
+      "blend": 0.265,
+      "in": 0.02,
+      "out": 1.0,
+      "ctx": 1048576,
+      "quant": "fp4",
+      "tps": 73,
+      "uptime": 100
+    },
+    {
+      "name": "CoreWeave",
+      "blend": 0.275,
+      "in": 0.15,
+      "out": 0.65,
+      "ctx": 1048576,
+      "quant": "fp8",
+      "tps": 177,
+      "uptime": 100
+    },
+    {
+      "name": "Reka",
+      "blend": 0.28875,
+      "in": 0.105,
+      "out": 0.84,
+      "ctx": 1048576,
+      "quant": "unknown",
+      "tps": 107.5,
+      "uptime": 90
+    },
+    {
+      "name": "DigitalOcean",
+      "blend": 0.28875,
+      "in": 0.165,
+      "out": 0.66,
+      "ctx": 1048576,
+      "quant": "unknown",
+      "tps": 173,
+      "uptime": 100
+    },
+    {
+      "name": "ModelRun",
+      "blend": 0.29500000000000004,
+      "in": 0.16999999999999998,
+      "out": 0.67,
+      "ctx": 1048576,
+      "quant": "fp4",
+      "tps": 175,
+      "uptime": 100
+    },
+    {
+      "name": "Wafer",
+      "blend": 0.30500000000000005,
+      "in": 0.19,
+      "out": 0.65,
+      "ctx": 1048576,
+      "quant": "mxfp4",
+      "tps": 162,
+      "uptime": 100
+    },
+    {
+      "name": "GMICloud",
+      "blend": 0.315,
+      "in": 0.18,
+      "out": 0.72,
+      "ctx": 1048575,
+      "quant": "fp8",
+      "tps": 89,
+      "uptime": 100
+    },
+    {
+      "name": "DeepInfra",
+      "blend": 0.315,
+      "in": 0.21,
+      "out": 0.63,
+      "ctx": 1048576,
+      "quant": "fp8",
+      "tps": 58.5,
+      "uptime": 11.11111111111111
+    },
+    {
+      "name": "Novita",
+      "blend": 0.34125,
+      "in": 0.195,
+      "out": 0.78,
+      "ctx": 1048576,
+      "quant": "fp8",
+      "tps": 130,
+      "uptime": 100
+    },
+    {
+      "name": "Fireworks",
+      "blend": 0.3675,
+      "in": 0.21,
+      "out": 0.84,
+      "ctx": 1048576,
+      "quant": "unknown",
+      "tps": 173,
+      "uptime": 100
+    },
+    {
+      "name": "Phala",
+      "blend": 0.3675,
+      "in": 0.21,
+      "out": 0.84,
+      "ctx": 1048576,
+      "quant": "unknown",
+      "tps": 106,
+      "uptime": 100
+    },
+    {
+      "name": "Morph",
+      "blend": 0.4815,
+      "in": 0.442,
+      "out": 0.6,
+      "ctx": 1048576,
+      "quant": "fp8",
+      "tps": 214,
+      "uptime": 100
+    },
+    {
+      "name": "Makora",
+      "blend": 0.4875,
+      "in": 0.26,
+      "out": 1.17,
+      "ctx": 1048576,
+      "quant": "fp8",
+      "tps": 145,
+      "uptime": 100
+    },
+    {
+      "name": "Crusoe",
+      "blend": 0.5175,
+      "in": 0.29,
+      "out": 1.2,
+      "ctx": 1048576,
+      "quant": "fp8",
+      "tps": 132,
+      "uptime": 100
+    },
+    {
+      "name": "Google",
+      "blend": 0.5249999999999999,
+      "in": 0.3,
+      "out": 1.2,
+      "ctx": 1048576,
+      "quant": "unknown",
+      "tps": 33,
+      "uptime": 100
+    },
+    {
+      "name": "Nebius",
+      "blend": 0.5249999999999999,
+      "in": 0.3,
+      "out": 1.2,
+      "ctx": 1048000,
+      "quant": "fp8",
+      "tps": 145,
+      "uptime": 100
+    },
+    {
+      "name": "PrimeIntellect",
+      "blend": 0.5249999999999999,
+      "in": 0.3,
+      "out": 1.2,
+      "ctx": 1048576,
+      "quant": "unknown",
+      "tps": 157,
+      "uptime": 100
+    },
+    {
+      "name": "Cohere",
+      "blend": 0.5249999999999999,
+      "in": 0.3,
+      "out": 1.2,
+      "ctx": 1048576,
+      "quant": "unknown",
+      "tps": 197,
+      "uptime": 100
+    },
+    {
+      "name": "BaseTen",
+      "blend": 0.5249999999999999,
+      "in": 0.3,
+      "out": 1.2,
+      "ctx": 1048576,
+      "quant": "unknown",
+      "tps": 270,
+      "uptime": 100
+    },
+    {
+      "name": "Together",
+      "blend": 0.5249999999999999,
+      "in": 0.3,
+      "out": 1.2,
+      "ctx": 1048576,
+      "quant": "unknown",
+      "tps": 291,
+      "uptime": 100
+    },
+    {
+      "name": "SiliconFlow",
+      "blend": 0.5249999999999999,
+      "in": 0.3,
+      "out": 1.2,
+      "ctx": 1048576,
+      "quant": "fp8",
+      "tps": 76,
+      "uptime": 100
+    },
+    {
+      "name": "Modal",
+      "blend": 0.5249999999999999,
+      "in": 0.3,
+      "out": 1.2,
+      "ctx": 1048576,
+      "quant": "unknown",
+      "tps": 74.5,
+      "uptime": 100
+    },
+    {
+      "name": "BaseTen",
+      "blend": 0.5249999999999999,
+      "in": 0.3,
+      "out": 1.2,
+      "ctx": 1048576,
+      "quant": "unknown",
+      "tps": 292,
+      "uptime": 100
+    },
+    {
+      "name": "Parasail",
+      "blend": 0.5249999999999999,
+      "in": 0.3,
+      "out": 1.2,
+      "ctx": 1048576,
+      "quant": "fp8",
+      "tps": 173,
+      "uptime": 100
+    },
+    {
+      "name": "Fireworks",
+      "blend": 0.5249999999999999,
+      "in": 0.3,
+      "out": 1.2,
+      "ctx": 1048576,
+      "quant": "unknown",
+      "tps": 59,
+      "uptime": 100
+    },
+    {
+      "name": "Venice",
+      "blend": 0.5249999999999999,
+      "in": 0.3,
+      "out": 1.2,
+      "ctx": 1000000,
+      "quant": "fp8",
+      "tps": 265,
+      "uptime": 100
+    },
+    {
+      "name": "Alibaba",
+      "blend": 0.5775,
+      "in": 0.33,
+      "out": 1.32,
+      "ctx": 1000000,
+      "quant": "unknown",
+      "tps": 65,
+      "uptime": 100
+    },
+    {
+      "name": "Fireworks",
+      "blend": 0.7875,
+      "in": 0.44999999999999996,
+      "out": 1.7999999999999998,
+      "ctx": 1048576,
+      "quant": "unknown",
+      "tps": 218,
+      "uptime": 100
+    },
+    {
+      "name": "BaseTen",
+      "blend": 1.0499999999999998,
+      "in": 0.6,
+      "out": 2.4,
+      "ctx": 1048576,
+      "quant": "unknown",
+      "tps": 253,
+      "uptime": 100
+    }
+  ],
+  "arms": [
+    {
+      "label": "default",
+      "pin": null,
+      "census": {
+        "OpenInference": 8
+      },
+      "checks": {
+        "B_trunc": true,
+        "C_32k": false,
+        "C_64k": false,
+        "D_tool": true
+      },
+      "passed": 2,
+      "cost": 0.003768,
+      "mean_latency": 1.713,
+      "B": {
+        "finish": "stop",
+        "items": 500,
+        "max_item": 500,
+        "latency": 16.36008095741272,
+        "provider": "OpenInference"
+      },
+      "C": {
+        "32000": {
+          "found": false,
+          "finish": "length",
+          "prompt_tokens": 32065,
+          "latency": 4.218476057052612,
+          "provider": "OpenInference"
+        },
+        "64000": {
+          "found": false,
+          "finish": "length",
+          "prompt_tokens": 64065,
+          "latency": 12.143603801727295,
+          "provider": "OpenInference"
+        }
+      },
+      "D": {
+        "valid": 3,
+        "of": 3
+      },
+      "errors": []
+    },
+    {
+      "label": "cheapest:Baidu",
+      "pin": "Baidu",
+      "census": {
+        "Baidu": 8
+      },
+      "checks": {
+        "B_trunc": true,
+        "C_32k": false,
+        "C_64k": false,
+        "D_tool": true
+      },
+      "passed": 2,
+      "cost": 0.0056,
+      "mean_latency": 1.034,
+      "B": {
+        "finish": "stop",
+        "items": 500,
+        "max_item": 500,
+        "latency": 7.552762031555176,
+        "provider": "Baidu"
+      },
+      "C": {
+        "32000": {
+          "found": false,
+          "finish": "length",
+          "prompt_tokens": 32065,
+          "latency": 1.3071379661560059,
+          "provider": "Baidu"
+        },
+        "64000": {
+          "found": false,
+          "finish": "length",
+          "prompt_tokens": 64065,
+          "latency": 2.2108497619628906,
+          "provider": "Baidu"
+        }
+      },
+      "D": {
+        "valid": 3,
+        "of": 3
+      },
+      "errors": []
+    },
+    {
+      "label": "next_up:CoreWeave",
+      "pin": "CoreWeave",
+      "census": {
+        "CoreWeave": 8
+      },
+      "checks": {
+        "B_trunc": true,
+        "C_32k": false,
+        "C_64k": false,
+        "D_tool": true
+      },
+      "passed": 2,
+      "cost": 0.015438,
+      "mean_latency": 0.5,
+      "B": {
+        "finish": "stop",
+        "items": 500,
+        "max_item": 500,
+        "latency": 3.7267754077911377,
+        "provider": "CoreWeave"
+      },
+      "C": {
+        "32000": {
+          "found": false,
+          "finish": "length",
+          "prompt_tokens": 32065,
+          "latency": 1.2156667709350586,
+          "provider": "CoreWeave"
+        },
+        "64000": {
+          "found": false,
+          "finish": "length",
+          "prompt_tokens": 64065,
+          "latency": 2.2188072204589844,
+          "provider": "CoreWeave"
+        }
+      },
+      "D": {
+        "valid": 3,
+        "of": 3
+      },
+      "errors": []
+    },
+    {
+      "label": "quality:BaseTen",
+      "pin": "BaseTen",
+      "census": {
+        "BaseTen": 8
+      },
+      "checks": {
+        "B_trunc": true,
+        "C_32k": true,
+        "C_64k": true,
+        "D_tool": true
+      },
+      "passed": 4,
+      "cost": 0.030795,
+      "mean_latency": 0.442,
+      "B": {
+        "finish": "stop",
+        "items": 500,
+        "max_item": 500,
+        "latency": 2.147315740585327,
+        "provider": "BaseTen"
+      },
+      "C": {
+        "32000": {
+          "found": true,
+          "finish": "length",
+          "prompt_tokens": 32066,
+          "latency": 1.3429341316223145,
+          "provider": "BaseTen"
+        },
+        "64000": {
+          "found": true,
+          "finish": "length",
+          "prompt_tokens": 64066,
+          "latency": 1.4028282165527344,
+          "provider": "BaseTen"
+        }
+      },
+      "D": {
+        "valid": 3,
+        "of": 3
+      },
+      "errors": []
+    }
+  ]
+}
