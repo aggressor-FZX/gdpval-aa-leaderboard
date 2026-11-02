@@ -89,9 +89,11 @@ budget flag.
 
 - **No LLM-as-judge.** A judge introduces a second model's bias into a
   cross-model comparison. Every v2 metric is deterministic and reproducible.
-- **No claim of an "AA writing score".** Artificial Analysis publishes no
-  writing benchmark — verified: 18 evaluation fields, none writing-related.
-  `shortlist.py` builds a clearly-labelled *proxy* from adjacent measures and
-  says so in every output.
+- **No fabricated "AA writing score".** I first concluded AA had no writing
+  benchmark, from the v2 API's 18 evaluation fields. **That was wrong.**
+  AA-PersonalityBench exists (organization, expressiveness, slop, transparency,
+  warmth, conviction, imagination, informativeness) and is the primary writing
+  measure here. It is not in the API, so `personalitybench.py` extracts it from
+  the site; the IFBench/LCR/HLE/GPQA proxy remains only as a labelled fallback.
 - **No hidden normalisation.** If a metric is missing, it is reported missing,
   not silently imputed.

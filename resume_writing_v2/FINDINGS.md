@@ -4,23 +4,60 @@ Two live runs against the AA writing-adjacent shortlist, 1 run per model,
 $0.012 total spend. These are validation runs to prove the harness behaves
 correctly, **not** a publishable leaderboard (n=1).
 
-## The AA writing question, answered
+## The AA writing question — CORRECTED
 
-**Artificial Analysis publishes no writing benchmark.** Verified against the
-live v2 API (`/api/v2/data/llms/models`, 722 records): 18 evaluation fields,
-none of them writing, essay, prose, style, summarisation or authoring.
+**I was wrong to say AA publishes no writing benchmark.** That claim came from
+the v2 API, which exposes 18 evaluation fields and none writing-related. The API
+is not the whole catalogue.
 
-| field | what it measures |
+**AA-PersonalityBench exists** and measures precisely what resume writing needs.
+It is only on the website. `personalitybench.py` extracts it.
+
+Endpoint status, all verified live:
+
+| source | result |
 |---|---|
-| ifbench, lcr | instruction following, long-context reasoning |
-| hle, gpqa, mmlu_pro | factual rigor, reasoning under distribution shift |
-| livecodebench, scicode, terminalbench_*, aime*, math_500 | code and math |
-| tau2, tau_banking | agentic tool use |
+| `data.artificialanalysis.ai/api/v1/models` (AA's documented host) | **404** `DEPLOYMENT_NOT_FOUND` |
+| `artificialanalysis.ai/api/v2/data/llms/models` (our key) | 200, 723 records, **0 personality fields** |
+| `artificialanalysis.ai/models` (website, RSC payload) | **works** — full leaderboard embedded |
 
-Any "AA writing score" would be fabricated. `shortlist.py` therefore builds an
-explicitly-labelled **proxy**: `IFBench .35 + LCR .25 + HLE .25 + GPQA .15`,
-with code/math fields deliberately excluded because they do not transfer to
-prose authoring. Every output states that it is a proxy.
+### The 8 PersonalityBench indexes (percentiles 1–100)
+
+| index | what it measures |
+|---|---|
+| **organization** | well-structured, scannable, answer-first |
+| **slop** | filler/buzzword avoidance — **higher = cleaner** |
+| expressiveness | prose variety and voice |
+| informativeness | information density |
+| transparency | candour / self-explanation |
+| warmth, conviction, imagination | tone and stance |
+
+Slop direction is a trap: AA's UI describes a *lower* slop number as cleaner,
+while the stored percentile is *higher=better*. Exposed here as
+`slop_avoidance` so no caller inverts it.
+
+### Extraction bug, found and fixed
+
+Every model page embeds the **whole leaderboard** — ~41 `personalityBench`
+blocks. My first parser took block `[0]` for every model, which is a degenerate
+placeholder (`organization=1`, `slop=90.1`). That produced 200 identical rows all
+reading `1.0 / 90.1`, which looked like data and was nonsense.
+
+Fix: the owner of a block is the **nearest preceding `"name"`**. Validated —
+Kimi K3.1 Pro resolves to organization **87.625**, expressiveness 62.875,
+slop 20.8, matching that model's own page exactly. One page now yields 40
+distinct models.
+
+### What the real scores say
+
+40 models scored. Top by organization: **DeepSeek V4.1 Flash 100**, Nemotron 3.5
+Super VL 97.5, Step 5 Preview 95, Inkling 92.6, Muse Wonder 90.1, Kimi K3.1 Pro
+87.6.
+
+Joined onto the OpenRouter-reachable shortlist: **24 of 62 models** have real
+scores; the rest keep the proxy and are labelled. Best value among
+PersonalityBench-scored models: **Inkling Small** — organization 93, slop 50, at
+$0.53/M.
 
 ## Shortlist (66 models with >=3 of 4 components, on OpenRouter, priced)
 

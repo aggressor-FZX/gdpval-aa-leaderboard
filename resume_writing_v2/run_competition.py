@@ -51,8 +51,10 @@ def main() -> int:
     key = api_key()          # OpenRouter — for inference
     akey = aa_key()          # Artificial Analysis — for the proxy shortlist
 
-    print("Building AA writing-adjacent shortlist ...")
+    print("Building resume-writing shortlist ...")
     rows = shortlist.build(akey)
+    rows = shortlist.attach_personality(rows)          # real scores replace the proxy
+    rows.sort(key=lambda r: -(r.get("writing_score") or 0))
     shortlist.print_shortlist(rows, limit=25)
     print(f"\nshortlist size (AA + OpenRouter reachable): {len(rows)}")
 

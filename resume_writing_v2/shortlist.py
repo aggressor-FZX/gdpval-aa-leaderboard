@@ -139,18 +139,98 @@ def build(api_key: str, min_jaccard: float = 0.80) -> list[dict]:
     return out
 
 
+def _dash(v, fmt="{:.1f}"):
+    return "-" if v is None else fmt.format(v)
+
+
 def print_shortlist(rows: list[dict], limit: int = 25) -> None:
-    print("=" * 116)
-    print("WRITING-ADJACENT SHORTLIST — a PROXY, not an AA writing benchmark")
-    print("  Artificial Analysis publishes no writing measure (18 eval fields, none writing).")
-    print("  proxy = IFBench .35 + LCR .25 + HLE .25 + GPQA .15")
-    print("  value = proxy / blended $/1M      rank_c = mean(writing rank, value rank)")
-    print("=" * 116)
-    print(f"{'#':<3}{'model':<46}{'or_id':<40}{'proxy':>7}{'$/1M':>8}"
-          f"{'value':>8}{'tok/s':>7}{'rW':>4}{'rV':>4}")
-    print("-" * 116)
+    """Print the shortlist, preferring real AA-PersonalityBench over the proxy.
+
+    Run attach_personality(rows) first. Rows carrying PersonalityBench scores
+    show writing = mean(organization, slop_avoidance); rows without show the
+    proxy and are labelled so the two are never silently mixed.
+    """
+    has_pb = any(r.get("writing_source") == "AA-PersonalityBench" for r in rows)
+    print("=" * 124)
+    print("RESUME-WRITING SHORTLIST")
+    print("  Primary: AA-PersonalityBench organization + slop-avoidance percentiles"
+          if has_pb else "  Proxy only — AA-PersonalityBench cache not loaded")
+    print("  Fallback: IFBench .35 + LCR .25 + HLE .25 + GPQA .15 (proxy)")
+    if has_pb:
+        print("  writing = mean(organization, slop_avoidance)  | both are 1-100"
+              " percentiles; HIGHER slop_avoidance = LESS filler")
+    print("=" * 124)
+    print(f"{'#':<3}{'model':<38}{'source':<22}{'write':>7}{'org':>6}"
+          f"{'slop':>6}{'$/1M':>8}{'value':>8}{'tok/s':>7}")
+    print("-" * 124)
     for i, r in enumerate(rows[:limit], 1):
-        print(f"{i:<3}{r['aa_name'][:44]:<46}{r['or_id'][:38]:<40}"
-              f"{r['writing_proxy']:>7.3f}{r['price_blend_1m']:>8.2f}"
-              f"{r['value']:>8.2f}{r['tput']:>7.0f}"
-              f"{r['rank_writing']:>4}{r['rank_value']:>4}")
+        src = str(r.get("writing_source", "proxy"))[:20]
+        print(f"{i:<3}{r['aa_name'][:36]:<38}{src:<22}"
+              f"{_dash(r.get('writing_score')):>7}"
+              f"{_dash(r.get('pb_organization'), '{:.0f}'):>6}"
+              f"{_dash(r.get('pb_slop_avoidance'), '{:.0f}'):>6}"
+              f"{r['price_blend_1m']:>8.2f}{r['value']:>8.2f}{r['tput']:>7.0f}")
+
+def attach_personality(rows: list[dict]) -> list[dict]:
+    """Merge real AA-PersonalityBench scores onto the shortlist.
+
+    This REPLACES the proxy wherever a real measurement exists. The proxy was
+    only ever a stand-in for a benchmark I wrongly believed did not exist; now
+    that organization / slop_avoidance are available for 40 models, they are the
+    authority and the proxy is the fallback.
+
+    Matching is on normalised model tail (provider prefix stripped, punctuation
+    removed) so "DeepSeek V4.1 Flash 1017" and "deepseek/deepseek-v4.1-flash"
+    line up. No fuzzy guessing: an unmatched row keeps its proxy and is marked.
+    """
+    from . import personalitybench as pb
+
+    cache = pb.load()
+    if not cache:
+        for r in rows:
+            r["pb_organization"] = None
+            r["pb_slop_avoidance"] = None
+            r["pb_match"] = "no cache (run personalitybench)"
+        return rows
+
+    def norm(x):
+        x = re.sub(r"-\d{8}$", "", str(x))
+        x = str(x).split("/")[-1]
+        return re.sub(r"[^a-z0-9]+", "", x.lower())
+
+    index = {}
+    for m in cache:
+        index[norm(m["model"])] = m
+
+    for r in rows:
+        hit = index.get(norm(r["aa_name"])) or index.get(norm(r["or_id"]))
+        if hit is None:
+            # allow a containment hit only when it is unambiguous
+            k = norm(r["aa_name"])
+            cands = [v for kk, v in index.items() if kk and (kk in k or k in kk)]
+            hit = cands[0] if len(cands) == 1 else None
+        if hit:
+            r["pb_organization"] = hit["organization"]
+            r["pb_slop_avoidance"] = hit["slop_avoidance"]
+            r["pb_match"] = "exact"
+        else:
+            r["pb_organization"] = None
+            r["pb_slop_avoidance"] = None
+            r["pb_match"] = "unmatched"
+
+    matched = sum(1 for r in rows if r["pb_match"] == "exact")
+    print(f"\nAA-PersonalityBench joined: {matched}/{len(rows)} shortlist models")
+
+    # real writing score when available; proxy otherwise - never mixed silently
+    for r in rows:
+        if r["pb_organization"] is not None and r["pb_slop_avoidance"] is not None:
+            # organization is the closest real analogue to "can this model write
+            # a scannable resume"; slop_avoidance penalises filler. Equal weight,
+            # both are 1-100 percentiles so no rescaling is needed.
+            r["writing_score"] = round(
+                (r["pb_organization"] + r["pb_slop_avoidance"]) / 2, 2)
+            r["writing_source"] = "AA-PersonalityBench"
+        else:
+            r["writing_score"] = round(r["writing_proxy"] * 100, 2)
+            r["writing_source"] = "proxy (no PersonalityBench)"
+    return rows
