@@ -1,11 +1,10 @@
 # METHODOLOGY — what was tested, how, and what the numbers mean
 
-This is the single reference for the resume-writing work. The three results
-documents assume you already know the design; this one states it.
+This states the design; `RESULTS.md` states the outcomes.
 
-- `CONTEST_RESULTS.md` — free-authoring contest (full resume from a profile)
-- `DRAFTER_RESULTS.md` — drafter faithfulness contest + spend analysis
-- `FINDINGS.md` — AA-PersonalityBench extraction and the proxy shortlist
+- **`RESULTS.md`** — consolidated final results, recommendations, limitations.
+  (Earlier per-round reports were removed; their corrections are summarised in
+  RESULTS.md §5 and preserved in git history.)
 
 ---
 
@@ -16,9 +15,9 @@ is the fastest way to draw a wrong conclusion.
 
 | # | Test | Question | Scored on | Results |
 |---|---|---|---|---|
-| A | **Free-authoring contest** | Can a cheap model write a good resume from a profile? | gate-clamped 100-pt rubric | `CONTEST_RESULTS.md` |
-| B | **Drafter faithfulness** | Can a model rewrite raw notes into STAR bullets without inventing anything? | fabrication / metrics / format | `DRAFTER_RESULTS.md` |
-| C | **AA-PersonalityBench** | What does AA's published writing benchmark say? | AA's 8 indexes | `FINDINGS.md` |
+| A | **Free-authoring contest** | Can a cheap model write a good resume from a profile? | gate-clamped 100-pt rubric | RESULTS.md §2 |
+| B | **Drafter faithfulness** | Can a model rewrite raw notes into STAR bullets without inventing anything? | fabrication / metrics / format | RESULTS.md §3 |
+| C | **AA-PersonalityBench** | What does AA's published writing benchmark say? | AA's 8 indexes | RESULTS.md §5 |
 
 Notes that matter:
 

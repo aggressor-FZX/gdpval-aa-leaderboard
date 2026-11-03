@@ -91,8 +91,4 @@ def build(max_out: float = MAX_OUTPUT_PER_1M, verbose: bool = True) -> list[Mode
 
 
 if __name__ == "__main__":
-    ents = build()
-    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                           "competitors.json"), "w") as f:
-        json.dump([{"model_id": e.model_id, "label": e.label, "group": e.group}
-                   for e in ents], f, indent=1)
+    build()   # prints the competitor set; consumers call build() directly
