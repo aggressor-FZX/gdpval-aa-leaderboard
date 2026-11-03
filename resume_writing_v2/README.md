@@ -60,6 +60,22 @@ Reports per-model **mean, min, max, std dev and pass rate** across runs, plus th
 score spread across the field. If the spread is small, the harness says so
 instead of printing a leaderboard that pretends to separate models.
 
+## Reports — read in this order
+
+| document | answers |
+|---|---|
+| **`METHODOLOGY.md`** | what was tested, the exact scoring axes, thresholds, and limitations. **Start here.** |
+| `CONTEST_RESULTS.md` | free-authoring contest: can a cheap model write a good resume from a profile? |
+| `DRAFTER_RESULTS.md` | drafter faithfulness: can a model rewrite notes without inventing anything? + spend analysis |
+| `FINDINGS.md` | AA-PersonalityBench extraction, and the corrected "AA has no writing benchmark" claim |
+
+Short version: **three different tests, not interchangeable.** Free-authoring is
+scored on a gate-clamped 100-point rubric (fidelity 30, alignment 20, bullets 12,
+metrics 10, targeting 10, ats 8, skills 5, brevity 5); drafter faithfulness is
+scored on fabrication / metric fidelity / format only, because the drafter's job
+is fidelity rather than prose. AA-PersonalityBench is a candidate filter and has
+never been used to grade a run.
+
 ## Layout
 
 ```
