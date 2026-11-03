@@ -1,0 +1,142 @@
+[
+ {
+  "model_id": "minimax/minimax-m3",
+  "label": "MiniMax-M3",
+  "group": "cheap<=$2/M"
+ },
+ {
+  "model_id": "z-ai/glm-5.3-flash",
+  "label": "GLM-5.3-Flash",
+  "group": "cheap<=$2/M"
+ },
+ {
+  "model_id": "tencent/hy3",
+  "label": "Hy3",
+  "group": "cheap<=$2/M"
+ },
+ {
+  "model_id": "google/gemma-4-26b-a4b-it",
+  "label": "Gemma 4 26B A4B (Reasoning)",
+  "group": "cheap<=$2/M"
+ },
+ {
+  "model_id": "qwen/qwen3.5-9b",
+  "label": "Qwen3.5 9B (Reasoning)",
+  "group": "cheap<=$2/M"
+ },
+ {
+  "model_id": "qwen/qwen3.7-plus",
+  "label": "Qwen3.7 Plus",
+  "group": "cheap<=$2/M"
+ },
+ {
+  "model_id": "nvidia/nemotron-3-nano-30b-a3b",
+  "label": "NVIDIA Nemotron 3 Nano 30B A3B (Reasoning)",
+  "group": "cheap<=$2/M"
+ },
+ {
+  "model_id": "deepseek/deepseek-v4-flash-vision-exp",
+  "label": "DeepSeek V4 Flash Vision (Max)",
+  "group": "cheap<=$2/M"
+ },
+ {
+  "model_id": "thinkingmachines/inkling-small",
+  "label": "Inkling Small",
+  "group": "cheap<=$2/M"
+ },
+ {
+  "model_id": "openai/gpt-oss-20b",
+  "label": "gpt-oss-20b (High)",
+  "group": "cheap<=$2/M"
+ },
+ {
+  "model_id": "nvidia/nemotron-3.5-lightning",
+  "label": "Nemotron 3.5 Lightning",
+  "group": "cheap<=$2/M"
+ },
+ {
+  "model_id": "openai/gpt-oss-120b",
+  "label": "gpt-oss-120b (High)",
+  "group": "cheap<=$2/M"
+ },
+ {
+  "model_id": "upstage/solar-pro4",
+  "label": "Solar Pro 4",
+  "group": "cheap<=$2/M"
+ },
+ {
+  "model_id": "qwen/qwen3.8-27b",
+  "label": "Qwen3.8 27B (Xhigh)",
+  "group": "cheap<=$2/M"
+ },
+ {
+  "model_id": "google/gemma-4-31b-it",
+  "label": "Gemma 4 31B (Non-reasoning)",
+  "group": "cheap<=$2/M"
+ },
+ {
+  "model_id": "qwen/qwen3.6-35b-a3b",
+  "label": "Qwen3.6 35B A3B (Reasoning)",
+  "group": "cheap<=$2/M"
+ },
+ {
+  "model_id": "ibm-granite/granite-4.2-8b",
+  "label": "Granite 4.2 8B",
+  "group": "cheap<=$2/M"
+ },
+ {
+  "model_id": "qwen/qwen3-next-80b-a3b-instruct",
+  "label": "Qwen3 Next 80B A3B Instruct",
+  "group": "cheap<=$2/M"
+ },
+ {
+  "model_id": "nvidia/nemotron-3-nano-30b-a3b",
+  "label": "NVIDIA Nemotron 3 Nano 30B A3B (Non-reasoning)",
+  "group": "cheap<=$2/M"
+ },
+ {
+  "model_id": "meta-llama/llama-4-maverick",
+  "label": "Llama 4 Maverick",
+  "group": "cheap<=$2/M"
+ },
+ {
+  "model_id": "meituan/longcat-2.0",
+  "label": "LongCat 2.0",
+  "group": "cheap<=$2/M"
+ },
+ {
+  "model_id": "meta-llama/llama-4-scout",
+  "label": "Llama 4 Scout",
+  "group": "cheap<=$2/M"
+ },
+ {
+  "model_id": "rekaai/reka-flash-3",
+  "label": "Reka Flash 3",
+  "group": "cheap<=$2/M"
+ },
+ {
+  "model_id": "qwen/qwen3-coder-next",
+  "label": "Qwen3 Coder Next",
+  "group": "cheap<=$2/M"
+ },
+ {
+  "model_id": "microsoft/phi-4",
+  "label": "Phi-4",
+  "group": "cheap<=$2/M"
+ },
+ {
+  "model_id": "qwen/qwen3-30b-a3b",
+  "label": "Qwen3 Omni 30B A3B (Reasoning)",
+  "group": "cheap<=$2/M"
+ },
+ {
+  "model_id": "meta-llama/llama-3.3-70b-instruct",
+  "label": "Llama 3.3 Instruct 70B",
+  "group": "cheap<=$2/M"
+ },
+ {
+  "model_id": "deepseek/deepseek-v4.1-flash",
+  "label": "DeepSeek V4.1 Flash (incumbent)",
+  "group": "incumbent"
+ }
+]

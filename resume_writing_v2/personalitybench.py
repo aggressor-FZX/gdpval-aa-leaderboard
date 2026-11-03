@@ -1,53 +1,58 @@
-"""AA-PersonalityBench — the missing writing benchmark, extracted from AA's site.
+"""AA-PersonalityBench — the writing benchmark AA does not expose via its API.
 
-CORRECTION TO AN EARLIER CLAIM IN THIS REPO
--------------------------------------------
-I previously wrote that "Artificial Analysis publishes no writing benchmark",
-based on the free v2 API exposing 18 evaluation fields with none writing-related.
-That was WRONG. AA-PersonalityBench exists and measures exactly what a resume
-writer needs. It is simply not in the v2 API.
+CORRECTION LOG (kept because both errors were mine and both were consequential)
+------------------------------------------------------------------------------
+1. I first claimed "AA publishes no writing benchmark" based on the v2 API's 18
+   evaluation fields. WRONG: AA-PersonalityBench exists on the website.
+2. I then named the field `slop_avoidance` and treated a higher value as better.
+   That was INVERTED. Corrected below.
 
-WHERE THE DATA LIVES
---------------------
-  * data.artificialanalysis.ai/api/v1/models (documented in AA's docs)
-      -> 404 DEPLOYMENT_NOT_FOUND. The host does not resolve. Verified.
-  * artificialanalysis.ai/api/v2/data/llms/models (the key we have)
-      -> 200, 723 records, ZERO personality fields. Verified.
-  * artificialanalysis.ai/models/<slug> (the website)
-      -> the full leaderboard, embedded in the Next.js RSC flight payload.
+WHERE THE DATA LIVES (all verified live 2026-11-02)
+---------------------------------------------------
+  data.artificialanalysis.ai/api/v1/models       -> 404 DEPLOYMENT_NOT_FOUND
+  artificialanalysis.ai/api/v2/data/llms/models  -> 200, 723 records,
+                                                    0 personality fields
+  artificialanalysis.ai/models/<slug>            -> works; the whole leaderboard
+                                                    is embedded in the RSC payload
 
-So the website is the only reachable source. That is why this module scrapes.
-
-WHAT THE SCORES MEAN
---------------------
-8 index scores, all percentile ranks 1-100 (AA's own page text: "AA-PersonalityBench
-scores are percentile ranks from 1 to 100"):
-
-  expressiveness    how expressive / varied the prose is
-  organization      how well-structured and scannable the writing is
-  informativeness   information density
-  transparency      self-explanation / candour
+THE 8 INDEXES (percentile ranks 1-100, per AA's own page text)
+--------------------------------------------------------------
+  organization     structure / scannability / answer-first ordering
+  slop             AMOUNT of filler and AI buzzwords -- LOWER IS BETTER
+  expressiveness   prose variety
+  informativeness  information density
+  transparency     candour / self-explanation
   warmth, conviction, imagination
-  slop              filler avoidance — HIGHER IS BETTER
 
-`slop` is exposed here as `slop_avoidance` because the direction is easy to get
-backwards. Verified by cross-checking: DeepSeek V4.1 Flash = organization 100,
-slop 40.6; Kimi K3.1 Pro = organization 87.625, slop 20.8. The two move with, not
-against, each other, and AA's UI describes a LOWER slop number as cleaner output
-while storing a HIGHER percentile as better. Treat the field as "slop avoidance
-percentile" and state the direction wherever it is displayed.
+SLOP DIRECTION — THE TRAP, MEASURED
+-----------------------------------
+`indexScores["slop"]` is the amount of slop. HIGHER = MORE filler = WORSE.
 
-EXTRACTION — WHY THE FIRST ATTEMPT WAS WRONG
---------------------------------------------
-Every model page embeds the WHOLE leaderboard: ~41 `personalityBench` blocks.
-Taking the first block gave a degenerate placeholder for every model
-(`expressiveness/organization/... = 1`, `slop = 90.1`), which is why an earlier
-run produced 200 identical rows all reading 1.0 / 90.1.
+Evidence, computed over all 40 scored models:
+  corr(organization, slop) = -0.196      NEGATIVE
 
-The owner of each block is the NEAREST PRECEDING `"name"` field. Verified: a
-single page yields 40 models, and the values for Kimi K3.1 Pro
-(organization 87.625, expressiveness 62.875, slop 20.8) match what that model's
-own page reports.
+A negative correlation disproves the "avoidance" reading: if the field meant
+avoidance, good structure and high values would agree (positive correlation).
+The worst-structured models carry the highest slop values:
+
+  Llama 4 Maverick      organization  3.5  slop 100.0
+  GPT-4o (Nov '24)      organization  6.0  slop  97.5
+  GPT-3.5 Turbo         organization  1.0  slop  90.1
+  DeepSeek V4.1 Flash   organization 100.0  slop  40.6
+
+So the field is exposed as `slop` (amount, lower is better) and any caller that
+combines it with `organization` must INVERT it:
+    writing = (organization + (100 - slop)) / 2
+
+EXTRACTION — SECOND BUG, ALSO MINE
+----------------------------------
+Every model page embeds the WHOLE leaderboard (~41 `personalityBench` blocks).
+The first attempt took block[0] for every model, which is a degenerate
+placeholder (organization=1, slop=90.1). That produced ~200 identical rows all
+reading 1.0/90.1 that looked like data and were meaningless.
+
+The owner of a block is the NEAREST PRECEDING `"name"`. Validated against Kimi
+K3.1 Pro's own page: organization 87.625, expressiveness 62.875, slop 20.8.
 """
 from __future__ import annotations
 
@@ -55,7 +60,6 @@ import json
 import os
 import re
 import time
-from concurrent.futures import ThreadPoolExecutor
 
 import requests
 
@@ -69,10 +73,8 @@ INDEX_KEYS = ("expressiveness", "organization", "informativeness",
 CACHE = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                      "results", "personalitybench_cache.json")
 
-# A degenerate placeholder block seen at the head of every payload.
-# All-six-1.0 with slop 90.1 is a chart default, not a measurement.
-_PLACEHOLDER_ORG = 1.0
-_PLACEHOLDER_SLOP = 90.1
+# The degenerate placeholder block seen at the head of every payload.
+_PLACEHOLDER = {"organization": 1.0, "slop": 90.1}
 
 
 def _payload(html: str) -> str:
@@ -82,11 +84,7 @@ def _payload(html: str) -> str:
 
 
 def parse_leaderboard(s: str) -> dict[str, dict]:
-    """Every model on the embedded leaderboard: name -> index scores.
-
-    Each `personalityBench` block belongs to the nearest preceding `"name"`.
-    Blocks whose `indexScores` block is missing or unparseable are skipped.
-    """
+    """name -> raw index scores, from the leaderboard embedded in any page."""
     out: dict[str, dict] = {}
     for m in re.finditer(r'"personalityBench":\{"scores":', s):
         i = m.start()
@@ -104,19 +102,18 @@ def parse_leaderboard(s: str) -> dict[str, dict]:
         if len(vals) < len(INDEX_KEYS):
             continue
         rec = {k: vals.get(k) for k in INDEX_KEYS}
-        # drop the degenerate placeholder if it ever survives the name pairing
-        if (rec["organization"] == _PLACEHOLDER_ORG
-                and rec["slop"] == _PLACEHOLDER_SLOP):
+        if (rec["organization"] == _PLACEHOLDER["organization"]
+                and rec["slop"] == _PLACEHOLDER["slop"]):
             continue
         out.setdefault(name, rec)
     return out
 
 
-def normalise(rows: dict[str, dict]) -> list[dict]:
-    """Flatten to a list with slop renamed to slop_avoidance."""
-    out = []
-    for name, v in rows.items():
-        out.append({
+def normalise(raw: dict[str, dict]) -> list[dict]:
+    """Flatten to rows. `slop` is the AMOUNT of slop: lower is better."""
+    rows = []
+    for name, v in raw.items():
+        rows.append({
             "model": name,
             "expressiveness": v["expressiveness"],
             "organization": v["organization"],
@@ -125,40 +122,20 @@ def normalise(rows: dict[str, dict]) -> list[dict]:
             "warmth": v["warmth"],
             "conviction": v["conviction"],
             "imagination": v["imagination"],
-            "slop_avoidance": v["slop"],
+            "slop": v["slop"],
+            # combined and correctly oriented, so no caller has to remember the
+            # inversion: organization good, slop bad
+            "writing_score": round((v["organization"] + (100.0 - v["slop"])) / 2, 2),
         })
-    return out
+    return rows
 
 
 def fetch_from_page(slug: str = "deepseek-v4-1-flash-non-reasoning",
                     timeout: int = 60) -> list[dict]:
-    """One page carries the whole leaderboard, so a single fetch is enough."""
+    """Any model page carries the whole leaderboard, so one fetch is enough."""
     r = requests.get(f"{BASE}/{slug}", headers=UA, timeout=timeout)
     r.raise_for_status()
     return normalise(parse_leaderboard(_payload(r.text)))
-
-
-def fetch_merged(slugs: list[str] | None = None, timeout: int = 60,
-                 verbose: bool = True) -> list[dict]:
-    """Union of several pages, in case any page's payload is stale/partial."""
-    slugs = slugs or ["deepseek-v4-1-flash-non-reasoning",
-                      "kimi-k3-1-pro", "minimax-m3-1-flash"]
-    merged: dict[str, dict] = {}
-    for sl in slugs:
-        try:
-            rows = {r["model"]: r for r in fetch_from_page(sl, timeout)}
-        except requests.RequestException as e:
-            if verbose:
-                print(f"  {sl}: {type(e).__name__}")
-            continue
-        added = 0
-        for k, v in rows.items():
-            if k not in merged:
-                merged[k] = v
-                added += 1
-        if verbose:
-            print(f"  {sl:38} page rows={len(rows):3} new={added:3} total={len(merged):3}")
-    return sorted(merged.values(), key=lambda r: -(r["organization"] or 0))
 
 
 def save(rows: list[dict], path: str = CACHE) -> str:
@@ -177,14 +154,12 @@ def load(path: str = CACHE) -> list[dict]:
 
 
 if __name__ == "__main__":
-    rows = fetch_merged()
+    rows = sorted(fetch_from_page(), key=lambda r: -r["writing_score"])
     path = save(rows)
-    print(f"\n{len(rows)} models with AA-PersonalityBench -> {path}\n")
-    hdr = ("model", "organization", "expressiveness", "slop_avoidance",
-           "informativeness", "transparency")
-    print(f"{'model':<44}" + "".join(f"{h[:11]:>13}" for h in hdr[1:]))
-    print("-" * 112)
+    print(f"{len(rows)} models -> {path}\n")
+    print("writing_score = (organization + (100 - slop)) / 2    [slop lower is better]")
+    print(f"{'model':<40}{'writing':>9}{'org':>7}{'slop':>7}")
+    print("-" * 64)
     for r in rows:
-        print(f"{r['model'][:42]:<44}" +
-              "".join(f"{(r[h] if r[h] is not None else float('nan')):>13.1f}"
-                      for h in hdr[1:]))
+        print(f"{r['model'][:38]:<40}{r['writing_score']:>9.1f}"
+              f"{r['organization']:>7.1f}{r['slop']:>7.1f}")
