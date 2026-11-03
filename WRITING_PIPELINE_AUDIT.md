@@ -6,6 +6,14 @@
 `dev_workspaces/resume_experiment/` (dataset), `Model_Efficiency_Comparison.ipynb` (appendix V2/V3/V4 cells).
 **Spend during this audit:** $0 (code reading + local reproduction only; no model calls, no deploys).
 
+> **Path note (2026-11-02).** This audit is a point-in-time record and its paths
+> are left as written. The v4 evaluator it critiques now lives at
+> `archive/superseded_resume_benchmarks/v4_resume_writing_benchmark.py`, and the
+> replacement harness is `resume_writing_v2/`. Every evaluator defect listed here
+> (E1 weights 110→clip, E3 pipe-count gate, E4 case-blind "I" gate, E7
+> reasoning-as-content) is fixed in the current harness and recorded in
+> `resume_writing_v2/METHODOLOGY.md` § "Why the gate design changed".
+
 ---
 
 ## 0. Executive summary

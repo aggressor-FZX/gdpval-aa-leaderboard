@@ -20,6 +20,8 @@ import requests
 
 from .config import (OPENROUTER_URL, CATALOG_URL, RUNS_PER_MODEL, MAX_SPEND_USD,
                      MAX_CONCURRENCY, REQUEST_TIMEOUT_S, RETRIES, api_key)
+
+CHECKPOINT_EVERY = 5         # completions between atomic result flushes
 from .scoring import score
 
 
@@ -166,16 +168,25 @@ def run(entries, prompt: str, system: str, runs: int = RUNS_PER_MODEL,
             results.append(row)
             print(f"  [{len(results):>2}/{len(plan)}] {e.label[:34]:<36} "
                   f"run{run_i} {'OK ' if row['ok'] else 'ERR'} "
-                  f"score={row.get('score', '-')} ${row['cost_usd']:.5f}")
+                  f"score={row.get('score', '-')} ${row['cost_usd']:.5f}",
+                  flush=True)
+            # Checkpoint after every completion. A long reasoning model can
+            # hold a worker for minutes, and a killed process used to discard
+            # the entire round's paid-for results.
+            if out_path and len(results) % CHECKPOINT_EVERY == 0:
+                _checkpoint(out_path, entries, runs, plan, results, spent,
+                            skipped, budget_usd, complete=False)
 
     payload = {
         "meta": {
             "runs_per_model": runs,
             "models": len(entries),
             "requests_planned": len(plan),
+            "requests_completed": len(results),
             "requests_skipped_budget": skipped,
             "spent_usd": round(spent, 5),
             "budget_ceiling_usd": budget_usd,
+            "complete": True,
         },
         "results": results,
     }
@@ -187,3 +198,26 @@ def run(entries, prompt: str, system: str, runs: int = RUNS_PER_MODEL,
     if skipped:
         print(f"BUDGET CEILING HIT — {skipped} request(s) were not submitted.")
     return payload
+
+
+def _checkpoint(out_path, entries, runs, plan, results, spent, skipped,
+                budget_usd, complete):
+    """Flush partial results atomically so a kill cannot corrupt the file."""
+    payload = {
+        "meta": {
+            "runs_per_model": runs,
+            "models": len(entries),
+            "requests_planned": len(plan),
+            "requests_completed": len(results),
+            "requests_skipped_budget": skipped,
+            "spent_usd": round(spent, 5),
+            "budget_ceiling_usd": budget_usd,
+            "complete": complete,
+        },
+        "results": list(results),
+    }
+    tmp = out_path + ".tmp"
+    os.makedirs(os.path.dirname(out_path) or ".", exist_ok=True)
+    with open(tmp, "w") as f:
+        json.dump(payload, f, indent=1)
+    os.replace(tmp, out_path)

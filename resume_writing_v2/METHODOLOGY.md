@@ -93,6 +93,32 @@ at +1.2 to +3.7 points, all with |t| < 0.9 — inside noise. Round 2 (n=8) plus
 combined n=11 produced 4 **statistically significant** winners (t = 2.6–3.5,
 Cohen's d = 1.1–1.5).
 
+Threshold used throughout: **|t| ≥ 2.5 AND |Cohen's d| ≥ 0.8**. Both must hold.
+A large effect with an unstable n, or a stable mean with a trivial effect, is
+reported as `inside noise`.
+
+### Rounds, and why a variant is not a model
+
+| round | set | runs/model | effort |
+|---|---|---|---|
+| 1 | every OpenRouter model with output ≤ $2/M | 3 | provider default |
+| 2 | round-1 contenders within 4 pts of control | 8 | provider default |
+| 3 | the named high/low-cost set (Haiku through GPT-3.5) | 4 | explicit |
+
+Rounds 1 and 2 ran every model at the **provider default** effort. Round 3 exists
+because that cannot answer "Grok 4.7 at `xhigh` vs Kimi K3.1 Pro", and because
+most of that set had never been run at all.
+
+The unit of analysis is therefore the **variant**: `(model_id, reasoning_effort)`.
+The same family at `xhigh` and at provider default behaves differently — Grok 4.7
+at `xhigh` produced 68–78 where its default-effort predecessor sat near 68–71 —
+so pooling them would average two different models and hide the effect under test.
+
+**Cost is measured, not modelled.** `$/run` is the mean observed `usage.cost`
+returned by OpenRouter for the scored runs, not price × an assumed token count.
+That matters because reasoning models bill for hidden reasoning tokens, which vary
+run to run (Grok 4.7 at `xhigh`: $0.119–$0.177 per run for the same prompt).
+
 ---
 
 ## B. Drafter faithfulness contest
@@ -184,6 +210,31 @@ Both exist only on the website, not in the v2 API, so they are scraped.
 - Used **only** to shortlist candidates. Demonstrated not to predict task
   performance.
 
+### Trait predictive value — the n=6 number was not usable
+
+With the round-3 data there are **24 models** that have both a trait record and a
+measured score. Pearson r against our score, one point per model (best variant):
+
+| trait | r | threshold at n=24 is 0.43 |
+|---|---|---|
+| `scannable` | +0.38 | not significant |
+| `truthful` | −0.29 | not significant |
+| `eloquent` | +0.12 | not significant |
+| `lexicallyVaried` | +0.11 | not significant |
+| `structured` | +0.10 | not significant |
+| `literate` | −0.06 | not significant |
+
+`scannable` was previously reported as **+0.81 at n=6** and described as sitting
+"on the threshold". It is now +0.38 at n=24. Both are consistent with a true
+correlation somewhere near 0.3–0.4; the n=6 value was small-sample noise, and
+quoting it as borderline-predictive was wrong. The correct statement is that no
+AA trait has been shown to predict this task.
+
+There is also a **degenerate-payload check** in `compile_results.py`: any AA
+record whose 30 traits are all identical is rejected and its values nulled
+(currently `GPT-6.1 Sol`, all 1000.0). Such a record is a scrape artefact, not a
+model that scores 1000 on every trait.
+
 ---
 
 ## D. Reproducing
@@ -191,15 +242,36 @@ Both exist only on the website, not in the v2 API, so they are scraped.
 ```bash
 source venv/bin/activate
 python resume_writing_v2/contestants.py           # who is in the contest
-python resume_writing_v2/run_contest.py           # test A  (RUNS/BUDGET env)
+python resume_writing_v2/run_contest.py           # A round 1  (RUNS/BUDGET env)
+python resume_writing_v2/round2.py                # A round 2  (n=8 contenders)
+python resume_writing_v2/round3.py                # A round 3  (named set, efforts)
 python resume_writing_v2/analyse_contest.py       # A: trust check + leaderboard
 python resume_writing_v2/significance.py <results.json>   # A: significance
 python resume_writing_v2/run_drafter_contest.py   # test B
 python resume_writing_v2/personalitybench.py      # C: AA indexes
-python resume_writing_v2/visualise.py             # figures
+traits
+python resume_writing_v2/compile_results.py       # consolidated + figure + RESULTS.md
+python resume_writing_v2/visualise.py             # the two per-test figures
 ```
 
-Cost: A ≈ $0.37 (164 requests), B ≈ $0.20 (20 requests), C free.
+`compile_results.py` is the single source of `RESULTS.md`. It pools all rounds,
+attaches AA trait Elo by **exact** name match only, writes
+`results/consolidated.json`, and regenerates `figures/price_vs_quality.png`.
+A fuzzy name match is deliberately not attempted: attaching the wrong model's Elo
+would be invisible in the output.
+
+Cost: A rounds 1+2 ≈ $0.37 (164 requests), round 3 ≈ $0.75 (100 requests at
+named efforts), B ≈ $0.20 (20 requests), C free.
+
+`round3.py` records models with no OpenRouter id (currently
+`K2 Horizon 375B A23B`) as **unavailable** rather than dropping them silently.
+
+### Runner safety
+
+The runner checkpoints partial results atomically (`os.replace`) every 5
+completions. This was added after a 15-minute console timeout killed a paid-for
+run with nothing written: high-effort models can hold a worker for minutes, and
+losing the whole round to an impatient shell is a real cost.
 
 ---
 

@@ -20,9 +20,18 @@ candidate shortlist filter only, never a grading axis.
 
 ## Headline findings
 
-- **A:** `qwen/qwen3.6-35b-a3b` beats the DeepSeek V4.1 Flash incumbent by
-  **+5.8 points (significant, t=2.62)** at **0.22× the cost**. Four models beat
-  it significantly; none were significantly worse.
+48 measured variants across three rounds. Full tables in
+[`RESULTS.md`](RESULTS.md) §2; figure at `figures/price_vs_quality.png`.
+
+- **A — best value:** `qwen/qwen3.6-35b-a3b` beats the DeepSeek V4.1 Flash
+  incumbent by **+5.8 points (t=2.62)** at **$0.00053/run — 0.21× the cost**.
+  Four variants are significantly better; 15 are significantly worse.
+- **A — cheap does not mean good.** `Claude Haiku 5.5` at `high` scores **73.8**,
+  significantly *worse* than the incumbent (t=−3.89), as do Kimi K3.1 Pro
+  (73.5), Grok 4.6/4.7 at `xhigh` (71–72) and GPT-6 Luna at `xhigh` (71.2), at
+  13–66× the control's cost per run.
+- **A — expensive does not mean good either.** Grok 4.7 at `xhigh` costs
+  **$0.162/run** — 66× the control — and scores 72.0.
 - **B:** the incumbent `qwen3-coder` is the most faithful *cheap* model but has
   **0% compliance** with its own 15–25 word bullet spec. `Kimi K3.1 Pro` is the
   only model faithful *and* compliant, at 94× cost. `MiniMax M3.1 Flash` writes
@@ -50,10 +59,12 @@ resume_writing_v2/
 ├── significance.py         Welch t-test + effect size vs the incumbent
 ├── run_contest.py          test A runner
 ├── round2.py               test A, higher-n focused rerun
+├── round3.py               test A, named model set at explicit efforts
 ├── run_drafter_contest.py  test B runner
 ├── analyse_contest.py      test A trust check + leaderboard
-├── visualise.py            generates figures/
-└── results/  figures/      raw JSON, PNGs (gitignored)
+├── compile_results.py      pools all rounds -> RESULTS.md + price/quality figure
+├── visualise.py            generates the two per-test figures
+└── results/  figures/      raw JSON, consolidated.json, PNGs (gitignored)
 ```
 
 ## Running
@@ -61,15 +72,20 @@ resume_writing_v2/
 ```bash
 source venv/bin/activate
 python resume_writing_v2/contestants.py             # who competes
-python resume_writing_v2/run_contest.py             # test A (RUNS/BUDGET env)
+python resume_writing_v2/run_contest.py             # test A round 1 (RUNS/BUDGET)
+python resume_writing_v2/round2.py                  # A round 2, n=8 contenders
+python resume_writing_v2/round3.py                  # A round 3, named set
 python resume_writing_v2/analyse_contest.py         # A: trust check + table
 python resume_writing_v2/significance.py results/contest_cheap_r2.json
 python resume_writing_v2/run_drafter_contest.py     # test B
 python resume_writing_v2/personalitybench.py        # AA shortlist data
-python resume_writing_v2/visualise.py               # figures
+python resume_writing_v2/compile_results.py         # RESULTS.md + figure
+python resume_writing_v2/visualise.py               # per-test figures
 ```
 
-Cost: A ≈ $0.37, B ≈ $0.20. Nothing spends money without an explicit budget.
+Cost: A rounds 1+2 ≈ $0.37, round 3 ≈ $1.96, B ≈ $0.20. Nothing spends money
+without an explicit budget, and `runner.py` checkpoints partial results every 5
+completions so a killed shell cannot discard a paid-for round.
 
 ## Design principles
 
@@ -82,3 +98,9 @@ Cost: A ≈ $0.37, B ≈ $0.20. Nothing spends money without an explicit budget.
 - **Significance gates the claims.** A positive delta inside the noise is reported
   as noise, not as a winner.
 - **Missing data stays missing.** No silent imputation, no zero-filling.
+- **A variant is not a model.** `(model_id, reasoning_effort)` is the unit; the
+  same family at `xhigh` and at provider default is never pooled.
+- **Efforts are verified, not assumed.** If an explicit `reasoning_effort`
+  returns zero reasoning tokens, the run is flagged as default-effort rather
+  than reported under the effort name that was requested.
+- **Cost is measured, not modelled.** `$/run` is the mean observed `usage.cost`.
