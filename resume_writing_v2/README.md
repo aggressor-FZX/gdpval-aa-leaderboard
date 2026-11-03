@@ -13,7 +13,7 @@ axes and thresholds if you need to audit or reproduce a number.
 | test | task | scored on |
 |---|---|---|
 | **A — free-authoring** | full resume from a verified profile + a job description | gate-clamped 100-point rubric |
-| **B — drafter faithfulness** | raw experience notes → STAR bullets under an evidence boundary | fabrication / metric fidelity / format |
+| **B — full-resume faithfulness + structure** | raw experience notes → a complete resume under an evidence boundary | invention checks **and** sections / chronology / exact dates / ATS formatting — both required |
 
 These are different tasks and are not interchangeable. AA-PersonalityBench was a
 candidate shortlist filter only, never a grading axis.
@@ -32,10 +32,14 @@ candidate shortlist filter only, never a grading axis.
   13–66× the control's cost per run.
 - **A — expensive does not mean good either.** Grok 4.7 at `xhigh` costs
   **$0.162/run** — 66× the control — and scores 72.0.
-- **B:** the incumbent `qwen3-coder` is the most faithful *cheap* model but has
-  **0% compliance** with its own 15–25 word bullet spec. `Kimi K3.1 Pro` is the
-  only model faithful *and* compliant, at 94× cost. `MiniMax M3.1 Flash` writes
-  the prettiest bullets and invents 24 things — do not use it as a drafter.
+- **B:** 40 variants, 3 runs each, scored on faithfulness **and** structure
+  together. **35 passed every run.** Structure was not the hard part — exact
+  dates and years were copied correctly by almost everyone. The **15–25 word
+  band** was the real discriminator (several models: 0–7%). One variant leaked
+  its internal reasoning into the output and failed outright.
+- **B — excluded by request:** five variants Test A found significantly worse
+  than the incumbent at a higher price (Haiku 5.5 `high`, Kimi K3.1 Pro, Grok
+  4.7/4.6 `xhigh`, GPT-6 Luna `xhigh`) were not re-run.
 - **Spend (product only):** Job Scout research is **91% of product spend**
   ($27.52/mo). The whole Imaginator pipeline is **$2.86**, of which the drafter
   is $0.21. Development traffic is excluded from this analysis.
@@ -60,7 +64,10 @@ resume_writing_v2/
 ├── run_contest.py          test A runner
 ├── round2.py               test A, higher-n focused rerun
 ├── round3.py               test A, named model set at explicit efforts
-├── run_drafter_contest.py  test B runner
+├── run_drafter_contest.py  test B runner (superseded bullets-only version)
+├── round_b_fullresume.py   test B runner (full resume, faithfulness + structure)
+├── compile_test_b.py       test B ranking + figure + RESULTS_TEST_B.md
+├── test_scorers.py         scorer self-tests: fire on bad, quiet on good
 ├── analyse_contest.py      test A trust check + leaderboard
 ├── compile_results.py      pools all rounds -> RESULTS.md + price/quality figure
 ├── visualise.py            generates the two per-test figures
@@ -77,15 +84,24 @@ python resume_writing_v2/round2.py                  # A round 2, n=8 contenders
 python resume_writing_v2/round3.py                  # A round 3, named set
 python resume_writing_v2/analyse_contest.py         # A: trust check + table
 python resume_writing_v2/significance.py results/contest_cheap_r2.json
-python resume_writing_v2/run_drafter_contest.py     # test B
+python resume_writing_v2/round_b_fullresume.py      # test B (full resume)
+python resume_writing_v2/compile_test_b.py          # B: ranking + figure
+python resume_writing_v2/test_scorers.py            # scorer self-tests (free)
 python resume_writing_v2/personalitybench.py        # AA shortlist data
 python resume_writing_v2/compile_results.py         # RESULTS.md + figure
 python resume_writing_v2/visualise.py               # per-test figures
 ```
 
-Cost: A rounds 1+2 ≈ $0.37, round 3 ≈ $1.96, B ≈ $0.20. Nothing spends money
-without an explicit budget, and `runner.py` checkpoints partial results every 5
-completions so a killed shell cannot discard a paid-for round.
+Run `compile_test_b.py` **before** `compile_results.py`: the latter folds the
+Test B section into `RESULTS.md` at a placeholder.
+
+Cost: A rounds 1+2 = $0.37, round 3 = $1.96, B = $0.50. Total **$3.03**. Nothing
+spends money without an explicit budget, and `runner.py` checkpoints partial
+results every 5 completions so a killed shell cannot discard a paid-for round.
+
+`RESCORE=1 python resume_writing_v2/round_b_fullresume.py` re-scores saved
+responses with the current scorer, at zero cost. Use it after any scorer change:
+a run that finished under an older scorer would otherwise keep stale verdicts.
 
 ## Design principles
 
@@ -104,3 +120,8 @@ completions so a killed shell cannot discard a paid-for round.
   returns zero reasoning tokens, the run is flagged as default-effort rather
   than reported under the effort name that was requested.
 - **Cost is measured, not modelled.** `$/run` is the mean observed `usage.cost`.
+- **Scorers are tested.** `test_scorers.py` asserts each check fires on a
+  known-bad fixture and stays quiet on a known-good one. Six silent scorer bugs
+  were caught this way; each would have produced a confident wrong ranking.
+- **Truncation is its own failure.** A run that exhausts its token budget is
+  reported as truncated, not as a wrong date.

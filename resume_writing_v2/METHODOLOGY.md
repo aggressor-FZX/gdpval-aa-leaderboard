@@ -16,7 +16,7 @@ is the fastest way to draw a wrong conclusion.
 | # | Test | Question | Scored on | Results |
 |---|---|---|---|---|
 | A | **Free-authoring contest** | Can a cheap model write a good resume from a profile? | gate-clamped 100-pt rubric | RESULTS.md §2 |
-| B | **Drafter faithfulness** | Can a model rewrite raw notes into STAR bullets without inventing anything? | fabrication / metrics / format | RESULTS.md §3 |
+| B | **Full-resume faithfulness + structure** | Can a model rewrite raw notes into a complete, correctly-dated, correctly-ordered resume without inventing anything? | fidelity AND structure, both required | RESULTS.md §3 |
 | C | **AA-PersonalityBench** | What does AA's published writing benchmark say? | 8 index percentiles + 30 trait Elos | RESULTS.md §5 |
 
 Notes that matter:
@@ -28,6 +28,9 @@ Notes that matter:
 - **A and B use different tasks.** A is authoring from a structured profile. B is
   constrained rewriting with an explicit evidence boundary. A model can win one
   and lose the other — several did.
+- **B is not just a fact-check.** It also requires sections, chronology, exact
+  dates and ATS-parseable text. A resume can be factually perfect and still
+  unusable.
 - **Neither A nor B measures prose beauty.** Deliberately. A fluent fabricator is
   worse than a plain faithful writer for this pipeline.
 
@@ -121,7 +124,79 @@ run to run (Grok 4.7 at `xhigh`: $0.119–$0.177 per run for the same prompt).
 
 ---
 
-## B. Drafter faithfulness contest
+## B. Test B — full resume: faithfulness AND structure
+
+Test B was extended on 2026-11-02. The original version asked for JSON bullets
+only, which meant it could not observe a wrong graduation year, a reordered job
+history, or a missing section — it never asked for them. Its 5-model result is
+kept in `results/drafter_faithfulness.json` as history, not as a current ranking.
+
+### The two contracts
+
+Both must hold on the SAME run for `pass`.
+
+**Faithfulness** — unchanged in substance:
+
+| check | rule |
+|---|---|
+| invented technology | any of 23 JD-only technologies (aws, docker, kubernetes,
+  pytorch, langchain, llm, gpu, rag…) in a bullet. Word-boundary matched. |
+| invented company | an org-like token outside the allowed company set |
+| unverified number | a number not in the verified list |
+| unit stripped | a verified value whose unit was dropped (`30` not `30 hours`) |
+
+**Structure** — new:
+
+| check | rule |
+|---|---|
+| required sections | `PROFESSIONAL EXPERIENCE`, `EDUCATION`, `CERTIFICATIONS` |
+| chronology | source companies appear in reverse-chronological order |
+| employment dates | start AND end copied exactly, **month included** |
+| education years | both years of each range exact, and no invented year |
+| cert dates | exact issue date per certificate |
+| formatting | plain text; no markdown table, no code fence |
+
+### Fixture and its honesty
+
+The structure test needs dates to check, and the production profile in `task.py`
+deliberately carries none.
+
+`FIXTURE_EDUCATION` and `FIXTURE_CERTIFICATIONS` are therefore **synthetic**:
+the school years and certificate dates are invented *for the test*. They are not
+claims about the real candidate and must never be reused in user-facing output.
+
+### Why truncation is its own column
+
+A run that consumes 98%+ of its `max_tokens` budget was cut off mid-sentence.
+That is not a wrong date and not a wrong layout — the model never finished. One
+variant (Gemini 3.8 Flash at `high`) hit 8187/8192 on **all three** runs and its
+structural failures were entirely truncation. Reporting that as "got the cert
+date wrong" would be misleading.
+
+### Scorer integrity
+
+The scorers are deterministic, so they fail deterministically. Six silent bugs
+were found in this round, every one of which produced a plausible wrong answer:
+
+| bug | wrong conclusion |
+|---|---|
+| plain-text resumes scored by the JSON scorer | all 43 variants failed
+  faithfulness |
+| `04/2024` parsed as numbers 4 and 2024 | correct dates flagged as fabricated
+  metrics |
+| unmarked bullets not extracted | models with 7 good bullets scored 0 |
+| education/cert lines counted as bullets | in-band compliance forced to 0% |
+| character window instead of line | adjacent credentials shared years |
+| fixed above-then-below line preference | below-layout certs borrowed the
+  previous cert's date |
+
+`python resume_writing_v2/test_scorers.py` now asserts each scorer FIRES on a
+known-bad fixture and stays QUIET on a known-good one, including all three
+common date layouts (same line / above / below).
+
+---
+
+## B-history. Drafter bullets-only contest (superseded, kept for the record)
 
 ### Task — read from `stages/drafter.py`, not assumed
 The production drafter (`OR_SLUG_DRAFTER = "qwen/qwen3-coder"`, temp 0.3,
@@ -247,12 +322,18 @@ python resume_writing_v2/round2.py                # A round 2  (n=8 contenders)
 python resume_writing_v2/round3.py                # A round 3  (named set, efforts)
 python resume_writing_v2/analyse_contest.py       # A: trust check + leaderboard
 python resume_writing_v2/significance.py <results.json>   # A: significance
-python resume_writing_v2/run_drafter_contest.py   # test B
-python resume_writing_v2/personalitybench.py      # C: AA indexes
-traits
+python resume_writing_v2/round_b_fullresume.py    # test B (full resume)
+python resume_writing_v2/compile_test_b.py        # B: ranking + figure + section
+RESCORE=1 python resume_writing_v2/round_b_fullresume.py  # rescore, no API calls
+python resume_writing_v2/test_scorers.py          # scorer self-tests (free)
+python resume_writing_v2/personalitybench.py traits eloquent scannable   # C
 python resume_writing_v2/compile_results.py       # consolidated + figure + RESULTS.md
 python resume_writing_v2/visualise.py             # the two per-test figures
 ```
+
+Order matters for the last two: `compile_test_b.py` writes `RESULTS_TEST_B.md`,
+and `compile_results.py` folds that file into `RESULTS.md` at a placeholder. Run
+the Test B compiler first or §3 will contain the placeholder marker.
 
 `compile_results.py` is the single source of `RESULTS.md`. It pools all rounds,
 attaches AA trait Elo by **exact** name match only, writes
@@ -260,8 +341,9 @@ attaches AA trait Elo by **exact** name match only, writes
 A fuzzy name match is deliberately not attempted: attaching the wrong model's Elo
 would be invisible in the output.
 
-Cost: A rounds 1+2 ≈ $0.37 (164 requests), round 3 ≈ $0.75 (100 requests at
-named efforts), B ≈ $0.20 (20 requests), C free.
+Cost: A rounds 1+2 = $0.37 (164 requests), round 3 = $1.96 (100 requests at
+named efforts), B (full resume) = $0.50 (129 requests across 43 variants), the
+superseded bullets-only B = $0.19, C free. Total: **$3.03** of API calls.
 
 `round3.py` records models with no OpenRouter id (currently
 `K2 Horizon 375B A23B`) as **unavailable** rather than dropping them silently.

@@ -46,6 +46,8 @@ FIG = os.path.join(HERE, "figures")
 ROUNDS = ["contest_cheap_r1.json", "contest_cheap_r2.json",
           "contest_cheap_r3.json"]
 CONSOLIDATED = os.path.join(RES, "consolidated.json")
+TEST_B_MD = os.path.join(HERE, "RESULTS_TEST_B.md")
+TEST_B_PLACEHOLDER = "<!--TEST_B-->"
 
 plt.rcParams["text.parse_math"] = False     # '$' is currency, not mathtext
 
@@ -424,8 +426,9 @@ def write_markdown(rows: list[dict], fig: str) -> str:
         "Consolidated, generated document. Regenerate with "
         "`python resume_writing_v2/compile_results.py`.",
         "",
-        "All experiments in this document cost **$2.52** in API calls "
-        "($2.33 for test A across three rounds, $0.19 for test B).",
+        "All experiments in this document cost **$3.03** in API calls: $2.33 "
+        "for test A across three rounds, $0.50 for test B, and $0.19 for the "
+        "superseded bullets-only drafting test.",
         "",
         f"Figure: `{os.path.relpath(fig, HERE)}`  ",
         f"Machine-readable: `{os.path.relpath(CONSOLIDATED, HERE)}`",
@@ -555,43 +558,9 @@ def write_markdown(rows: list[dict], fig: str) -> str:
     lines += [
         "---",
         "",
-        "## 3. Test B — drafter faithfulness",
+        "## 3. Test B — full resume: faithfulness AND structure",
         "",
-        "The production drafter is `qwen/qwen3-coder` (temp 0.3, "
-        "`max_tokens=6000`). Contract read from `stages/drafter.py`: company "
-        "names exact, only input technologies, metrics only from a verified list "
-        "with units attached, 15–25 word bullets, JSON output.",
-        "",
-        "| model | clean runs | fabricated | metric err | 15–25w band "
-        "| strong verb | $/run |",
-        "|---|---|---|---|---|---|---|",
-        "| **Kimi K3.1 Pro** | **4/4** | **0** | 0 | **100%** | 94% "
-        "| $0.04344 |",
-        "| Qwen3 Coder (incumbent) | 3/4 | 2 | 0 | **0%** | 78% | **$0.00046** |",
-        "| Claude Haiku 5.5 | 2/4 | 11 | 0 | 100% | 68% | $0.00205 |",
-        "| GLM 5.3 | 2/4 | 5 | 0 | 3% | 78% | $0.00064 |",
-        "| **MiniMax M3.1 Flash** | **0/4** | **24** | 0 | 100% | 93% "
-        "| $0.00041 |",
-        "",
-        "**The incumbent's defect is format, not fabrication.** `qwen3-coder` "
-        "invents little (2 items / 4 runs) but its bullets average 6–10 words "
-        "against a 15–25 spec — 0% compliance. Prompt-compliance failure, "
-        "invisible to any fact-only check.",
-        "",
-        "**MiniMax M3.1 Flash is the trap.** Best format shape (100% band, 93% "
-        "strong verbs), worst faithfulness — 24 invented items, 0/4 clean. Every "
-        "flagged item was a JD-only technology.",
-        "",
-        "### Recommendation",
-        "",
-        "**Keep `qwen3-coder`.** Most faithful cheap model; its one defect is "
-        "fixable by making the word band machine-checkable (pad-or-retry) rather "
-        "than trusting a prompt sentence.",
-        "",
-        "- Do **not** switch to MiniMax M3.1 Flash at any price.",
-        "- Kimi K3.1 Pro is the only model satisfying both faithfulness and "
-        "format unaided, at 94× the cost — a bad trade to avoid a "
-        "post-processing rule.",
+        TEST_B_PLACEHOLDER,
         "",
         "---",
         "",
@@ -713,6 +682,18 @@ def main() -> int:
     out = write_consolidated(rows)
     fig = figure(rows)
     md = write_markdown(rows, fig)
+
+    # Fold the generated Test B section into RESULTS.md via an explicit
+    # placeholder. A string-search merge was fragile and silently dropped
+    # sections when a heading changed.
+    if os.path.exists(TEST_B_MD):
+        body = open(TEST_B_MD).read().strip()
+        # drop the generated file's own H2 so it nests under this document
+        body = body.split("\n", 1)[1].lstrip() if body.startswith("## ") else body
+        doc = open(md).read()
+        doc = doc.replace(TEST_B_PLACEHOLDER, body)
+        with open(md, "w") as f:
+            f.write(doc)
 
     print(f"consolidated -> {out}")
     print(f"figure       -> {fig}")
