@@ -87,7 +87,7 @@ Control = **DeepSeek V4.1 Flash at provider default** (n=11, mean 84.1). Signifi
 | Granite 4.2 8B | n=3 | 68.6 | 4.2 | -15.4 | -4.91 | $0.00204 | $0.060 | $0.150 | significant |
 | Gemma 4 26B A4B (Reasoning) | n=3 | 68.4 | 2.0 | -15.6 | -6.74 | $0.00008 | $0.076 | $0.255 | significant |
 | Muse Glimmer (high) · high | n=4 | 67.9 | 4.0 | -16.1 | -5.66 | $0.00330 | $0.300 | $1.200 | significant |
-| Reka Flash 3 | n=1 | 25.1 | — | — | — | $0.00331 | $0.100 | $0.200 | low_n |
+| Reka Flash 3 | n=1 | 23.1 | — | — | — | $0.00331 | $0.100 | $0.200 | low_n |
 
 ### The cheap end, and Claude Haiku 5.5
 
@@ -140,7 +140,7 @@ Control = **DeepSeek V4.1 Flash at provider default** (n=11, mean 84.1). Signifi
 | Granite 4.2 8B | n=3 | 68.6 | 4.2 | -15.4 | -4.91 | $0.00204 | — | — | — | — |
 | Gemma 4 26B A4B (Reasoning) | n=3 | 68.4 | 2.0 | -15.6 | -6.74 | $0.00008 | — | — | — | — |
 | Muse Glimmer (high) · high | n=4 | 67.9 | 4.0 | -16.1 | -5.66 | $0.00330 | 1019 | 954 | 177 | 21.5 |
-| Reka Flash 3 | n=1 | 25.1 | — | — | — | $0.00331 | — | — | — | — |
+| Reka Flash 3 | n=1 | 23.1 | — | — | — | $0.00331 | — | — | — | — |
 
 `—` in an AA column means no exact PersonalityBench name match, not a score of zero.
 
@@ -294,6 +294,12 @@ The first Test B asked for JSON bullets only. It could not see a wrong graduatio
 | education/cert lines counted as bullets | in-band compliance artificially 0% |
 | character window instead of line | adjacent credentials shared years, reported as invented |
 | dates searched only below the company | correct layouts marked failed |
+| fixed above-then-below line preference | below-layout certs borrowed the previous cert's date |
+| `2016`, `1000`, `4.0` in `VERIFIED_METRICS` but absent from the profile | a model could invent that graduation year and be **credited** for it |
+
+### The year rule
+
+The education years and certificate dates in this test are **synthetic** and belong to no real person. They are also never reachable from the production prompt: `task.build_prompt()` uses `CANDIDATE_PROFILE`, which contains no graduation or certificate years. See METHODOLOGY.md "Fixture provenance — the year rule" for why this is treated as an invariant rather than a convention.
 
 ---
 

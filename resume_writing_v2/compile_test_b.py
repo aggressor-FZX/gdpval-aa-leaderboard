@@ -298,6 +298,20 @@ def write_markdown(agg: list[dict], meta: dict, fig: str) -> str:
         "years, reported as invented |",
         "| dates searched only below the company | correct layouts marked "
         "failed |",
+        "| fixed above-then-below line preference | below-layout certs borrowed "
+        "the previous cert's date |",
+        "| `2016`, `1000`, `4.0` in `VERIFIED_METRICS` but absent from the "
+        "profile | a model could invent that graduation year and be **credited** "
+        "for it |",
+        "",
+        "### The year rule",
+        "",
+        "The education years and certificate dates in this test are **synthetic** "
+        "and belong to no real person. They are also never reachable from the "
+        "production prompt: `task.build_prompt()` uses `CANDIDATE_PROFILE`, which "
+        "contains no graduation or certificate years. See METHODOLOGY.md "
+        "\"Fixture provenance — the year rule\" for why this is treated as an "
+        "invariant rather than a convention.",
         "",
     ]
     return "\n".join(L)

@@ -18,6 +18,8 @@ Thumbs.db
 
 # Large binary artifacts (regenerable from the notebook)
 *.pdf
+# ...except the curated evaluation report, which is a deliverable
+!resume_writing_REPORT.pdf
 __pycache__/LLM_comparisons/
 LLM_comparisons/
 

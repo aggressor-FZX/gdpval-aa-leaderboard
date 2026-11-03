@@ -11,6 +11,7 @@ Run: python resume_writing_v2/test_scorers.py
 from __future__ import annotations
 
 import os
+import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -85,6 +86,39 @@ B.S. Data Analytics, Washington State University 2015 - 2019
 CERTIFICATIONS
 CompTIA Security+ 03/2023
 """
+
+
+def _invariants() -> None:
+    """Cross-module invariants: the allowlists must describe the real profile."""
+    from resume_writing_v2 import gates, task
+
+    print("\nInvariant: every 'verified' metric appears in the candidate profile")
+    profile = task.CANDIDATE_PROFILE.lower()
+    phantom = [m for m in gates.VERIFIED_METRICS if m not in profile]
+    check(not phantom,
+          f"no phantom verified metrics (found {phantom})" if phantom
+          else "no phantom verified metrics")
+
+    print("\nInvariant: the profile carries NO education or certification years")
+    # An employment start year ("Cogito Metric (2024 - present)") is a real,
+    # verified fact. What the profile must NOT contain is a graduation year or a
+    # certificate issue date, because Test A has no gate that could detect a
+    # model inventing one. Check the education and certification blocks only.
+    edu = task.CANDIDATE_PROFILE.split("EDUCATION")[1].split("EXPERIENCE")[0]
+    cert = task.CANDIDATE_PROFILE.split("CERTIFICATIONS")[1].split("EXPERIENCE")[0]
+    edu_years = re.findall(r"\b(?:19|20)\d{2}\b", edu)
+    cert_years = re.findall(r"\b(?:19|20)\d{2}\b", cert)
+    check(not edu_years and not cert_years,
+          "no graduation/cert years in the profile"
+          if not (edu_years or cert_years)
+          else f"profile leaks years: education={edu_years} certs={cert_years}")
+
+    print("\nInvariant: Test B fixture years are flagged synthetic")
+    import inspect
+    from resume_writing_v2 import drafter_faithfulness as d
+    src = inspect.getsource(d)
+    check("SYNTHETIC TEST FIXTURE" in src,
+          "FIXTURE_EDUCATION block carries a SYNTHETIC warning")
 
 
 def main() -> int:
@@ -249,6 +283,8 @@ Data Analytics Certificate
           "04/2024, 2015, 03/2023 are not fabricated metrics")
     check(dd["unit_stripped"] == [],
           "dates do not trigger the unit-stripped check")
+
+    _invariants()
 
     print("\n" + "=" * 60)
     if FAILS:

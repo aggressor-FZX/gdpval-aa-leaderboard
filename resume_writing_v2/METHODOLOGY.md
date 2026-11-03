@@ -156,14 +156,77 @@ Both must hold on the SAME run for `pass`.
 | cert dates | exact issue date per certificate |
 | formatting | plain text; no markdown table, no code fence |
 
-### Fixture and its honesty
+### Fixture provenance — the year rule
 
 The structure test needs dates to check, and the production profile in `task.py`
-deliberately carries none.
+deliberately carries none. `FIXTURE_EDUCATION` and `FIXTURE_CERTIFICATIONS` are
+therefore **synthetic**: those school years and certificate dates are invented
+for the test and belong to no real person.
 
-`FIXTURE_EDUCATION` and `FIXTURE_CERTIFICATIONS` are therefore **synthetic**:
-the school years and certificate dates are invented *for the test*. They are not
-claims about the real candidate and must never be reused in user-facing output.
+#### Why synthetic years must NEVER reach user-facing output
+
+The harness is **instructed to write a resume**, and Test B's prompt says to copy
+the education years and certification dates exactly from the source. A model
+obeying that instruction emits whatever years it was given. If the years it was
+given are synthetic, the output contains fabricated credentials that read as
+verified. That is the exposure, and it is created by the instruction itself.
+
+Four reasons the rule is absolute rather than a preference:
+
+1. **It is a claim to an employer.** A resume is a document of record. An
+   invented graduation year or certification date is a false statement made in
+   the candidate's name and sent to a third party. Convenience in a benchmark
+   does not justify that.
+
+2. **A missing year is not the same as a wrong year.** Omission is incomplete.
+   Invention is misrepresentation. They must never be conflated, and no fallback
+   that "fills in" a year is acceptable.
+
+3. **It is identity-adjacent.** Inventing a year is the same *kind* of act as
+   inventing the degree. Age and tenure are inferred from graduation years, so a
+   wrong year can misstate both.
+
+4. **Nothing downstream would catch a leak.** Test A's critical gates G1–G4
+   check employers, degrees and clearance. **There is no gate for years.** A
+   synthetic year that reached a production prompt would pass every existing
+   check silently. This is why the rule cannot depend on a reviewer noticing.
+
+Two further practical reasons:
+
+5. **It cannot be traced back.** These values exist only inside a scorer
+   fixture. No source document supports them, so a leak is not auditable after
+   the fact — there is nothing to verify against.
+
+6. **The production path never needs them.** `task.build_prompt()` uses
+   `CANDIDATE_PROFILE` only, which contains no graduation or certificate years.
+   The fixture is reached exclusively by the Test B scorer.
+
+#### The rule
+
+> Education years and certification dates must always come from the candidate's
+> own uploaded documents. They are never inferred, never defaulted, never
+> borrowed from a test fixture, and never carried over from another candidate's
+> record. If a source year is unavailable, the resume omits it — omission is
+> always preferable to invention.
+
+If a future change makes the harness copy `FIXTURE_EDUCATION` or
+`FIXTURE_CERTIFICATIONS` into a prompt for real users, that is a **defect**, not
+a configuration choice.
+
+#### Enforcement
+
+| guarantee | where |
+|---|---|
+| production profile has no education or cert years | `task.CANDIDATE_PROFILE` |
+| fixture block is marked SYNTHETIC in source | `drafter_faithfulness.FIXTURE_EDUCATION` |
+| test fails if the profile gains a year | `test_scorers.py::_invariants` |
+| test fails if the SYNTHETIC marker is removed | `test_scorers.py::_invariants` |
+| `VERIFIED_METRICS` contains no unverifiable value | `test_scorers.py::_invariants` |
+
+The third row previously caught a real bug: `VERIFIED_METRICS` contained `2016`,
+which appears nowhere in the profile. A model could invent that graduation year
+and be **credited** for it by the metrics score. `1000` and `4.0` were the same
+kind of phantom. All three are removed.
 
 ### Why truncation is its own column
 

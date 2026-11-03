@@ -66,11 +66,31 @@ VERIFIED_METRICS = [
 ]
 
 # ── Full-resume fixture (structure test) ───────────────────────────────────
-# SYNTHETIC TEST FIXTURE. The school years and certificate dates below are
-# INVENTED for this test so that "did the model copy them exactly?" is
-# measurable. They are NOT claims about the real candidate; the production
-# profile in task.py deliberately carries no years. Do not reuse these dates
-# anywhere user-facing.
+# !! SYNTHETIC TEST FIXTURE — NOT CANDIDATE DATA !!
+#
+# The school years and certificate dates below are INVENTED for this test. They
+# exist only so "did the model copy the year exactly?" is measurable; without a
+# source year there is nothing to copy.
+#
+# They are NOT claims about Jeff Calderon. The production profile in task.py
+# deliberately omits graduation and certification years, and a real resume must
+# always take those dates from the candidate's uploaded source documents.
+#
+# WHY THEY MUST NEVER REACH USER-FACING OUTPUT:
+#   1. A fabricated graduation year in a resume sent to an employer is a
+#      misrepresentation. It is materially different from a missing year, which
+#      is merely incomplete.
+#   2. Education and certification years are identity-adjacent claims. Inventing
+#      one is indistinguishable from inventing a degree.
+#   3. Test A has NO gate that detects an invented year (G1-G4 check employers,
+#      degrees and clearance only), so nothing downstream would catch a leak.
+#   4. These specific values exist only in a scorer fixture and were never
+#      verified against any document. Tracing them back to a real source is
+#      impossible by construction.
+#
+# If a future change makes the harness copy FIXTURE_EDUCATION or
+# FIXTURE_CERTIFICATIONS into a prompt for real users, that is a defect, not a
+# configuration choice.
 FIXTURE_EDUCATION = [
     {"school": "Washington State University",
      "credential": "B.S. Data Analytics", "years": "2015 - 2019"},

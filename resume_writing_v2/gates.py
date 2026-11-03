@@ -29,7 +29,11 @@ VERIFIED_DEGREES = ["b.s. data analytics", "b.s. physics", "a.a.s. computer scie
                     "bachelor"]
 VERIFIED_CERTS = ["network security+", "security+", "comptia", "cybersecurity analyst",
                   "ecc", "data analytics"]
-VERIFIED_METRICS = ["263", "500k", "40%", "10+ tb", "13", "1000", "4.0", "2016"]
+# Every entry MUST appear verbatim in task.CANDIDATE_PROFILE. `1000`, `4.0` and
+# `2016` used to sit here and appear nowhere in the profile, so a model could
+# invent that graduation year and be CREDITED for it by the metrics score.
+# test_scorers.py::test_verified_metrics_are_real now enforces the invariant.
+VERIFIED_METRICS = ["263", "500k", "40%", "10+ tb", "13"]
 
 FORBIDDEN_DEGREES = ["master", "phd", "ph.d", "doctorate", "m.s.", "mba", "m.eng", "m.sc"]
 FORBIDDEN_EMPLOYERS = ["google", "microsoft", "amazon", "facebook", "meta",
