@@ -107,37 +107,60 @@ trusting a prompt sentence.
 
 ---
 
-## 4. Spend — the drafter is not the cost problem
+## 4. Spend — product stages only
 
-30 days (2026-10-04 → 2026-11-02), **$166.20** total.
+30 days (2026-10-04 → 2026-11-02). Development traffic is **excluded**: `gpt-6.1-sol`,
+`gpt-6.1-terra`, `claude-haiku-5.5` and similar are engineering-use models, not
+product, and quoting them as "cost to replace" would be wrong.
 
-| model | spend | share |
-|---|---|---|
-| openai/gpt-6.1-sol | $39.02 | **23.5%** |
-| openai/gpt-6.1-terra | $33.74 | **20.3%** |
-| deepseek/deepseek-v4.1-flash (`/coder`, Wafer max) | $26.23 | **15.8%** |
-| anthropic/claude-haiku-5.5 | $20.24 | 12.2% |
-| z-ai/glm-5.3 | $10.61 | 6.4% |
+| | spend | requests | share |
+|---|---|---|---|
+| **A. Imaginator pipeline** | **$2.86** | 2,060 | 1.7% |
+| └ drafter (`qwen3-coder`) | $0.21 | — | 0.13% |
+| **B. Job Scout research** | **$27.52** | 10,281 | 16.6% |
+| **PRODUCT TOTAL** | **$30.38** | 12,341 | **18.3%** |
+| Development (out of scope) | $135.82 | — | 81.7% |
 
-**All Imaginator/application stages combined: ~$2.82 = 1.7%.**
-**Drafter alone: $0.20 = 0.15%.**
+### Where the product money actually is
 
-Per key: **`fast_value_model_keys` = $62.20/month**, the largest recurring spend
-and unattributed to any model in the activity feed.
+**Job Scout research is 91% of product spend** — `deepseek-v4.1-flash` at
+$27.52 across 10,281 requests. The entire Imaginator pipeline, all stages
+together, is **$2.86**.
 
-### Where to look for savings
+So within the product:
 
-| priority | target | why |
-|---|---|---|
-| 1 | `fast_value_model_keys` ($62.20/mo) | largest recurring spend, no model attribution |
-| 2 | `gpt-6.1-terra` ($33.74) | 1,891 requests; candidates beat it significantly |
-| 3 | `gpt-6.1-sol` ($39.02) | highest $/1k output at 0.0746 |
-| **not worth it** | Imaginator stages ($2.82) | 1.7% of spend — optimising this cannot move the bill |
+| priority | target | spend | note |
+|---|---|---|---|
+| 1 | **Job Scout / `deepseek-v4.1-flash`** | $27.52 | 10,281 requests, $0.00408/1k out |
+| 2 | `xiaomi/mimo-v2.6-flash` (parser backup) | $1.07 | highest $/1k out of the Imaginator models at 0.00374 |
+| 3 | `inception/mercury-3` | $1.08 | |
+| 4 | drafter `qwen3-coder` | $0.21 | 0.13% of total — not a cost lever |
 
-Switching every Imaginator model to the cheapest option saves at most
-**$2.82/month**.
+**The drafter question is a quality question, not a cost question.** Replacing it
+cannot move the bill: it is $0.21 of $166.20.
 
----
+### AA traits corroborate the drafter result
+
+AA-PersonalityBench's 30 trait Elos (unbounded scale; −611 to 2178 across these
+40 models, 19 with negative values) include several that map directly onto the
+drafter's contract. They were not used to score anything — they are a
+post-hoc check that the empirical result is not an artefact of the fixture.
+
+| model | `truthful` | `structured` | `scannable` | measured outcome |
+|---|---|---|---|---|
+| Kimi K3.1 Pro | **989** | **974** | 980 | **4/4 clean, 0 fabricated** |
+| GLM-5.3 | 743 | 820 | 994 | 2/4 clean, 5 fabricated, 3% band |
+| Claude Haiku 5.5 | 873 | 920 | 967 | 2/4 clean, 11 fabricated |
+| **MiniMax-M3.1-Flash** | **202** | 860 | 1079 | **0/4 clean, 24 fabricated** |
+
+MiniMax M3.1 Flash has the 6th-lowest `truthful` Elo of the 40 scored models and
+the worst measured fabrication by a wide margin (24 items vs 2 for the incumbent).
+Its `scannable` score (1079) is above Kimi's (980) — which is exactly why it looks
+good on a format-only measure and fails the faithfulness test. The trait data
+agrees with the harness on both counts.
+
+`qwen3-coder` is not in AA's 40-model PersonalityBench set, so it has no traits to
+compare — the empirical result stands on its own for that model.
 
 ## 5. Corrections carried forward
 

@@ -17,7 +17,7 @@ is the fastest way to draw a wrong conclusion.
 |---|---|---|---|---|
 | A | **Free-authoring contest** | Can a cheap model write a good resume from a profile? | gate-clamped 100-pt rubric | RESULTS.md §2 |
 | B | **Drafter faithfulness** | Can a model rewrite raw notes into STAR bullets without inventing anything? | fabrication / metrics / format | RESULTS.md §3 |
-| C | **AA-PersonalityBench** | What does AA's published writing benchmark say? | AA's 8 indexes | RESULTS.md §5 |
+| C | **AA-PersonalityBench** | What does AA's published writing benchmark say? | 8 index percentiles + 30 trait Elos | RESULTS.md §5 |
 
 Notes that matter:
 
@@ -152,9 +152,29 @@ same fixture.
 
 ## C. AA-PersonalityBench (prior, not a score)
 
-AA publishes 8 writing indexes (percentiles 1–100): organization, slop,
-expressiveness, informativeness, transparency, warmth, conviction, imagination.
-They exist only on the website, not in the v2 API, so they are scraped.
+AA-PersonalityBench publishes **two different things on two different scales**.
+They are not interchangeable and must never be averaged together.
+
+**8 index scores — percentile ranks 1–100** (AA's own page text):
+organization, slop, expressiveness, informativeness, transparency, warmth,
+conviction, imagination.
+
+**30 trait scores — Elo ratings**, one per named trait. Measured range across
+the 40 scored models is **−611 to 2178** and 19 models carry negative values, so
+treat the scale as unbounded rather than as a 0–100 or 780–1570 band:
+lexicallyVaried, eloquent, literate, naturalSounding, metaphorical, structured,
+scannable, summarizesBottomLine, answerFirst, informationDense, evidenceBased,
+resourceSpecific, providesActionableGuidance, pragmatic, truthful,
+admitsUncertainty, disclaimsWithAssumptions, flagsNuances, sycophantic, friendly,
+humorous, sincere, emotionallyIntelligent, direct, confident, opinionated,
+constructivelyPushesBack, creative, openEnded, slop.
+
+The indexes are used for ranking. The traits are used to inspect *why* — several
+map directly onto the drafter's contract (`scannable`, `answerFirst`,
+`summarizesBottomLine`, `structured` → organization; `truthful`,
+`evidenceBased`, `resourceSpecific` → the no-fabrication rule).
+
+Both exist only on the website, not in the v2 API, so they are scraped.
 
 - **`slop` is the AMOUNT of filler — lower is better.** Verified:
   corr(organization, slop) = −0.196, and the worst models carry the highest slop

@@ -27,8 +27,9 @@ candidate shortlist filter only, never a grading axis.
   **0% compliance** with its own 15–25 word bullet spec. `Kimi K3.1 Pro` is the
   only model faithful *and* compliant, at 94× cost. `MiniMax M3.1 Flash` writes
   the prettiest bullets and invents 24 things — do not use it as a drafter.
-- **Spend:** all Imaginator stages are **1.7%** of the bill. The cost is in
-  development traffic (`gpt-6.1-sol` + `gpt-6.1-terra` = 43.8%).
+- **Spend (product only):** Job Scout research is **91% of product spend**
+  ($27.52/mo). The whole Imaginator pipeline is **$2.86**, of which the drafter
+  is $0.21. Development traffic is excluded from this analysis.
 
 ## Layout
 

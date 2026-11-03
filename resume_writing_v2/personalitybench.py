@@ -15,6 +15,27 @@ WHERE THE DATA LIVES (all verified live 2026-11-02)
   artificialanalysis.ai/models/<slug>            -> works; the whole leaderboard
                                                     is embedded in the RSC payload
 
+TWO SEPARATE SCALES - DO NOT MIX THEM
+-------------------------------------
+AA-PersonalityBench publishes BOTH:
+
+  * 8 INDEX scores  - percentile ranks 1-100 (AA's own page text).
+                      e.g. organization 87.6, slop 20.8
+  * 30 TRAIT scores - Elo-scale ratings, one per named trait. Measured range
+                      across the 40 scored models is -611 to 2178, and 19 of
+                      them carry negative values, so never assume 0 is a floor:
+      lexicallyVaried, eloquent, literate, naturalSounding, metaphorical,
+      structured, scannable, summarizesBottomLine, answerFirst,
+      informationDense, evidenceBased, resourceSpecific,
+      providesActionableGuidance, pragmatic, truthful, admitsUncertainty,
+      disclaimsWithAssumptions, flagsNuances, sycophantic, friendly, humorous,
+      sincere, emotionallyIntelligent, direct, confident, opinionated,
+      constructivelyPushesBack, creative, openEnded, slop
+
+The two are different units. Averaging an Elo with a percentile is meaningless.
+The indexes are used for ranking; the traits are used to inspect WHY a model
+scores as it does.
+
 THE 8 INDEXES (percentile ranks 1-100, per AA's own page text)
 --------------------------------------------------------------
   organization     structure / scannability / answer-first ordering
@@ -105,6 +126,17 @@ def parse_leaderboard(s: str) -> dict[str, dict]:
         if (rec["organization"] == _PLACEHOLDER["organization"]
                 and rec["slop"] == _PLACEHOLDER["slop"]):
             continue
+        # Trait-level Elos live in the sibling "scores" dict, NOT in indexScores.
+        # They are on an unbounded Elo scale (-611 to 2178 across our 40
+        # models, with 19 negatives), NOT percentiles - never compare them to
+        # the indexes and never average the two together.
+        scores_m = re.search(r'"personalityBench":\{"scores":\{([^}]*)\}', s[max(0, i - 200):i + 4000])
+        traits = {}
+        if scores_m:
+            traits = {k: float(v) for k, v in
+                      re.findall(r'"(\w+)":(-?[0-9.]+)', scores_m.group(1))}
+        if traits:
+            rec["traits"] = traits
         out.setdefault(name, rec)
     return out
 
@@ -126,6 +158,8 @@ def normalise(raw: dict[str, dict]) -> list[dict]:
             # combined and correctly oriented, so no caller has to remember the
             # inversion: organization good, slop bad
             "writing_score": round((v["organization"] + (100.0 - v["slop"])) / 2, 2),
+            # 30 trait Elos, kept separate from the percentile indexes
+            "traits": v.get("traits") or {},
         })
     return rows
 
