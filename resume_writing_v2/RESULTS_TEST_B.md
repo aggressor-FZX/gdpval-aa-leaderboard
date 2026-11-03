@@ -56,7 +56,7 @@ Two contracts are scored **separately** and both must hold to pass. They fail in
 | 37 | NVIDIA Nemotron 3 Nano 30B A3B (Reasoning) | 2 | **50%** | 1/2 | 1/2 | 0/2 | 100% | $0.00130 | 74.4 |
 | 38 | Gemini 3.8 Flash (high) · high | 3 | **33%** | 2/3 | 1/3 | 3/3 | 67% | $0.03125 | 88.0 |
 | 39 | Llama 4 Scout | 3 | **33%** | 3/3 | 1/3 | 0/3 | 0% | $0.00026 | 73.2 |
-| 40 | Reka Flash 3 | 1 | **0%** | 0/1 | 0/1 | 1/1 | 37% | $0.00174 | 25.1 |
+| 40 | Reka Flash 3 | 1 | **0%** | 0/1 | 0/1 | 1/1 | 37% | $0.00174 | 23.1 |
 
 `pass` = faithfulness-clean AND structurally-clean on the same run.
 `faith`/`struct` are counts of clean runs out of n.

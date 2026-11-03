@@ -328,7 +328,12 @@ def _numbers_in(text: str) -> list[tuple[str, str]]:
     """
     text = _DATE_TOKEN.sub(" ", text)
     out = []
-    for m in re.finditer(r"(?<!\w)(\d[\d,]*\.?\d*)([^\d]{0,14})", text):
+    # The trailing context is 48 chars, not 14. A unit can follow a few
+    # intervening words ("4200 monthly appointment requests", "12 front-desk
+    # staff") and a 14-char window truncated before reaching it, reporting a
+    # correctly-stated metric as `unit stripped`. The match still stops at the
+    # next digit, so a later claim's unit cannot leak backwards.
+    for m in re.finditer(r"(?<!\w)(\d[\d,]*\.?\d*)([^\d]{0,48})", text):
         val = m.group(1).replace(",", "").rstrip(".")
         if val in ("", "."):
             continue
@@ -675,12 +680,16 @@ def score_response(text: str, experiences=None, verified_metrics=None,
     # ── fabrication: JD-only technologies named anywhere in the bullets ─────
     fab_tech = sorted({t for t, rx in _JD_RE.items() if rx.search(low)})
     # companies: any capitalised org-looking token not in the allowed set
+    # The company allowlist must follow the experiences passed in. Using the
+    # module constant meant a second fixture's legitimate employers were scanned
+    # against the first fixture's names.
+    allowed_companies = {e["company"].lower() for e in exps}
     fab_companies = []
     for c in re.findall(r"\b([A-Z][A-Za-z&.\-]+(?:\s+[A-Z][A-Za-z&.\-]+){0,2})\b", scan):
         cl = c.lower().strip()
-        if cl in ALLOWED_COMPANIES or any(a in cl for a in ALLOWED_COMPANIES):
+        if cl in allowed_companies or any(a in cl for a in allowed_companies):
             continue
-        if cl in ("cogito", "metric", "noaa"):
+        if cl in {w for co in allowed_companies for w in co.split()}:
             continue
         # ignore sentence-initial verbs and common non-org words
         if cl.split()[0] in STRONG_VERBS or cl in (
@@ -690,12 +699,26 @@ def score_response(text: str, experiences=None, verified_metrics=None,
             fab_companies.append(c)
 
     # ── metric fidelity ────────────────────────────────────────────────────
+    # The unit set is derived from the fixtures' own verified metrics, not from
+    # a module constant. The old hardcoded `UNITS` (%/hours) meant any other
+    # fixture (requests, patients, minutes, staff) had every correct number
+    # flagged as `unit stripped` — the holdout fixture exposed this
+    # immediately, and it is exactly the fixture-specific brittleness the
+    # holdout exists to find.
+    allowed_units = set(UNITS)
+    for m in vmetrics:
+        u = str(m.get("unit", "")).strip().lower()
+        if u:
+            allowed_units.add(u)
+            allowed_units.add(u.rstrip("s"))
+    allowed_units |= {u + "s" for u in list(allowed_units)}
+
     bad_numbers = []
     unit_stripped = []
     for val, tail in _numbers_in(scan):
         if val not in allowed_nums:
             bad_numbers.append(val)
-        elif not any(u in tail for u in UNITS):
+        elif not any(u in tail for u in allowed_units):
             unit_stripped.append(val)
 
     # ── format ─────────────────────────────────────────────────────────────
@@ -897,3 +920,68 @@ Write the complete resume now, with the three required section headings and
 every date copied exactly from the source above.
 """
     return system, user
+
+
+# ── HOLDOUT fixture — never used for tuning any scorer ─────────────────────
+# Different domain (healthcare ops), different metric shapes (dollar, count,
+# duration), and different date format (Month-YYYY) from the tuning fixture.
+# Purpose: detect a scorer tuned to one fixture's surface forms. Do NOT edit
+# this to make a model pass; if it fails, that is the finding.
+HOLDOUT_EXPERIENCES = [
+    {
+        "company": "Cascade Health Partners",
+        "role": "Operations Analyst",
+        "duration": "02/2022 - Present",
+        "bullets": [
+            "Rebuilt the patient intake scheduling flow, cutting no-show rate "
+            "from 19% to 8%",
+            "Managed a queue of 4200 monthly appointment requests across three "
+            "clinics",
+            "Trained 12 front-desk staff on the new intake process",
+            "Cut average check-in time by about 6 minutes per patient",
+        ],
+    },
+    {
+        "company": "Puget Regional Clinic",
+        "role": "Data Coordinator",
+        "duration": "05/2019 - 01/2022",
+        "bullets": [
+            "Maintained the immunization records system for 15000 patients",
+            "Reduced duplicate patient records by 34% after a deduplication pass",
+            "Produced monthly compliance reports for state auditors",
+        ],
+    },
+]
+
+HOLDOUT_EDUCATION = [
+    {"school": "Evergreen State College", "credential": "B.A. Public Health",
+     "years": "2012 - 2016"},
+    {"school": "Shoreline Community College",
+     "credential": "A.A.S. Health Information Technology",
+     "years": "2009 - 2011"},
+]
+
+HOLDOUT_CERTIFICATIONS = [
+    {"name": "Registered Health Information Technician", "issuer": "AHIMA",
+     "date": "08/2020"},
+    {"name": "Certified Professional Coder", "issuer": "AAPC",
+     "date": "04/2018"},
+]
+
+HOLDOUT_JOB_AD = """Healthcare Operations Analyst - Regional Clinic Network
+- Analyze patient access, scheduling and throughput data.
+- Build reporting on no-show rates, wait times and capacity.
+- Support compliance and audit reporting for state programs.
+- Work with clinical and front-desk teams on process improvement.
+Required: SQL, Excel, healthcare operations experience, data quality.
+"""
+
+HOLDOUT_VERIFIED_METRICS = [
+    {"value": "19", "unit": "%", "kind": "percent"},
+    {"value": "8", "unit": "%", "kind": "percent"},
+    {"value": "4200", "unit": "requests", "kind": "count"},
+    {"value": "12", "unit": "staff", "kind": "count"},
+    {"value": "6", "unit": "minutes", "kind": "duration"},
+    {"value": "15000", "unit": "patients", "kind": "count"},
+    {"value": "34", "unit": "%", "kind": "percent"},
+]

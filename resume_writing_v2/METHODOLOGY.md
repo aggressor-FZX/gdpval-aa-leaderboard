@@ -236,6 +236,85 @@ variant (Gemini 3.8 Flash at `high`) hit 8187/8192 on **all three** runs and its
 structural failures were entirely truncation. Reporting that as "got the cert
 date wrong" would be misleading.
 
+### Grounding checks (added 2026-11-03, from `Render_Dockers/resume_bench`)
+
+Four deterministic additions. Each closes a gap that was *demonstrated*, not
+imagined.
+
+#### 1. Content gate — runs BEFORE any truth check
+
+Ordering is load-bearing. A document containing no claims cannot contain a false
+claim, so a truth check on a vacuous document always passes. Measured on this
+harness, a 59-word skeleton with zero bullets scored `faith clean=True,
+struct clean=True` — a PASS. `resume_bench` hit the same bug on their first live
+run: 4 of 8 "passes" were headers-only or the model asking for more information.
+
+`grounding.content_gate()` rejects:
+
+| check | rejects |
+|---|---|
+| S-1 | conversational / meta output ("I'm ready to…", "please provide…") |
+| S-2 | fewer than 90 words |
+| S-3/S-4 | a required section missing or empty |
+| S-5 | `[placeholder]` / `{placeholder}` leakage |
+| S-6 | fewer than 4 bullets |
+| S-7 | degenerate repetition (unique-word ratio < 0.25) |
+
+A **positive control** is part of the test suite. The first version of this gate
+treated company names as section headings and rejected every correct resume; a
+gate that can only fail is not a gate.
+
+#### 2. Typed claims instead of a flat whitelist
+
+A flat `VERIFIED_METRICS` list is simultaneously too permissive and too brittle:
+
+| case | outcome under a flat list |
+|---|---|
+| `30%` vs `30 percent` | same fact, different surface → false miss |
+| `30% diagnostic time` vs `30% revenue` | same number, one is a false claim |
+
+Claims now compare on **(normalized value, normalized unit, subject)**.
+Normalization maps `%`→`percent`, `1,200`→`1200`, `30.0`→`30`.
+
+#### 3. Ownership (T-2)
+
+A real number re-attached to the wrong employer is still a false claim. Each
+claim carries the company whose bullet stated it; a number appearing under a
+different company heading is a tier-A violation naming both companies. This
+found nothing in the current data because our fixture has only one owned metric,
+but it is enforced rather than assumed.
+
+#### 4. Preservation (P-2)
+
+Required facts must **survive** into the output. Previously only invention was
+measured; a model that silently dropped a verified metric cost nothing.
+
+#### Tier discipline
+
+A verdict is never a bare `PASS`. The string is `PASS (tier A only)`, and
+`tier_b_checked` is `false`, because no semantic checker exists. Subject overlap
+is surfaced as `subject_mismatch_review` for a human, never as a pass or a fail.
+
+### The holdout fixture
+
+`HOLDOUT_EXPERIENCES` is a different domain (healthcare operations), with
+different metric shapes (counts, minutes, staff) and a different date format
+from the tuning fixture. **No scorer was tuned against it.**
+
+It earned its place immediately by finding two fixture-specific bugs in the
+existing scorer:
+
+| bug | effect |
+|---|---|
+| `UNITS` was a hardcoded module constant (`%`, `hours`) | every correct `4200 requests` / `12 staff` / `6 minutes` was flagged `unit stripped` |
+| `ALLOWED_COMPANIES` was a hardcoded module constant | a second fixture's legitimate employers were scanned against the first fixture's names |
+| unit-detection window was 14 chars | `4200 monthly appointment requests` truncated before reaching `requests` |
+| `months?` matched the prefix of `monthly` | `4200 monthly` invented a phantom unit and owner |
+
+All four are fixed: the unit set and company allowlist are now derived from the
+fixture passed in, the window is 48 chars and bounded by the next digit, and word
+units require a trailing word boundary.
+
 ### Scorer integrity
 
 The scorers are deterministic, so they fail deterministically. Six silent bugs

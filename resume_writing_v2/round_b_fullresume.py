@@ -34,8 +34,12 @@ import requests
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from resume_writing_v2 import drafter_faithfulness as dfn
+from resume_writing_v2 import grounding
 from resume_writing_v2.config import (CATALOG_URL, OPENROUTER_URL,
                                       REQUEST_TIMEOUT_S, api_key)
+
+# Typed ledger built from the fixture, so metric ownership can be enforced.
+LEDGER = grounding.build_ledger(dfn.FIXTURE_EXPERIENCES, dfn.VERIFIED_METRICS)
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 RES = os.path.join(HERE, "results")
@@ -204,8 +208,19 @@ def main() -> int:
             # a fabrication failure by all 43 variants.
             row["faith"] = dfn.score_response(res["text"], plain_text=True)
             row["struct"] = dfn.score_structure(res["text"])
-            row["pass"] = bool(row["faith"]["clean"]
-                               and row["struct"]["structural_clean"])
+            # CONTENT GATE FIRST. A document with no claims cannot contain a
+            # false claim, so a truth check on a 59-word skeleton passes. That
+            # was a real false-pass in our own harness and in resume_bench's
+            # first live run. Ordering is load-bearing.
+            row["content"] = grounding.content_gate(res["text"])
+            row["truth"] = grounding.check_truth(res["text"], LEDGER)
+            row["preservation"] = grounding.check_preservation(
+                LEDGER, res["text"])
+            row["pass"] = bool(
+                row["content"]["ok"]
+                and row["faith"]["clean"]
+                and row["struct"]["structural_clean"]
+                and not row["preservation"])
             row["text"] = res["text"]
         else:
             row["ok"] = False

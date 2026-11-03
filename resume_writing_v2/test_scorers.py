@@ -121,6 +121,120 @@ def _invariants() -> None:
           "FIXTURE_EDUCATION block carries a SYNTHETIC warning")
 
 
+def _grounding_tests() -> None:
+    """The four gates borrowed from resume_bench, plus regression cases."""
+    from resume_writing_v2 import grounding as g
+
+    ledger = g.build_ledger(dfn.FIXTURE_EXPERIENCES, dfn.VERIFIED_METRICS)
+
+    print("\ncontent gate: a GOOD resume must pass (positive control)")
+    # Without this, the gate can only ever fail — the first version treated
+    # company names as section headings and rejected every correct resume.
+    good = ("PROFESSIONAL EXPERIENCE\n"
+            "Cogito Metric - Data Engineer\n"
+            "04/2024 - Present\n"
+            "- Built the resume parsing pipeline that processes candidate "
+            "resumes reliably.\n"
+            "- Reduced runtime by 40% after reworking the pipeline flow.\n"
+            "- Worked with Postgres and Python for the storage layer.\n"
+            "- Partnered with the recruiting team on field specifications.\n"
+            "\nNOAA - Data Analyst\n"
+            "06/2021 - 03/2024\n"
+            "- Made charts and reports for weather data every week.\n"
+            "- Cleaned messy oceanographic datasets before analysis.\n"
+            "- Presented findings to a small group of scientists.\n"
+            "\nEDUCATION\n"
+            "B.S. Data Analytics, Washington State University 2015 - 2019\n"
+            "B.S. Physics, Washington State University 2013 - 2017\n"
+            "A.A.S. Computer Science, Bates Technical College 2011 - 2013\n"
+            "\nCERTIFICATIONS\n"
+            "CompTIA Security+ 03/2023\n"
+            "Cybersecurity Analyst 07/2022\n"
+            "Data Analytics Certificate 11/2021\n")
+    ggood = g.content_gate(good)
+    check(ggood["ok"],
+          f"valid resume passes the content gate (problems={ggood['problems']})")
+
+    print("\ncontent gate: company names are not section headings")
+    check(ggood["words"] > 90, "valid resume is long enough")
+    check(ggood["bullets"] >= 4, "bullets are counted")
+
+    print("\ncontent gate: vacuous output must NOT pass")
+    vac = ("PROFESSIONAL EXPERIENCE\nCogito Metric 04/2024 - Present\n"
+           "Built things.\n\nEDUCATION\nB.S. Physics 2013 - 2017\n\n"
+           "CERTIFICATIONS\nCompTIA Security+ 03/2023\n")
+    cg = g.content_gate(vac)
+    check(not cg["ok"], "59-word skeleton is rejected")
+    check(any(p.startswith("below_min_words") for p in cg["problems"]),
+          "below_min_words reported")
+
+    print("\ncontent gate: conversational refusal is an output failure")
+    conv = ("I'm ready to craft a polished resume. Please provide the company "
+            "names, job titles and dates.")
+    check(not g.content_gate(conv)["ok"], "conversational output rejected")
+    check(any(p == "meta_or_conversational_output"
+              for p in g.content_gate(conv)["problems"]),
+          "meta_or_conversational_output reported")
+
+    print("\ncontent gate: degenerate repetition")
+    rep = "In addition. " * 120
+    check(any(p.startswith("degenerate_repetition")
+              for p in g.content_gate(rep)["problems"]),
+          "repetition loop caught")
+
+    print("\nunit normalization")
+    check(g.normalize_unit("%") == g.normalize_unit("percent") == "percent",
+          "'%' and 'percent' normalize the same")
+    check(g.normalize_number("1,200") == "1200", "thousands separator handled")
+    check(g.normalize_number("30.0") == "30", "trailing zero handled")
+    # the bug the holdout fixture found
+    claims = g.extract_output_claims(
+        "Managed a queue of 4200 monthly appointment requests")
+    check(all(c["unit"] != "months" for c in claims),
+          "'4200 monthly' is NOT read as '4200 months'")
+    check(any(c["value"] == "4200" and c["unit"] == "requests"
+              for c in claims),
+          "'4200 monthly ... requests' resolves to 4200 requests")
+    gap = g.extract_output_claims("Trained 12 front-desk staff on intake")
+    check(any(c["value"] == "12" and c["unit"] == "staff" for c in gap),
+          "'12 front-desk staff' resolves to 12 staff")
+    nope = g.extract_output_claims("Improved throughput for 42% of staff")
+    check(not any(c["unit"] == "staff" for c in nope),
+          "a preposition blocks the gap: '42% of staff' is not 42 staff")
+
+    print("\nownership (T-2)")
+    swapped = ("NOAA - Data Analyst 06/2021 - 03/2024\n"
+               "- Reduced reporting overhead by 40% across the team.\n")
+    viol = g.check_ownership(swapped, ledger)
+    check(len(viol) == 1, "number under the wrong employer is flagged")
+    check(viol and viol[0]["expected_employer"] == "cogito metric",
+          "expected employer named")
+
+    print("\ntier discipline: never a bare PASS")
+    ok_text = ("Cogito Metric 04/2024 - Present\n"
+               "- Reduced parsing time by 40% through refactoring.\n")
+    tr = g.check_truth(ok_text, ledger)
+    check(tr.verdict != "PASS", "verdict is never a bare PASS")
+    check(tr.verdict.startswith("PASS (tier A only)"),
+          "verdict states tier A only")
+    check(tr.tier_b_checked is False,
+          "tier_b_checked is False (no semantic checker exists)")
+
+    print("\npreservation (P-2)")
+    lost = g.check_preservation(ledger, "Cogito Metric\n- Built pipelines.\n")
+    check(any(x["reason"] == "required_fact_lost" for x in lost),
+          "a required metric missing from output is caught")
+
+    print("\nholdout ledger builds with reconciled units")
+    hl = g.build_ledger(dfn.HOLDOUT_EXPERIENCES, dfn.HOLDOUT_VERIFIED_METRICS)
+    owned = hl.owned_pairs()
+    check(("4200", "requests") in owned,
+          "4200 is owned as 'requests', not 'months'")
+    legal = {c.pair() for c in hl.metric_claims()}
+    check(all(k in legal for k in owned),
+          "every owned pair is also a legal pair")
+
+
 def main() -> int:
     print("date parsing")
     check(dfn.parse_date("04/2024") == (2024, 4), "04/2024 -> (2024, 4)")
@@ -285,6 +399,7 @@ Data Analytics Certificate
           "dates do not trigger the unit-stripped check")
 
     _invariants()
+    _grounding_tests()
 
     print("\n" + "=" * 60)
     if FAILS:
