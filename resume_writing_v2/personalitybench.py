@@ -185,9 +185,98 @@ def load(path: str = CACHE) -> list[dict]:
         return []
     with open(path) as f:
         return json.load(f).get("models", [])
+# ── Trait selection ────────────────────────────────────────────────────────
+# The traits AA publishes, camelCase exactly as stored in their payload.
+TRAITS = (
+    "lexicallyVaried", "eloquent", "literate", "naturalSounding",
+    "metaphorical", "structured", "scannable", "summarizesBottomLine",
+    "answerFirst", "informationDense", "evidenceBased", "resourceSpecific",
+    "providesActionableGuidance", "pragmatic", "truthful", "admitsUncertainty",
+    "disclaimsWithAssumptions", "flagsNuances", "sycophantic", "friendly",
+    "humorous", "sincere", "emotionallyIntelligent", "direct", "confident",
+    "opinionated", "constructivelyPushesBack", "creative", "openEnded", "slop",
+)
+
+# A model may carry either a trait Elo or an index percentile; these names
+# collide with an index but are stored at index level, not trait level.
+_INDEX_OVERLAP = {"slop"}
+
+
+def trait_table(rows: list[dict] | None = None,
+                traits: tuple[str, ...] | None = None,
+                sort_by: str | None = None) -> list[dict]:
+    """Pull specific traits (Eloquent, Slop, Expressiveness, ...) per model.
+
+    Two sources are checked because AA stores the two scales in different
+    places and only ONE of them is an Elo:
+
+      trait Elos      -> row["traits"][name]        (unbounded, higher better
+                                                     except `slop`)
+      index percentiles -> row[name] for the 8 indexes (1-100)
+
+    `expressiveness` is an INDEX (percentile), not a trait, so it is read from
+    the top level. `eloquent` and `lexicallyVaried` are TRAITS (Elo) and are
+    read from row["traits"]. Mixing them up would compare a percentile to an
+    Elo, so each record records where the number came from.
+
+    Unknown trait names raise, rather than silently returning None, so a typo
+    cannot look like missing data.
+    """
+    rows = rows if rows is not None else load()
+    wanted = traits or TRAITS
+    valid = set(TRAITS) | set(INDEX_KEYS)
+    bad = [t for t in wanted if t not in valid]
+    if bad:
+        raise KeyError(f"unknown trait(s) {bad}; valid = {sorted(valid)}")
+
+    out = []
+    for r in rows:
+        rec = {"model": r["model"],
+               "organization": r.get("organization"),
+               "slop": r.get("slop"),
+               "writing_score": r.get("writing_score")}
+        for t in wanted:
+            if t in _INDEX_OVERLAP:
+                rec[t] = r.get(t)
+                rec[f"_{t}_scale"] = "index percentile"
+            elif t in (r.get("traits") or {}):
+                rec[t] = r["traits"][t]
+                rec[f"_{t}_scale"] = "trait Elo"
+            else:
+                rec[t] = r.get(t)          # index percentile fallback
+                rec[f"_{t}_scale"] = "index percentile" if r.get(t) is not None else None
+        out.append(rec)
+
+    if sort_by:
+        if sort_by not in out[0]:
+            raise KeyError(f"cannot sort by {sort_by}; not in the selected traits")
+        out.sort(key=lambda x: (x[sort_by] is None,
+                                -(x[sort_by] if x[sort_by] is not None else 0)))
+    return out
+
+
+def print_traits(traits: tuple[str, ...], limit: int | None = None,
+                 sort_by: str | None = None) -> None:
+    rows = trait_table(traits=traits, sort_by=sort_by or traits[0])
+    if limit:
+        rows = rows[:limit]
+    scales = {t: rows[0].get(f"_{t}_scale") for t in traits}
+    print(f"{'model':<30}" + "".join(f"{t[:11]:>12}" for t in traits))
+    print(f"{'scale':<30}" + "".join(f"{str(scales[t] or '-')[:11]:>12}" for t in traits))
+    print("-" * (30 + 12 * len(traits)))
+    for r in rows:
+        print(f"{r['model'][:28]:<30}" +
+              "".join(f"{(r[t] if r[t] is not None else float('nan')):>12.1f}"
+                      for t in traits))
 
 
 if __name__ == "__main__":
+    import sys as _sys
+    if len(_sys.argv) > 1 and _sys.argv[1] == "traits":
+        # usage: python -m resume_writing_v2.personalitybench traits eloquent slop
+        want = tuple(_sys.argv[2:]) or ("eloquent", "lexicallyVaried", "scannable")
+        print_traits(want, limit=15)
+        raise SystemExit(0)
     rows = sorted(fetch_from_page(), key=lambda r: -r["writing_score"])
     path = save(rows)
     print(f"{len(rows)} models -> {path}\n")

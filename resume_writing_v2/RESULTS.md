@@ -139,28 +139,84 @@ So within the product:
 **The drafter question is a quality question, not a cost question.** Replacing it
 cannot move the bill: it is $0.21 of $166.20.
 
-### AA traits corroborate the drafter result
+### Why AA's traits were not used for scoring
 
-AA-PersonalityBench's 30 trait Elos (unbounded scale; −611 to 2178 across these
-40 models, 19 with negative values) include several that map directly onto the
-drafter's contract. They were not used to score anything — they are a
-post-hoc check that the empirical result is not an artefact of the fixture.
+They were available and are now extracted for all 40 models (30 trait Elos plus
+the 8 index percentiles). They are **not** used as a grading axis, for three
+measurable reasons.
 
-| model | `truthful` | `structured` | `scannable` | measured outcome |
-|---|---|---|---|---|
-| Kimi K3.1 Pro | **989** | **974** | 980 | **4/4 clean, 0 fabricated** |
-| GLM-5.3 | 743 | 820 | 994 | 2/4 clean, 5 fabricated, 3% band |
-| Claude Haiku 5.5 | 873 | 920 | 967 | 2/4 clean, 11 fabricated |
-| **MiniMax-M3.1-Flash** | **202** | 860 | 1079 | **0/4 clean, 24 fabricated** |
+**1. They are not exposed by the documented API.** The endpoint
+`data.artificialanalysis.ai/api/v1/models` returns **404 DEPLOYMENT_NOT_FOUND**.
+The working host (`artificialanalysis.ai/api/v2/...`) has **no** personality data:
+`?include=personality` returns a byte-identical payload, `personality_bench` is
+absent from `evaluations`, and six plausible subresource paths all 404. Extraction
+from the website payload is the only route.
 
-MiniMax M3.1 Flash has the 6th-lowest `truthful` Elo of the 40 scored models and
-the worst measured fabrication by a wide margin (24 items vs 2 for the incumbent).
-Its `scannable` score (1079) is above Kimi's (980) — which is exactly why it looks
-good on a format-only measure and fails the faithfulness test. The trait data
-agrees with the harness on both counts.
+**2. They do not predict the measured task.** Of the 40 models with trait data,
+only **6** also produced a measured score in test A. With n=6, |r| must exceed
+~0.81 for significance at p=0.05:
 
-`qwen3-coder` is not in AA's 40-model PersonalityBench set, so it has no traits to
-compare — the empirical result stands on its own for that model.
+| trait | r vs measured score |
+|---|---|
+| scannable | +0.81 |
+| structured | +0.78 |
+| lexicallyVaried | +0.75 |
+| eloquent | +0.72 |
+| informationDense | +0.71 |
+| evidenceBased | +0.62 |
+| truthful | +0.48 |
+| resourceSpecific | +0.37 |
+| answerFirst | +0.31 |
+
+Every value sits on or under the significance threshold, so **no trait is a
+usable predictor on this sample**. Suggestive, not established.
+
+**3. They would have mis-ranked the best model.** DeepSeek V4.1 Flash has the
+highest `organization` index of all 40 models (100) and came **last among
+contenders** in test A. `eloquent` ranks Claude Fable 5.1 first (1716) and Kimi
+K3.1 Pro 14th (1189) — while the harness found Kimi the single best-faithfulness
+drafter. Trait rank and task rank disagree.
+
+### Where the traits are genuinely useful
+
+As a **post-hoc corroboration** of the drafter result, which is not the same as
+using them as a score. The traits that map onto the drafter's contract agree with
+what the harness measured independently:
+
+| model | `truthful` | `scannable` | measured drafter outcome |
+|---|---|---|---|
+| Kimi K3.1 Pro | **989** | 980 | **4/4 clean, 0 fabricated** |
+| GLM-5.3 | 743 | 994 | 2/4 clean, 5 fabricated |
+| Claude Haiku 5.5 | 873 | 967 | 2/4 clean, 11 fabricated |
+| **MiniMax-M3.1-Flash** | **202** | 1079 | **0/4 clean, 24 fabricated** |
+
+MiniMax M3.1 Flash scores **near-bottom `truthful` (202 of a −611…2178 scale,
+6th lowest of 40)** while its `scannable` (1079) sits above Kimi K3.1 Pro's (980).
+That single pair of numbers explains the whole result: it looks well-structured on
+a format measure and fabricates in practice. AA's own traits and this harness
+reached the same conclusion from different evidence.
+
+The strongest `scannable` in the set is MiMo-V2.6-Pro at 1545, not MiniMax — so
+`scannable` alone is not a discriminator, which is consistent with §2 finding it
+only borderline correlated (r=+0.81, n=6).
+
+`qwen3-coder` (the production drafter) is **not in AA's 40-model set**, so it has
+no traits at all — another reason the empirical harness is the primary instrument.
+
+### Querying specific traits
+
+```bash
+python -m resume_writing_v2.personalitybench traits eloquent scannable truthful
+```
+
+```python
+from resume_writing_v2 import personalitybench as pb
+rows = pb.trait_table(traits=("eloquent", "slop"), sort_by="eloquent")
+```
+
+Each record carries a `_<trait>_scale` field (`trait Elo` or `index percentile`)
+so the two scales cannot be silently mixed. Unknown trait names raise `KeyError`
+rather than returning `None`, so a typo cannot look like missing data.
 
 ## 5. Corrections carried forward
 
